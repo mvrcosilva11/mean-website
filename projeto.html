@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto — MEAN AGENCY</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-projeto">
+
+  <!-- NAV -->
+  <header class="nav">
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-dd">
+        <a href="work.html">Work</a>
+        <div class="nav-dd-menu">
+          <a href="projects.html">Projects</a>
+        </div>
+      </div>
+      <span class="nav-clock" id="clock"></span>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema dark/light">◐</button>
+  </header>
+
+  <!-- PROJECT -->
+  <main class="projeto" id="projeto">
+    <header class="projeto-head">
+      <div class="projeto-head-name">
+        <h1 class="projeto-name"></h1>
+        <p class="projeto-cat"></p>
+      </div>
+      <p class="projeto-text"></p>
+    </header>
+    <div class="projeto-scroll" id="projeto-scroll">
+      <div class="projeto-imgs"></div>
+    </div>
+    <div class="projeto-progress">
+      <div class="projeto-progress-track"><div class="projeto-progress-bar" id="projeto-bar"></div></div>
+      <span class="projeto-progress-pct" id="projeto-pct">0%</span>
+    </div>
+  </main>
+
+  <script src="imagens.js"></script>
+  <script src="EDITAR-PROJETOS.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

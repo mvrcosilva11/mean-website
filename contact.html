@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — MEAN AGENCY</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <header class="nav">
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <div class="nav-dd">
+        <a href="work.html">Work</a>
+        <div class="nav-dd-menu">
+          <a href="projects.html">Projects</a>
+        </div>
+      </div>
+      <span class="nav-clock" id="clock"></span>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema dark/light">◐</button>
+  </header>
+
+  <!-- CONTACT -->
+  <main class="section" style="padding-top: calc(var(--nav-h) + 4rem);">
+    <div class="container">
+      <header class="work-head">
+        <h1 class="work-title">Let's talk</h1>
+        <p class="work-sub">Tell us about your project. We reply within 24h.</p>
+      </header>
+
+      <div class="contact-layout">
+        <!-- Contact info + socials -->
+        <div>
+          <ul class="contact-list">
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" fill="none"/><path d="m22 6-10 7L2 6"/></svg>
+              <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              <a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2a4 4 0 0 1 6-2"/><rect x="2" y="9" width="4" height="11"/><circle cx="4" cy="4" r="2"/></svg>
+              <a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Contact form -->
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="email@example.com" required />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Describe your project…" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Enviar mensagem</button>
+          <p class="form-feedback" id="formFeedback" role="status"></p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>2026 © MEAN AGENCY</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

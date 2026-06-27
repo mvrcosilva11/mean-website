@@ -3,3 +3,6 @@
 node_modules/
 .vscode/
 Thumbs.db
+
+# video original pesado (so o bg.mp4 leve vai para o repo)
+assets/bg.mov

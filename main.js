@@ -67,6 +67,26 @@ if (projeto && window.PROJETOS) {
   }
 }
 
+// Home: lente de vidro canelado que segue o cursor sobre o vídeo
+(function () {
+  const home = document.querySelector('.home');
+  const lens = document.getElementById('homeLens');
+  if (!home || !lens) return;
+  let raf = null, x = 0, y = 0;
+  const move = e => {
+    x = e.clientX; y = e.clientY;
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      lens.style.left = x + 'px';
+      lens.style.top = y + 'px';
+      raf = null;
+    });
+  };
+  home.addEventListener('mouseenter', () => lens.classList.add('on'));
+  home.addEventListener('mouseleave', () => lens.classList.remove('on'));
+  home.addEventListener('mousemove', move);
+})();
+
 // Nav: scrolled class + hamburger
 const nav = document.querySelector('.nav');
 const toggle = document.querySelector('.nav-toggle');

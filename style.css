@@ -380,6 +380,58 @@ h3 { font-size: 1.1rem; }
   display: block;
 }
 
+/* Canvas WebGL do flowmap — desenha o vídeo distorcido por cima do <video> cru */
+.home-ripple {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  display: block;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.home-ripple.ready { opacity: 1; }
+
+/* Composição de ecrã inteiro (wordmark nos cantos) por cima do vídeo */
+.home-comp {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* ── Lente de vidro canelado que segue o cursor ── */
+.home-lens {
+  position: fixed;
+  top: 0; left: 0;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity .3s ease;
+  /* vidro fosco: difunde o vídeo por trás */
+  -webkit-backdrop-filter: blur(5px) brightness(1.06) saturate(1.1);
+  backdrop-filter: blur(5px) brightness(1.06) saturate(1.1);
+  /* ripas verticais (canelado) por cima */
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255,255,255,0.14) 0px,
+    rgba(255,255,255,0.00) 2px,
+    rgba(0,0,0,0.12)        5px,
+    rgba(255,255,255,0.00)  7px,
+    rgba(255,255,255,0.14)  9px
+  );
+  /* bordas esbatidas: funde-se no fundo sem corte seco */
+  -webkit-mask-image: radial-gradient(circle at center, #000 50%, transparent 100%);
+  mask-image: radial-gradient(circle at center, #000 50%, transparent 100%);
+}
+.home-lens.on { opacity: 1; }
+
 /* ── About ── */
 .about {
   padding: calc(var(--nav-h) + 4rem) clamp(1.25rem, 5vw, 5rem) 5rem;

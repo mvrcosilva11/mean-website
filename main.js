@@ -84,25 +84,37 @@ if (projeto && window.PROJETOS) {
   else window.addEventListener('load', hide);
 })();
 
-// Cursor personalizado: ponto redondo vermelho que segue o rato
+// Cursor personalizado: bolinha vermelha + rasto de 3 bolinhas (4 no total)
 (function () {
   // ignora em dispositivos touch (não há cursor)
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-  const dot = document.createElement('div');
-  dot.className = 'cursor-dot';
-  document.body.appendChild(dot);
-  let raf = null, x = 0, y = 0;
-  window.addEventListener('mousemove', e => {
-    x = e.clientX; y = e.clientY;
-    if (raf) return;
-    raf = requestAnimationFrame(() => {
-      dot.style.left = x + 'px';
-      dot.style.top = y + 'px';
-      raf = null;
-    });
-  });
-  document.addEventListener('mouseleave', () => dot.classList.add('hidden'));
-  document.addEventListener('mouseenter', () => dot.classList.remove('hidden'));
+  const N = 4;
+  const OPAC = [1, 0.7, 0.45, 0.22]; // desvanece proporcionalmente ao longo do rasto
+  const dots = [];
+  for (let i = 0; i < N; i++) {
+    const el = document.createElement('div');
+    el.className = 'cursor-dot';
+    el.style.opacity = OPAC[i];
+    document.body.appendChild(el);
+    dots.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  }
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2, visible = true;
+  const show = v => dots.forEach((d, i) => d.el.style.opacity = v ? OPAC[i] : 0);
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!visible) { visible = true; show(true); } });
+  document.addEventListener('mouseleave', () => { visible = false; show(false); });
+  document.addEventListener('mouseenter', () => { visible = true; show(true); });
+  (function loop() {
+    for (let i = 0; i < N; i++) {
+      const d = dots[i];
+      if (i === 0) { d.x = mx; d.y = my; }            // a principal cola no cursor
+      else {                                            // as outras perseguem a anterior → caminho
+        d.x += (dots[i - 1].x - d.x) * 0.35;
+        d.y += (dots[i - 1].y - d.y) * 0.35;
+      }
+      d.el.style.transform = 'translate(' + d.x + 'px,' + d.y + 'px) translate(-50%,-50%)';
+    }
+    requestAnimationFrame(loop);
+  })();
 })();
 
 // Nav: scrolled class + hamburger

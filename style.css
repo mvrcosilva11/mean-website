@@ -18,6 +18,8 @@
   transition: opacity .2s ease;
 }
 .cursor-dot.hidden { opacity: 0; }
+/* sobre fundo escuro/imagem → cursor branco (negativo) */
+.cursor-dot.invert { background: #ffffff; }
 
 /* ── Separador / preloader de entrada ── */
 .preloader {

@@ -98,20 +98,27 @@ if (projeto && window.PROJETOS) {
     document.body.appendChild(el);
     dots.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
   }
+  const GAP = 7;                                   // intervalo (frames) entre bolinhas → espaçamento
   let mx = window.innerWidth / 2, my = window.innerHeight / 2, visible = true;
+  const hist = [];
   const show = v => dots.forEach((d, i) => d.el.style.opacity = v ? OPAC[i] : 0);
-  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; if (!visible) { visible = true; show(true); } });
+  const setInvert = on => dots.forEach(d => d.el.classList.toggle('invert', on));
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (!visible) { visible = true; show(true); }
+    // fundo escuro/imagem (home) → cursor branco; resto → vermelho
+    const under = document.elementFromPoint(mx, my);
+    setInvert(!!(under && under.closest('.home, .cursor-light, [data-cursor="light"]')));
+  });
   document.addEventListener('mouseleave', () => { visible = false; show(false); });
   document.addEventListener('mouseenter', () => { visible = true; show(true); });
   (function loop() {
+    hist.unshift({ x: mx, y: my });
+    const maxLen = (N - 1) * GAP + 1;
+    if (hist.length > maxLen) hist.length = maxLen;
     for (let i = 0; i < N; i++) {
-      const d = dots[i];
-      if (i === 0) { d.x = mx; d.y = my; }            // a principal cola no cursor
-      else {                                            // as outras perseguem a anterior → caminho
-        d.x += (dots[i - 1].x - d.x) * 0.35;
-        d.y += (dots[i - 1].y - d.y) * 0.35;
-      }
-      d.el.style.transform = 'translate(' + d.x + 'px,' + d.y + 'px) translate(-50%,-50%)';
+      const p = hist[Math.min(i * GAP, hist.length - 1)];   // bolinha i = posição de i*GAP frames atrás
+      dots[i].el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(-50%,-50%)';
     }
     requestAnimationFrame(loop);
   })();

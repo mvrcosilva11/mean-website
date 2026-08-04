@@ -168,8 +168,71 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
   observer.observe(el);
 });
 
-// About page: reveal elements already marked with .reveal in the HTML
-document.querySelectorAll('.ab .reveal').forEach(el => observer.observe(el));
+// About page: reveal elements already marked with .reveal in the HTML (com stagger por grupo)
+['.ab-team-grid', '.ab-manifesto .ab-list', '.ab-services .ab-list'].forEach(sel => {
+  const group = document.querySelector(sel);
+  if (group) group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 65) + 'ms'; });
+});
+document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => observer.observe(el));
+
+// Parallax — elementos com data-parallax movem-se ao scroll
+(function () {
+  const els = document.querySelectorAll('[data-parallax]');
+  if (!els.length) return;
+  let ticking = false;
+  const update = () => {
+    const y = window.scrollY;
+    els.forEach(el => {
+      const s = parseFloat(el.dataset.parallax) || 0.1;
+      el.style.transform = 'translate3d(0,' + (y * s) + 'px,0)';
+    });
+    ticking = false;
+  };
+  window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+  update();
+})();
+
+// Work: header muda para escuro quando a cortina branca cobre o vídeo
+(function () {
+  if (!document.body.classList.contains('page-work')) return;
+  const nav = document.querySelector('.nav');
+  const hero = document.querySelector('.work-hero');
+  if (!nav || !hero) return;
+  const onScroll = () => {
+    nav.classList.toggle('nav-on-light', window.scrollY > hero.offsetHeight * 0.72);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+// Transição de página — wipe vermelho ao navegar entre páginas do site
+(function () {
+  const trans = document.createElement('div');
+  trans.className = 'page-trans';
+  document.body.appendChild(trans);
+  const EASE = 'transform .55s cubic-bezier(.76,0,.24,1)';
+  // ao carregar: revela (a não ser que o preloader de entrada esteja a mostrar)
+  if (!document.getElementById('preloader')) {
+    trans.style.transformOrigin = 'right center';
+    trans.style.transform = 'scaleX(1)';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      trans.style.transition = EASE;
+      trans.style.transform = 'scaleX(0)';
+    }));
+  }
+  // ao clicar num link interno: cobre e depois navega
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || a.target === '_blank') return;
+    e.preventDefault();
+    trans.style.transition = EASE;
+    trans.style.transformOrigin = 'left center';
+    trans.style.transform = 'scaleX(1)';
+    setTimeout(() => { window.location.href = href; }, 520);
+  });
+})();
 
 // Work grid reveal — left column slides in from the left, right column from the right
 document.querySelectorAll('.w-item').forEach((el, i) => {

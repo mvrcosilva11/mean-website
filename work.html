@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Work — MEAN AGENCY</title>
-  <link rel="stylesheet" href="style.css?v=29" />
+  <link rel="stylesheet" href="style.css?v=30" />
 </head>
 <body class="page-work">
 
@@ -20,34 +20,30 @@
           <a href="projects.html">Projects</a>
         </div>
       </div>
-      <span class="nav-clock" id="clock"></span>
+      <img class="nav-logo-center" src="assets/logo-branco.png?v=30" alt="MEAN" />
       <a href="about.html">About</a>
     </nav>
   </header>
 
-  <!-- WORK HERO — fullscreen background video -->
+  <!-- WORK HERO — vídeo fullscreen (sticky) -->
   <section class="work-hero">
     <video class="work-hero-bg" autoplay muted loop playsinline poster="assets/work-bg-poster.jpg?v=29">
       <source src="assets/work-bg.mp4?v=29" type="video/mp4" />
     </video>
-    <div class="work-hero-overlay">
-      <p class="ab-kicker">Work</p>
-      <h1 class="work-hero-title">Selected projects</h1>
-    </div>
-    <div class="work-hero-scroll" aria-hidden="true">Scroll ↓</div>
   </section>
 
-  <!-- PROJECTS GRID -->
-  <main class="work">
-    <section class="w-grid" id="w-grid"></section>
-  </main>
+  <!-- CORTINA — sobe a cobrir o vídeo ao dar scroll -->
+  <section class="work-curtain">
+    <div class="work-curtain-inner reveal">
+      <p class="work-curtain-text">[O texto do Work entra aqui.]</p>
+    </div>
+  </section>
 
   <!-- FOOTER -->
   <footer class="footer footer-dark">
     <p>2026 © MEAN AGENCY</p>
   </footer>
 
-  <script src="EDITAR-PROJETOS.js"></script>
-  <script src="main.js?v=29"></script>
+  <script src="main.js?v=30"></script>
 </body>
 </html>

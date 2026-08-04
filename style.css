@@ -838,6 +838,75 @@ body.page-work { background: #0d0d0d; color: #f4f4f1; }
 }
 .page-work .work { padding: clamp(3rem, 8vh, 6rem) clamp(1.25rem, 6vw, 6rem); max-width: 1400px; margin: 0 auto; }
 
+/* ===== Animation layer (MEAN) ===== */
+.reveal { transform: translateY(40px); }            /* entrada mais marcada */
+.ab-item { transition: background .35s var(--ease); }
+.ab-num { transition: color .3s var(--ease), transform .3s var(--ease); }
+.ab-item:hover .ab-num { transform: translateX(5px); }
+.ab-member-photo { overflow: hidden; transition: transform .5s var(--ease); }
+.ab-member:hover .ab-member-photo { transform: scale(1.03); }
+.ab-member-name { transition: color .3s var(--ease); }
+.ab-member:hover .ab-member-name { color: var(--ab-red); }
+[data-parallax] { will-change: transform; }
+/* wipe de transição entre páginas */
+.page-trans {
+  position: fixed; inset: 0; z-index: 100001; background: #d33d3d;
+  transform: scaleX(0); transform-origin: left center; pointer-events: none;
+}
+
+/* ===== About — tema claro (fundo branco, conteúdo preto) ===== */
+body.page-about { background: #ffffff; color: #111111; }
+.page-about .nav-over::before { background: #111; }
+.page-about .nav-over .nav-links a,
+.page-about .nav-over .nav-clock { color: #111; }
+.page-about .nav-toggle span { background: #111; }
+.page-about .nav-dd-menu { background: #fff; }
+.ab-narr p { color: #333; }
+.ab-narr strong { color: #000; }
+.ab-manifesto-title { color: #888; }
+.ab-item { border-top-color: #e4e4e1; }
+.ab-item:last-child { border-bottom-color: #e4e4e1; }
+.ab-item-text { color: #555; }
+.ab-item:hover { background: rgba(211, 61, 61, .06); }
+.ab-item:hover .ab-num { color: #111; }
+.ab-tags li { color: #444; border-color: #cfcfca; }
+.ab-member-photo { background: #ececea; }
+.ab-member-role { color: #555; }
+.ab-loc-addr { color: #555; }
+.ab-loc-photo { background: #ececea; }
+.footer-dark.ab-footer { background: #ffffff; color: #555; border-top-color: #e4e4e1; }
+.ab-footer a, .ab-footer span { color: #333; }
+.ab-footer-label { color: #999; }
+
+/* ===== Logo centrado na nav (em vez do relógio) ===== */
+.nav-logo-center {
+  height: 18px; width: auto; display: block;
+  margin: 0 auto; /* fica centrado no espaço do meio */
+}
+/* branco por defeito (sobre fundo escuro); preto quando o fundo é claro */
+.page-about .nav-logo-center,
+.nav.nav-on-light .nav-logo-center { filter: brightness(0); }
+
+/* ===== Work — vídeo sticky + cortina overlay ===== */
+.work-hero { position: sticky; top: 0; z-index: 0; }
+.work-hero::after { background: linear-gradient(180deg, rgba(0,0,0,.30), rgba(0,0,0,0) 45%, rgba(0,0,0,.25)); }
+.work-curtain {
+  position: relative; z-index: 1;
+  min-height: 100dvh; background: #ffffff; color: #111111;
+  display: flex; align-items: center;
+  padding: clamp(3rem, 10vw, 9rem);
+}
+.work-curtain-text {
+  font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 800;
+  line-height: 1.08; letter-spacing: -.02em; max-width: 24ch;
+}
+
+/* Nav muda para escuro quando passa sobre fundo claro (cortina do Work) */
+.nav.nav-on-light .nav-links a,
+.nav.nav-on-light .nav-clock { color: #111; }
+.nav.nav-on-light::before { background: #111; }
+.nav.nav-on-light .nav-toggle span { background: #111; }
+
 /* Work items: slide in from their side + fade */
 .w-item.reveal-left,
 .w-item.reveal-right {

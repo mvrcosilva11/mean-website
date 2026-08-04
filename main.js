@@ -67,10 +67,13 @@ if (projeto && window.PROJETOS) {
   }
 }
 
-// Separador / preloader: desaparece quando a animação (vídeo) termina
+// Separador / preloader: só na 1ª abertura do site (por sessão); some quando a animação acaba
 (function () {
   const pre = document.getElementById('preloader');
   if (!pre) return;
+  // já visto nesta sessão → remove sem animação
+  if (sessionStorage.getItem('mean_intro_seen')) { pre.remove(); return; }
+  sessionStorage.setItem('mean_intro_seen', '1');
   const vid = document.getElementById('introVideo');
   let done = false;
   const hide = () => {
@@ -80,7 +83,7 @@ if (projeto && window.PROJETOS) {
   };
   if (vid) {
     vid.addEventListener('ended', hide);
-    setTimeout(hide, 6500); // fallback caso o vídeo não toque
+    setTimeout(hide, 4000); // fallback caso o vídeo não toque
   } else {
     setTimeout(hide, 1300);
   }

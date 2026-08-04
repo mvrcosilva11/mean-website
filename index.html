@@ -9,12 +9,19 @@
 </head>
 <body>
 
-  <!-- SEPARADOR / PRELOADER (animação MEAN) -->
+  <!-- SEPARADOR / PRELOADER (animação MEAN) — só na 1ª abertura do site -->
   <div class="preloader" id="preloader">
     <video class="preloader-video" id="introVideo" autoplay muted playsinline>
-      <source src="assets/intro.mp4?v=24" type="video/mp4" />
+      <source src="assets/intro.mp4?v=25" type="video/mp4" />
     </video>
   </div>
+  <script>
+    // se já foi visto nesta sessão (ex: voltar à home dentro do site), esconde já
+    if (sessionStorage.getItem('mean_intro_seen')) {
+      var _p = document.getElementById('preloader');
+      if (_p) _p.style.display = 'none';
+    }
+  </script>
 
   <!-- NAV -->
   <header class="nav nav-over">

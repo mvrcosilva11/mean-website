@@ -168,6 +168,9 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
   observer.observe(el);
 });
 
+// About page: reveal elements already marked with .reveal in the HTML
+document.querySelectorAll('.ab .reveal').forEach(el => observer.observe(el));
+
 // Work grid reveal — left column slides in from the left, right column from the right
 document.querySelectorAll('.w-item').forEach((el, i) => {
   el.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');

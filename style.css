@@ -10,7 +10,10 @@
   top: 0; left: 0;
   width: 12px; height: 12px;
   border-radius: 50%;
-  background: #d33d3d;
+  /* cor-base #2cc2c2: com blend "difference" dá #d33d3d sobre branco
+     e um negativo por-pixel sobre imagens (meio/meio nas fronteiras) */
+  background: #2cc2c2;
+  mix-blend-mode: difference;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 99999;
@@ -18,8 +21,6 @@
   transition: opacity .2s ease;
 }
 .cursor-dot.hidden { opacity: 0; }
-/* sobre fundo escuro/imagem → cursor branco (negativo) */
-.cursor-dot.invert { background: #ffffff; }
 
 /* ── Separador / preloader de entrada ── */
 .preloader {

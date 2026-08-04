@@ -102,13 +102,9 @@ if (projeto && window.PROJETOS) {
   let mx = window.innerWidth / 2, my = window.innerHeight / 2, visible = true;
   const hist = [];
   const show = v => dots.forEach((d, i) => d.el.style.opacity = v ? OPAC[i] : 0);
-  const setInvert = on => dots.forEach(d => d.el.classList.toggle('invert', on));
   window.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     if (!visible) { visible = true; show(true); }
-    // fundo escuro/imagem (home) → cursor branco; resto → vermelho
-    const under = document.elementFromPoint(mx, my);
-    setInvert(!!(under && under.closest('.home, .cursor-light, [data-cursor="light"]')));
   });
   document.addEventListener('mouseleave', () => { visible = false; show(false); });
   document.addEventListener('mouseenter', () => { visible = true; show(true); });

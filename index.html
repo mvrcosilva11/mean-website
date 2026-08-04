@@ -5,22 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MEAN AGENCY — Branding, Web &amp; Digital</title>
   <meta name="description" content="Mean Agency — creative & digital agency. Branding, web and campaigns that stand out." />
-  <link rel="stylesheet" href="style.css?v=23" />
+  <link rel="stylesheet" href="style.css?v=24" />
 </head>
 <body>
 
-  <!-- SEPARADOR / PRELOADER -->
+  <!-- SEPARADOR / PRELOADER (animação MEAN) -->
   <div class="preloader" id="preloader">
-    <img class="preloader-logo" src="assets/logo-mean-red.png?v=20" alt="MEAN" />
+    <video class="preloader-video" id="introVideo" autoplay muted playsinline>
+      <source src="assets/intro.mp4?v=24" type="video/mp4" />
+    </video>
   </div>
 
   <!-- NAV -->
-  <header class="nav">
+  <header class="nav nav-over">
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
     <nav class="nav-links">
-      <a href="index.html">Home</a>
       <div class="nav-dd">
         <a href="work.html">Work</a>
         <div class="nav-dd-menu">
@@ -29,9 +30,7 @@
       </div>
       <span class="nav-clock" id="clock"></span>
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
     </nav>
-    <button class="theme-toggle" id="themeToggle" aria-label="Alternar tema dark/light">◐</button>
   </header>
 
   <!-- HOME / HERO -->
@@ -42,6 +41,6 @@
     <img class="home-comp" src="assets/corner-homepage-white.png?v=5" alt="MEAN — Creative Agency" />
   </section>
 
-  <script src="main.js?v=23"></script>
+  <script src="main.js?v=24"></script>
 </body>
 </html>

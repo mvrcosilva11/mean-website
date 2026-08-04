@@ -67,21 +67,23 @@ if (projeto && window.PROJETOS) {
   }
 }
 
-// Separador / preloader: some depois de o site carregar (tempo mínimo visível)
+// Separador / preloader: desaparece quando a animação (vídeo) termina
 (function () {
   const pre = document.getElementById('preloader');
   if (!pre) return;
-  const MIN_MS = 1300;
-  const start = Date.now();
+  const vid = document.getElementById('introVideo');
+  let done = false;
   const hide = () => {
-    const wait = Math.max(0, MIN_MS - (Date.now() - start));
-    setTimeout(() => {
-      pre.classList.add('done');
-      setTimeout(() => pre.remove(), 700);
-    }, wait);
+    if (done) return; done = true;
+    pre.classList.add('done');
+    setTimeout(() => pre.remove(), 700);
   };
-  if (document.readyState === 'complete') hide();
-  else window.addEventListener('load', hide);
+  if (vid) {
+    vid.addEventListener('ended', hide);
+    setTimeout(hide, 6500); // fallback caso o vídeo não toque
+  } else {
+    setTimeout(hide, 1300);
+  }
 })();
 
 // Cursor personalizado: bolinha vermelha + rasto de 3 bolinhas (4 no total)

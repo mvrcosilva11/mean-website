@@ -879,9 +879,9 @@ body.page-about { background: #ffffff; color: #111111; }
 .ab-footer-label { color: #999; }
 
 /* ===== Logo centrado na nav (em vez do relógio) ===== */
+.nav-logo-link { margin: 0 auto; display: block; line-height: 0; }
 .nav-logo-center {
-  height: 30px; width: auto; display: block;
-  margin: 0 auto; /* fica centrado no espaço do meio */
+  height: 42px; width: auto; display: block;
 }
 /* branco por defeito (sobre fundo escuro); preto quando o fundo é claro */
 .page-about .nav-logo-center,
@@ -906,6 +906,9 @@ body.page-about { background: #ffffff; color: #111111; }
 .nav.nav-on-light .nav-clock { color: #111; }
 .nav.nav-on-light::before { background: #111; }
 .nav.nav-on-light .nav-toggle span { background: #111; }
+
+/* header sem a linha do topo */
+.nav::before { display: none; }
 
 /* Work items: slide in from their side + fade */
 .w-item.reveal-left,

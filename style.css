@@ -56,8 +56,8 @@
   --accent-2: #c8202a;
   --radius:   12px;
   --nav-h:    50px;
-  --font: "Inter", system-ui, -apple-system, sans-serif;
-  --font-display: "Inter", system-ui, -apple-system, sans-serif;
+  --font: "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Text Pro", "NeueHaasGrotesk", "Neue Haas Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-display: "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Text Pro", "NeueHaasGrotesk", "Neue Haas Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --ease: cubic-bezier(.4,0,.2,1);
 }
 
@@ -77,10 +77,12 @@ html { scroll-behavior: smooth; font-size: 16px; }
 
 body {
   font-family: var(--font);
+  font-weight: 500; /* Neue Haas Grotesk Medium */
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 a { color: inherit; text-decoration: none; }
@@ -123,7 +125,7 @@ h3 { font-size: 1.1rem; }
 
 .nav-logo {
   font-family: var(--font-display);
-  font-size: 1.1rem; font-weight: 800; letter-spacing: -.04em;
+  font-size: 1.1rem; font-weight: 600; letter-spacing: -.04em;
   color: var(--accent);
 }
 
@@ -718,7 +720,7 @@ body.page-about { background: #0d0d0d; color: #f4f4f1; }
   color: var(--ab-red); margin-bottom: 1.6rem;
 }
 .ab-statement {
-  font-weight: 800; letter-spacing: -.025em; line-height: 1.04;
+  font-weight: 600; letter-spacing: -.025em; line-height: 1.04;
   font-size: clamp(2rem, 6vw, 5rem); max-width: 22ch;
 }
 .ab-statement .ab-em { color: var(--ab-red); display: block; margin-top: .35em; }
@@ -756,7 +758,7 @@ body.page-about { background: #0d0d0d; color: #f4f4f1; }
   font-variant-numeric: tabular-nums; padding-top: .5rem;
 }
 .ab-item-title {
-  font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 600;
   letter-spacing: -.01em; margin-bottom: .6rem;
   transition: color .25s var(--ease);
 }
@@ -764,7 +766,7 @@ body.page-about { background: #0d0d0d; color: #f4f4f1; }
 .ab-item:hover .ab-item-title { color: var(--ab-red); }
 
 .ab-cta { text-align: center; padding: clamp(4rem, 14vh, 10rem) 0; }
-.ab-cta-title { font-size: clamp(1.8rem, 5vw, 3.6rem); font-weight: 800; line-height: 1.1; margin-bottom: 2rem; }
+.ab-cta-title { font-size: clamp(1.8rem, 5vw, 3.6rem); font-weight: 600; line-height: 1.1; margin-bottom: 2rem; }
 .ab-cta-link {
   display: inline-block; font-size: 1.15rem; color: #fff;
   border-bottom: 2px solid var(--ab-red); padding-bottom: .2rem;
@@ -778,7 +780,7 @@ body.page-about { background: #0d0d0d; color: #f4f4f1; }
 .ab-team { max-width: 1100px; margin: 0 auto; padding: clamp(2rem, 6vh, 5rem) 0; }
 .ab-team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); }
 .ab-member-photo { aspect-ratio: 3 / 4; background: #1a1a1a; border-radius: 4px; margin-bottom: 1rem; }
-.ab-member-name { font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 800; }
+.ab-member-name { font-size: clamp(1.3rem, 2.5vw, 1.9rem); font-weight: 600; }
 .ab-member-role { color: #a7a7a4; font-size: .95rem; margin-top: .3rem; }
 
 /* Service tags */
@@ -793,7 +795,7 @@ body.page-about { background: #0d0d0d; color: #f4f4f1; }
 /* Locations */
 .ab-locations { max-width: 1100px; margin: 0 auto; padding: clamp(2rem, 6vh, 5rem) 0; }
 .ab-loc { display: grid; grid-template-columns: 1fr 1.4fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-.ab-loc-city { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; }
+.ab-loc-city { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; }
 .ab-loc-addr { color: #a7a7a4; margin: 1rem 0 1.5rem; line-height: 1.6; }
 .ab-loc-photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .ab-loc-photo { aspect-ratio: 3 / 4; background: #1a1a1a; border-radius: 4px; }
@@ -828,7 +830,7 @@ body.page-work { background: #0d0d0d; color: #f4f4f1; }
   left: clamp(1.25rem, 6vw, 6rem); bottom: clamp(2rem, 8vh, 5rem);
 }
 .work-hero-title {
-  font-size: clamp(2.5rem, 9vw, 8rem); font-weight: 800;
+  font-size: clamp(2.5rem, 9vw, 8rem); font-weight: 600;
   letter-spacing: -.03em; line-height: .95; color: #fff; margin-top: .5rem;
 }
 .work-hero-scroll {
@@ -897,7 +899,7 @@ body.page-about { background: #ffffff; color: #111111; }
   padding: clamp(3rem, 10vw, 9rem);
 }
 .work-curtain-text {
-  font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 4rem); font-weight: 600;
   line-height: 1.08; letter-spacing: -.02em; max-width: 24ch;
 }
 

@@ -67,24 +67,25 @@ if (projeto && window.PROJETOS) {
   }
 }
 
-// Home: lente de vidro canelado que segue o cursor sobre o vídeo
+// Cursor personalizado: ponto redondo vermelho que segue o rato
 (function () {
-  const home = document.querySelector('.home');
-  const lens = document.getElementById('homeLens');
-  if (!home || !lens) return;
+  // ignora em dispositivos touch (não há cursor)
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+  const dot = document.createElement('div');
+  dot.className = 'cursor-dot';
+  document.body.appendChild(dot);
   let raf = null, x = 0, y = 0;
-  const move = e => {
+  window.addEventListener('mousemove', e => {
     x = e.clientX; y = e.clientY;
     if (raf) return;
     raf = requestAnimationFrame(() => {
-      lens.style.left = x + 'px';
-      lens.style.top = y + 'px';
+      dot.style.left = x + 'px';
+      dot.style.top = y + 'px';
       raf = null;
     });
-  };
-  home.addEventListener('mouseenter', () => lens.classList.add('on'));
-  home.addEventListener('mouseleave', () => lens.classList.remove('on'));
-  home.addEventListener('mousemove', move);
+  });
+  document.addEventListener('mouseleave', () => dot.classList.add('hidden'));
+  document.addEventListener('mouseenter', () => dot.classList.remove('hidden'));
 })();
 
 // Nav: scrolled class + hamburger

@@ -1,6 +1,24 @@
 /* ── Reset & base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Cursor personalizado (ponto redondo vermelho) ── */
+@media (pointer: fine) {
+  * { cursor: none !important; }
+}
+.cursor-dot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #d33d3d;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 99999;
+  opacity: 1;
+  transition: opacity .2s ease;
+}
+.cursor-dot.hidden { opacity: 0; }
+
 :root {
   /* MEAN AGENCY brand colours — light theme (off-white / black) */
   --brand-white: #f4f4f1;

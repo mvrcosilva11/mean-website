@@ -880,7 +880,7 @@ body.page-about { background: #ffffff; color: #111111; }
 
 /* ===== Logo centrado na nav (em vez do relógio) ===== */
 .nav-logo-center {
-  height: 18px; width: auto; display: block;
+  height: 30px; width: auto; display: block;
   margin: 0 auto; /* fica centrado no espaço do meio */
 }
 /* branco por defeito (sobre fundo escuro); preto quando o fundo é claro */

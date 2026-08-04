@@ -67,6 +67,23 @@ if (projeto && window.PROJETOS) {
   }
 }
 
+// Separador / preloader: some depois de o site carregar (tempo mínimo visível)
+(function () {
+  const pre = document.getElementById('preloader');
+  if (!pre) return;
+  const MIN_MS = 1300;
+  const start = Date.now();
+  const hide = () => {
+    const wait = Math.max(0, MIN_MS - (Date.now() - start));
+    setTimeout(() => {
+      pre.classList.add('done');
+      setTimeout(() => pre.remove(), 700);
+    }, wait);
+  };
+  if (document.readyState === 'complete') hide();
+  else window.addEventListener('load', hide);
+})();
+
 // Cursor personalizado: ponto redondo vermelho que segue o rato
 (function () {
   // ignora em dispositivos touch (não há cursor)

@@ -63,16 +63,24 @@ if (projeto && window.PROJETOS) {
   // já visto nesta sessão → remove sem animação
   if (sessionStorage.getItem('mean_intro_seen')) { pre.remove(); return; }
   sessionStorage.setItem('mean_intro_seen', '1');
-  const vid = document.getElementById('introVideo');
+  if (new URLSearchParams(location.search).has('introhold')) return; // dev: mantém o loading visível p/ inspeção
+  const img = document.getElementById('introAnim');
+  const dur = parseInt(pre.dataset.duration, 10) || 2800;
   let done = false;
   const hide = () => {
     if (done) return; done = true;
     pre.classList.add('done');
     setTimeout(() => pre.remove(), 700);
   };
-  if (vid) {
-    vid.addEventListener('ended', hide);
-    setTimeout(hide, 4000); // fallback caso o vídeo não toque
+  if (img) {
+    // logo animado (WebP/APNG com transparência) toca uma vez; esconde quando acaba
+    const start = () => setTimeout(hide, dur + 250);
+    if (img.complete) start();
+    else {
+      img.addEventListener('load', start, { once: true });
+      img.addEventListener('error', () => setTimeout(hide, 600), { once: true });
+    }
+    setTimeout(hide, dur + 4000); // fallback de segurança
   } else {
     setTimeout(hide, 1300);
   }

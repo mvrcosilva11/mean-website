@@ -1135,3 +1135,6 @@ h3 { font-size: 1.1rem; }
   [data-parallax] { transform: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* Preloader: logo animado (WebP/APNG com transparência) */
+.preloader-anim { width: min(46vw, 420px); height: auto; display: block; }

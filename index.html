@@ -7,16 +7,17 @@
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>MEAN AGENCY — Branding, Web &amp; Digital</title>
   <meta name="description" content="Mean Agency — creative & digital agency. Branding, web and campaigns that stand out." />
-  <link rel="stylesheet" href="style.css?v=89" />
+  <link rel="preload" as="image" href="assets/intro-logo.webp?v=40" type="image/webp" />
+  <link rel="stylesheet" href="style.css?v=90" />
 </head>
 <body>
 
   <!-- SEPARADOR / PRELOADER (animação MEAN) — só na 1ª abertura do site -->
-  <div class="preloader" id="preloader">
-    <video class="preloader-video" id="introVideo" autoplay muted playsinline>
-      <source src="assets/intro.webm?v=27" type="video/webm" />
-      <source src="assets/intro-hevc.mp4?v=27" type="video/mp4; codecs=hvc1" />
-    </video>
+  <div class="preloader" id="preloader" data-duration="2840">
+    <picture>
+      <source srcset="assets/intro-logo.webp?v=40" type="image/webp" />
+      <img class="preloader-anim" id="introAnim" src="assets/intro-logo.png?v=40" alt="MEAN" decoding="async" />
+    </picture>
   </div>
   <script>
     // se já foi visto nesta sessão (ex: voltar à home dentro do site), esconde já
@@ -111,6 +112,6 @@
     <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=39"></script>
+  <script src="main.js?v=40"></script>
 </body>
 </html>

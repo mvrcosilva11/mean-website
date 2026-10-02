@@ -1,14 +1,3 @@
-// Theme toggle (light = gray, dark = black) with persistence
-(function () {
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark') document.body.classList.add('dark');
-  const btn = document.getElementById('themeToggle');
-  if (btn) btn.addEventListener('click', () => {
-    const dark = document.body.classList.toggle('dark');
-    localStorage.setItem('theme', dark ? 'dark' : 'light');
-  });
-})();
-
 // Live clock in the header (HH:MM:SS)
 const clock = document.getElementById('clock');
 if (clock) {
@@ -89,19 +78,19 @@ if (projeto && window.PROJETOS) {
   }
 })();
 
-// Cursor personalizado: bolinha vermelha + rasto de 3 bolinhas (4 no total)
+// Cursor personalizado: uma só bolinha (sem rasto), em modo "negativo" (ver .cursor-dot no CSS)
 (function () {
   // ignora em dispositivos touch (não há cursor)
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-  const N = 4;
-  const OPAC = [1, 0.7, 0.45, 0.22]; // desvanece proporcionalmente ao longo do rasto
+  const N = 1;
+  const OPAC = [1];
   const dots = [];
   for (let i = 0; i < N; i++) {
     const el = document.createElement('div');
     el.className = 'cursor-dot';
     el.style.opacity = OPAC[i];
     document.body.appendChild(el);
-    dots.push({ el, x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    dots.push({ el });
   }
   const GAP = 7;                                   // intervalo (frames) entre bolinhas → espaçamento
   let mx = window.innerWidth / 2, my = window.innerHeight / 2, visible = true;
@@ -169,7 +158,7 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
 });
 
 // About page: reveal elements already marked with .reveal in the HTML (com stagger por grupo)
-['.ab-team-grid', '.ab-manifesto .ab-list', '.ab-services .ab-list'].forEach(sel => {
+['.ab-team-grid', '.ab-manifesto .ab-list', '.ab-services .ab-list', '.ab-values-grid', '.ab-life-grid'].forEach(sel => {
   const group = document.querySelector(sel);
   if (group) group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 65) + 'ms'; });
 });
@@ -234,6 +223,40 @@ document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => obser
   });
 })();
 
+// About: sticky title swaps to match the manifesto item scrolled into the middle of the screen
+(function () {
+  const active = document.getElementById('manifestoActive');
+  const items = document.querySelectorAll('.ab-manifesto .ab-item');
+  if (!active || !items.length) return;
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const title = entry.target.querySelector('.ab-item-title');
+      if (!title) return;
+      active.textContent = title.textContent;
+      active.classList.add('visible');
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  items.forEach(el => io.observe(el));
+})();
+
+// Projects: category filter pills
+(function () {
+  const filters = document.getElementById('wl-filters');
+  const list = document.getElementById('wl-list');
+  if (!filters || !list) return;
+  filters.addEventListener('click', e => {
+    const btn = e.target.closest('.wl-filter');
+    if (!btn) return;
+    filters.querySelectorAll('.wl-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const cat = btn.dataset.cat;
+    list.querySelectorAll('li[data-categoria]').forEach(li => {
+      li.style.display = (!cat || li.dataset.categoria === cat) ? '' : 'none';
+    });
+  });
+})();
+
 // Work grid reveal — left column slides in from the left, right column from the right
 document.querySelectorAll('.w-item').forEach((el, i) => {
   el.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');
@@ -278,3 +301,86 @@ if (form) form.addEventListener('submit', e => {
     setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 5000);
   }, 1200);
 });
+
+// ── Home intro: dispara a animação de entrada ao carregar ──
+(function () {
+  const hero = document.querySelector('.hi-hero');
+  if (!hero) return;
+  requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-in')));
+
+  const wrap = hero.querySelector('.hi-dots');
+  if (!wrap) return;
+
+  const SPACING = 80;   // mais espaço entre bolas (menos bolas no ecrã)
+  const RADIUS  = 300;  // raio de influência largo — as bolas ao lado também crescem
+  // Bola renderizada a 150px; escala é 0..1 (reduzir mantém-se nítido)
+  const MAX_S   = 1;      // 150px junto ao cursor
+  const MIN_S   = 0.0667; // ≈ 10px de base (longe)
+  let dots = [], pos = [];
+
+  function build() {
+    const w = wrap.clientWidth, h = wrap.clientHeight;
+    // grelha por células: bola no centro de cada célula → meia-célula de margem em todos os lados,
+    // simétrico e sem bolas cortadas nas bordas seja qual for a largura do ecrã
+    const cols = Math.max(1, Math.round(w / SPACING)), rows = Math.max(1, Math.round(h / SPACING));
+    const cellW = w / cols, cellH = h / rows;
+    const frag = document.createDocumentFragment();
+    dots = []; pos = [];
+    for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+      const x = (c + 0.5) * cellW, y = (r + 0.5) * cellH;
+      const d = document.createElement('span');
+      d.className = 'hi-dot';
+      d.style.left = x + 'px'; d.style.top = y + 'px';
+      d.style.setProperty('--s', MIN_S);
+      frag.appendChild(d); dots.push(d); pos.push([x, y]);
+    }
+    wrap.replaceChildren(frag);
+  }
+
+  function update(mx, my) {
+    for (let i = 0; i < dots.length; i++) {
+      const dx = pos[i][0] - mx, dy = pos[i][1] - my;
+      let p = 1 - Math.sqrt(dx * dx + dy * dy) / RADIUS;
+      if (p < 0) p = 0; else p = p * p;            // queda suave — gradiente amplo à volta do cursor
+      dots[i].style.setProperty('--s', (MIN_S + p * (MAX_S - MIN_S)).toFixed(3));
+    }
+  }
+
+  build();
+  // ResizeObserver: reconstrói a grelha assim que a caixa recebe (ou muda) as dimensões reais,
+  // resolvendo o timing do 1º layout e o redimensionar da janela de forma fiável.
+  let rt;
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(build, 120); }).observe(wrap);
+  } else {
+    addEventListener('load', build);
+    addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(build, 200); });
+  }
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  let raf = null, mx = 0, my = 0;
+  // listener na janela (não só na hero) para o efeito continuar mesmo com o cursor sobre o header
+  window.addEventListener('pointermove', e => {
+    const r = wrap.getBoundingClientRect();
+    mx = e.clientX - r.left; my = e.clientY - r.top;
+    if (!raf) raf = requestAnimationFrame(() => { update(mx, my); raf = null; });
+  });
+  // só reinicia quando o cursor sai da janela toda
+  document.addEventListener('pointerleave', () => update(-9999, -9999));
+})();
+
+// ── Smooth scroll (Lenis) — em todo o site ──
+// Lenis self-hosted (lenis.min.js). Roda com easing (smoothWheel); toque fica nativo.
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const s = document.createElement('script');
+  s.src = 'lenis.min.js';
+  s.onload = () => {
+    if (typeof Lenis !== 'function') return;
+    const lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+    const raf = t => { lenis.raf(t); requestAnimationFrame(raf); };
+    requestAnimationFrame(raf);
+    window.__lenis = lenis;   // referência (ex.: voltar-ao-topo pode usar lenis.scrollTo)
+  };
+  document.head.appendChild(s);
+})();

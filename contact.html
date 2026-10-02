@@ -3,81 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
+  <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>Contact — MEAN AGENCY</title>
-  <link rel="stylesheet" href="style.css?v=34" />
+  <meta name="description" content="Fala com a MEAN AGENCY. Branding, web e estratégia — sem rodeios, respondemos em menos de 24h." />
+  <link rel="stylesheet" href="style.css?v=89" />
 </head>
-<body>
+<body class="page-contact">
 
   <!-- NAV -->
   <header class="nav nav-over">
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links">
-      <div class="nav-dd">
+    <div class="nav-left-group">
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
         <a href="work.html">Work</a>
-        <div class="nav-dd-menu">
-          <a href="projects.html">Projects</a>
-        </div>
-      </div>
-      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo-center" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
-      <a href="about.html">About</a>
-    </nav>
+        <a href="about.html">About</a>
+        <a href="index-intro.html">Intro</a>
+      </nav>
+    </div>
+    <div class="nav-right-group">
+      <a href="contact.html" class="btn btn-primary nav-cta">Contact</a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- CONTACT -->
-  <main class="section" style="padding-top: calc(var(--nav-h) + 4rem);">
-    <div class="container">
-      <header class="work-head">
-        <h1 class="work-title">Let's talk</h1>
-        <p class="work-sub">Tell us about your project. We reply within 24h.</p>
-      </header>
+  <main class="ab ct">
 
-      <div class="contact-layout">
-        <!-- Contact info + socials -->
-        <div>
-          <ul class="contact-list">
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" fill="none"/><path d="m22 6-10 7L2 6"/></svg>
-              <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-              <a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
-            </li>
-            <li>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v6h-4v-6a2 2 0 0 0-4 0v6h-4v-12h4v2a4 4 0 0 1 6-2"/><rect x="2" y="9" width="4" height="11"/><circle cx="4" cy="4" r="2"/></svg>
-              <a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
-            </li>
-          </ul>
+    <!-- HERO / STATEMENT -->
+    <section class="ab-hero ct-hero reveal">
+      <p class="ab-kicker">Contact</p>
+      <h1 class="ab-statement">
+        Vamos falar sobre o teu projeto.
+        <span class="ab-em">Sem rodeios, sem tretas.</span>
+      </h1>
+    </section>
+
+    <!-- INFO + FORM -->
+    <section class="ct-body">
+      <div class="ct-info reveal">
+        <h2 class="ct-info-title">Fala diretamente connosco</h2>
+        <a class="ct-email" href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
+        <p class="ct-availability">Respondemos em menos de 24h, todos os dias úteis. Sem intermediários — quem responde é quem vai trabalhar contigo.</p>
+
+        <ul class="ct-social">
+          <li><a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a></li>
+          <li><a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
+        </ul>
+
+        <div class="ct-loc">
+          <span class="ct-loc-label">Estúdio</span>
+          <span>Porto, Portugal</span>
         </div>
-
-        <!-- Contact form -->
-        <form class="contact-form" id="contactForm" novalidate>
-          <div class="field">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="email@example.com" required />
-          </div>
-          <div class="field">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Describe your project…" required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">Enviar mensagem</button>
-          <p class="form-feedback" id="formFeedback" role="status"></p>
-        </form>
       </div>
-    </div>
+
+      <form class="ct-form reveal" id="contactForm" novalidate>
+        <div class="ct-field">
+          <label for="name">Nome</label>
+          <input type="text" id="name" name="name" placeholder="O teu nome" required />
+        </div>
+        <div class="ct-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="email@exemplo.com" required />
+        </div>
+        <div class="ct-field">
+          <label for="budget">Orçamento estimado</label>
+          <select id="budget" name="budget">
+            <option value="">Seleciona uma opção</option>
+            <option>Menos de 3.000€</option>
+            <option>3.000€ – 8.000€</option>
+            <option>8.000€ – 20.000€</option>
+            <option>Mais de 20.000€</option>
+          </select>
+        </div>
+        <div class="ct-field">
+          <label for="message">Mensagem</label>
+          <textarea id="message" name="message" rows="5" placeholder="Conta-nos o que tens em mente…" required></textarea>
+        </div>
+        <button type="submit" class="ct-submit">Enviar mensagem <span aria-hidden="true">→</span></button>
+        <p class="form-feedback" id="formFeedback" role="status"></p>
+      </form>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="ab-manifesto ct-process">
+      <h2 class="ab-manifesto-title reveal">Como funciona</h2>
+      <ol class="ab-list">
+        <li class="ab-item reveal">
+          <span class="ab-num">01</span>
+          <div class="ab-item-body">
+            <h3 class="ab-item-title">Enviaste a mensagem</h3>
+            <p class="ab-item-text">Contas-nos o que precisas. Sem formulários intermináveis, só o essencial para começarmos a pensar.</p>
+          </div>
+        </li>
+        <li class="ab-item reveal">
+          <span class="ab-num">02</span>
+          <div class="ab-item-body">
+            <h3 class="ab-item-title">Conversa de 20 minutos</h3>
+            <p class="ab-item-text">Uma chamada rápida, sem compromisso, para perceber se fazemos sentido um para o outro.</p>
+          </div>
+        </li>
+        <li class="ab-item reveal">
+          <span class="ab-num">03</span>
+          <div class="ab-item-body">
+            <h3 class="ab-item-title">Proposta à medida</h3>
+            <p class="ab-item-text">Âmbito, prazos e valores claros, por escrito. Sem letra pequena e sem surpresas mais à frente.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
   </main>
 
   <!-- FOOTER -->
-  <footer class="footer">
-    <p>2026 © MEAN AGENCY</p>
+  <footer class="footer footer-dark ft">
+    <div class="ft-top">
+      <p class="ft-statement">Vamos construir a tua próxima marca, juntos.</p>
+      <nav class="ft-nav">
+        <div class="ft-col">
+          <span class="ft-col-title">Estúdio</span>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <span class="ft-col-title">Serviços</span>
+          <ul>
+            <li><span>Branding</span></li>
+            <li><span>Web</span></li>
+            <li><span>Social Media</span></li>
+            <li><span>Estratégia</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="ft-bottom">
+      <div class="ft-bottom-left">
+        <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
+        <span>Porto, Portugal</span>
+      </div>
+      <div class="ft-social">
+        <a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=30"></script>
+  <script src="main.js?v=39"></script>
 </body>
 </html>

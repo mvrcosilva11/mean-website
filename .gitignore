@@ -6,3 +6,7 @@ Thumbs.db
 
 # video original pesado (so o bg.mp4 leve vai para o repo)
 assets/bg.mov
+
+# artefactos de ferramentas (não fazem parte do site)
+.playwright-cli/
+.claude/.headroom_wrap_settings.lock

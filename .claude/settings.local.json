@@ -9,5 +9,28 @@
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://cdn.myportfolio.com/321808c2-06b5-4efb-b314-d1c0519d5689/40e1aab9-3c5d-4b01-b0e3-aff69d95a483_rwc_205x117x1101x623x4096.png?h=c092948419571a0057697e76a0cdd47b\" -o home-visual.png)",
       "Bash(curl -sL -A \"Mozilla/5.0\" \"https://cdn.myportfolio.com/321808c2-06b5-4efb-b314-d1c0519d5689/9f1b8f28-4d78-49ba-9f9d-71c7bc947de2_rwc_0x0x1500x1500x1500.png?h=5d6acb9bf238bc13e878fae99b1b25fa\" -o home-visual-square.png)"
     ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "git -C \"$CLAUDE_PROJECT_DIR\" pull --ff-only 2>&1 || true",
+            "statusMessage": "A atualizar a partir do GitHub (git pull)..."
+          }
+        ]
+      },
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Library/Frameworks/Python.framework/Versions/3.14/bin/headroom wrap selfheal --marker headroom-wrap-selfheal",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
   }
 }

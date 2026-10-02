@@ -3,26 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
+  <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>Projeto — MEAN AGENCY</title>
-  <link rel="stylesheet" href="style.css?v=34" />
+  <link rel="stylesheet" href="style.css?v=89" />
 </head>
 <body class="page-projeto">
 
   <!-- NAV -->
   <header class="nav nav-over">
-    <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links">
-      <div class="nav-dd">
+    <div class="nav-left-group">
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
         <a href="work.html">Work</a>
-        <div class="nav-dd-menu">
-          <a href="projects.html">Projects</a>
-        </div>
-      </div>
-      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo-center" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
-      <a href="about.html">About</a>
-    </nav>
+        <a href="about.html">About</a>
+        <a href="index-intro.html">Intro</a>
+      </nav>
+    </div>
+    <div class="nav-right-group">
+      <a href="contact.html" class="btn btn-primary nav-cta">Contact</a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </header>
 
   <!-- PROJECT -->
@@ -43,8 +47,46 @@
     </div>
   </main>
 
+  <!-- FOOTER -->
+  <footer class="footer footer-dark ft">
+    <div class="ft-top">
+      <p class="ft-statement">Vamos construir a tua próxima marca, juntos.</p>
+      <nav class="ft-nav">
+        <div class="ft-col">
+          <span class="ft-col-title">Estúdio</span>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="work.html">Work</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <span class="ft-col-title">Serviços</span>
+          <ul>
+            <li><span>Branding</span></li>
+            <li><span>Web</span></li>
+            <li><span>Social Media</span></li>
+            <li><span>Estratégia</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="ft-bottom">
+      <div class="ft-bottom-left">
+        <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
+        <span>Porto, Portugal</span>
+      </div>
+      <div class="ft-social">
+        <a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <div class="ft-copy">2026 © MEAN AGENCY</div>
+  </footer>
+
   <script src="imagens.js"></script>
   <script src="EDITAR-PROJETOS.js"></script>
-  <script src="main.js?v=30"></script>
+  <script src="main.js?v=39"></script>
 </body>
 </html>

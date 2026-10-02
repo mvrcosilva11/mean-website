@@ -85,7 +85,7 @@ body.page-home-intro { background: var(--bordo); }
   justify-content: center;
   z-index: 100000;
   opacity: 1;
-  transition: opacity .6s ease;
+  transition: opacity .45s ease;
 }
 .preloader.done { opacity: 0; pointer-events: none; }
 .preloader-video {

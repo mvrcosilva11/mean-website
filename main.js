@@ -74,7 +74,7 @@ if (projeto && window.PROJETOS) {
   };
   if (img) {
     // logo animado (WebP/APNG com transparência) toca uma vez; esconde quando acaba
-    const start = () => setTimeout(hide, dur + 250);
+    const start = () => setTimeout(hide, dur + 150);
     if (img.complete) start();
     else {
       img.addEventListener('load', start, { once: true });

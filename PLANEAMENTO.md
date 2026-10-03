@@ -7,14 +7,65 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 
 | Página | Ficheiro | Estado |
 |---|---|---|
-| Home | `index.html` | por planear (decidir: Home ou Intro como entrada) |
-| Intro | `index-intro.html` | por planear |
+| **Home** | `index.html` | **conteúdos planeados** (página principal do site) |
+| Intro | `index-intro.html` | por decidir (fica como página à parte ou sai) |
 | Work | `work.html` | por planear |
 | Projeto | `projeto.html` | por planear |
 | **About** | `about.html` | **conteúdos planeados** (esta ficha) |
 | Contact | `contact.html` | por planear |
 | 404 | não existe | por criar |
 | Política de privacidade | não existe | por criar (o formulário recolhe dados) |
+
+---
+
+## Home
+
+- **Ficheiro:** `index.html` (página principal)
+- **Referência:** https://www.burocratik.com
+- **Objetivo (proposta):** mostrar o trabalho logo à entrada, dizer numa frase quem é a MEAN, e levar o visitante aos projetos ou ao contacto.
+- **De onde se chega:** entrada do site. **Para onde leva:** Projeto (destaques), Work, Contact.
+
+### Secções
+
+Legenda: ✅ temos · ✏️ temos rascunho, falta validar · ❌ falta
+
+| # | Secção | O que a referência tem | Conteúdo MEAN | Estado |
+|---|---|---|---|---|
+| 0 | **Loading** | (não tem) | Logo MEAN animado sobre vermelho escuro, só na primeira abertura. | ✅ feito |
+| 1 | **Abertura com vídeo** | Vídeo do trabalho em ecrã inteiro, com botão para o ver completo. | Vídeo dos projetos (`assets/work-bg.mp4`, 31 s) em ecrã inteiro, com o menu por cima. | Vídeo ✅ (hoje a home usa outro vídeo, trocar) · O que fica por cima ❌ decidir |
+| 2 | **Frase de apresentação** | Ao descer, uma frase longa em tipografia grande: o que são e porque confiar neles. | Uma frase: quem é a MEAN, o que faz, o que a distingue. Rascunho: "Somos uma agência criativa do Porto, com opinião. Fazemos branding, web, social media e estratégia, sem dividir o que devia nascer junto." | ✏️ |
+| 3 | **Projetos em destaque (4)** | Projetos em blocos grandes: nome, frase curta, tipo de trabalho, setor, imagem ou vídeo, ligação ao caso. | 4 projetos, cada um com nome, frase curta, tipo de trabalho, setor, capa e ligação à página do projeto. Ligação final para o Work. | ❌ (o site ainda não tem nenhum projeto carregado) |
+| 4 | **O que fazemos (ramificações)** | Uma linha de introdução e 4 disciplinas, cada uma a abrir numa lista longa de serviços (8 a 14). | As disciplinas da MEAN, cada uma com todos os serviços que oferece. Rascunho abaixo. | Disciplinas ✅ · Listas ✏️ |
+| 5 | **Footer** | Frase final a convidar ao contacto, emails, redes sociais, moradas, newsletter. | Frase "Vamos construir a tua próxima marca, juntos.", menu, email, Porto, Instagram, LinkedIn. | ✅ |
+
+### "O que fazemos": rascunho das ramificações
+
+Riscar o que a MEAN não faz e acrescentar o que falta.
+
+- **Branding:** estratégia de marca · posicionamento · naming · identidade visual · logótipo · tom de voz · manual de marca · rebranding · embalagem · materiais impressos · sinalética · ilustração
+- **Web:** UX/UI · web design · desenvolvimento · landing pages · e-commerce · portfólios · SEO · otimização e performance · textos para web · manutenção
+- **Social Media:** estratégia de conteúdo · direção de arte · gestão de redes · calendário editorial · design de publicações · vídeo e reels · fotografia · campanhas pagas · relatórios
+- **Estratégia:** diagnóstico de marca · research · posicionamento · arquitetura de marca · plano de comunicação · campanhas · consultoria
+
+### O que a referência tem e ficou de fora desta versão
+
+Sequência rápida de imagens do trabalho, lista de todas as pessoas que passaram pelo estúdio, bloco de prémios, frases numeradas sobre o que fazem, testemunhos. Podem entrar mais tarde.
+
+### Conteúdo em falta
+
+- [ ] Escolher os 4 projetos em destaque
+- [ ] Por projeto: nome, frase curta, tipo de trabalho, setor, capa (imagem ou vídeo)
+- [ ] Validar a frase de apresentação
+- [ ] Validar as listas de serviços
+
+### Decisões em aberto
+
+1. **Por cima do vídeo de abertura:** nada, só o logo, ou uma frase curta? Hoje a home tem "Marcas com opinião, feitas por quem as constrói." sobre o vídeo.
+2. **Vídeo com som:** botão para ver o vídeo completo com som, como a referência, ou só fundo em silêncio?
+3. **Frase de apresentação:** a do rascunho repete a abertura do About. Qual das duas páginas fica com ela?
+4. **Quinta disciplina:** vídeo, motion e fotografia ficam dentro de Social Media ou passam a disciplina própria?
+5. **"O que fazemos" em duas páginas:** a Home fica com a versão completa (ramificações) e o About com a curta, ou o About deixa de a ter?
+6. **Página Intro:** continua no menu, ou sai agora que a Home é a principal?
 
 ---
 

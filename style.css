@@ -1638,6 +1638,7 @@ html.i18n-wait body { visibility: hidden; }
    o header. É tudo clip-path e transform (sem mexer no tamanho do vídeo), para correr liso no Safari.
    O motion.js põe .is-open no <html> quando a abertura acaba. */
 .m-hero::before { display: none; }
+.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, a janela abre escura, nunca vazia */
 .js .m-hero-video { opacity: 1; transform: none; transition: none; }
 .js .page-home { --ob1: max(7.1vw, 46px); --ob2: 26vw; }      /* meia largura da janela: em pé, depois deitada */
 .js:not(.is-open) .page-home .m-hero { background: var(--brand-white, #f4f4f1); }

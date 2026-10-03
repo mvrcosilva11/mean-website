@@ -80,8 +80,9 @@ if (projeto && window.PROJETOS) {
   };
   const img = new Image();
   img.className = 'preloader-anim'; img.id = 'introAnim'; img.alt = 'MEAN';
+  img.style.visibility = 'hidden';   // sem isto, enquanto a imagem não chega, o Safari desenha uma moldura com o texto "MEAN"
   // esconde quando a animação acaba (o tempo conta a partir do momento em que a imagem está pronta)
-  img.onload = () => { started = true; clearTimeout(timer); timer = setTimeout(hide, dur + 150); };
+  img.onload = () => { img.style.visibility = ''; started = true; clearTimeout(timer); timer = setTimeout(hide, dur + 150); };
   // sem suporte para WebP animado: logo parado
   img.onerror = () => { img.onerror = () => setTimeout(hide, 300); img.src = still; };
   pre.appendChild(img);

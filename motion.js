@@ -232,20 +232,27 @@
   var navGroups = nav ? [nav.querySelector('.nav-left-group'), nav.querySelector('.nav-right-group')] : [];
   var sheet = document.querySelector('.m-sheet');
   var toneCanvas = null, toneCtx = null, toneOK = true;
+  var posterImg = null;                                   // enquanto o vídeo não arranca, lê-se o poster
+  if (isHome && heroVideo && heroVideo.getAttribute('poster')) {
+    posterImg = new Image(); posterImg.src = heroVideo.getAttribute('poster');
+  }
   function sampleTone() {
     if (!toneOK) return;
     var on = root.classList.contains('is-open') && !nav.classList.contains('nav--menu') &&
              (!sheet || sheet.getBoundingClientRect().top > nav.getBoundingClientRect().bottom - 4);
     nav.classList.toggle('nav--onvideo', on);
     if (!on) { navGroups.forEach(function (g) { if (g) g.classList.remove('is-dark'); }); return; }
-    if (heroVideo.readyState < 2 || document.hidden) return;
+    if (document.hidden) return;
+    var playing = heroVideo.readyState >= 2 && heroVideo.currentTime > 0;
+    var src = playing ? heroVideo : (posterImg && posterImg.complete && posterImg.naturalWidth ? posterImg : null);
+    if (!src) return;
     try {
       if (!toneCanvas) {
         toneCanvas = document.createElement('canvas'); toneCanvas.width = 64; toneCanvas.height = 36;
         toneCtx = toneCanvas.getContext('2d', { willReadFrequently: true });
       }
-      toneCtx.drawImage(heroVideo, 0, 0, 64, 36);
-      var vw = heroVideo.videoWidth || 16, vh = heroVideo.videoHeight || 9;
+      toneCtx.drawImage(src, 0, 0, 64, 36);
+      var vw = (playing ? heroVideo.videoWidth : posterImg.naturalWidth) || 16, vh = (playing ? heroVideo.videoHeight : posterImg.naturalHeight) || 9;
       var W = hero.clientWidth, H = hero.clientHeight;
       var k = Math.max(W / vw, H / vh);                       // object-fit: cover
       var offX = (vw * k - W) / 2, offY = (vh * k - H) / 2;

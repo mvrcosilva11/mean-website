@@ -6,7 +6,9 @@
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>Work — MEAN AGENCY</title>
-  <link rel="stylesheet" href="style.css?v=89" />
+  <meta name="description" content="Projetos da MEAN: branding, web, social media, vídeo e estratégia." />
+  <link rel="stylesheet" href="style.css?v=103" />
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500)})(document.documentElement)</script>
 </head>
 <body class="page-work page-work--grid">
 
@@ -16,9 +18,8 @@
       <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
-        <a href="work.html">Work</a>
+        <a href="work.html" aria-current="page">Work</a>
         <a href="about.html">About</a>
-        <a href="index-intro.html">Intro</a>
       </nav>
     </div>
     <div class="nav-right-group">
@@ -29,87 +30,81 @@
     </div>
   </header>
 
-  <!-- WORK — layout inspirado em pixelmatters.com/work -->
-
-  <!-- 1. HEADER -->
+  <!-- 1. ABERTURA -->
   <section class="work-lead">
-    <p class="ab-kicker">Work</p>
-    <h1 class="work-lead-title">Construímos marcas que não passam despercebidas.</h1>
-    <p class="work-lead-sub">Uma seleção de projetos onde branding, web, social e estratégia nasceram juntos — não aos bocados.</p>
+    <p class="m-label" data-reveal>Work</p>
+    <h1 class="work-lead-title" data-split="rise">Construímos marcas que não passam despercebidas.</h1>
+    <p class="work-lead-sub" data-reveal style="--d: 250ms">Uma seleção de projetos onde branding, web, social e estratégia nasceram juntos — não aos bocados.</p>
   </section>
 
-  <!-- 2. LISTA DE CASE STUDIES (layout em linhas) -->
-  <main class="wk">
-    <div class="wk-list">
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">Identidade completa e site para uma marca nova — do naming à entrega final, tudo a nascer junto.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Branding</span><span>Website</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">Redesenhámos a presença digital, equilibrando conteúdo rico com uma navegação simples e direta.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Website</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">App móvel que permite à equipa aceder rapidamente ao que interessa, onde quer que esteja.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Mobile App</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">Trabalhámos numa nova versão do site, mais clara e alinhada com o posicionamento da marca.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Website</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">Durante um ano, desenhámos um produto complexo com dashboards claros e componentes modulares.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Web App</span><span>Estratégia</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
-
-      <a class="wk-row reveal" href="projeto.html">
-        <div class="wk-logo"><img src="assets/logo-branco.png?v=30" alt="Cliente" /></div>
-        <p class="wk-desc">Campanha de social media com direção de arte própria — presença com intenção, não a encher calendário.</p>
-        <div class="wk-thumb" aria-hidden="true"></div>
-        <div class="wk-right">
-          <div class="wk-tags"><span>Social Media</span><span>Campanhas</span></div>
-          <span class="wk-cs">Ver projeto <span aria-hidden="true">→</span></span>
-        </div>
-      </a>
+  <!-- 2. GALERIA — grelha de tamanhos mistos (projetos provisórios) -->
+  <main class="m-work">
+    <div class="m-grid" data-stagger="90" data-stagger-mod="4">
+        <a class="m-tile m-tile--lg" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 01</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 02</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 03</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--full" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 04</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 05</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 06</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--lg" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 07</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--full" href="projeto.html" data-cursor="Ver">
+          <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Projeto 08</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+          </div>
+        </a>
 
     </div>
-
-    <!-- 3. CTA -->
-    <section class="ab-cta reveal">
-      <h2 class="ab-cta-title">Queres ser o próximo caso?</h2>
-      <a href="contact.html" class="ab-cta-link">Fala connosco <span aria-hidden="true">→</span></a>
-    </section>
   </main>
+
+  <!-- 3. FECHO -->
+  <section class="m-cta">
+    <h2 class="m-cta-title" data-split="rise">Queres ser o próximo caso?</h2>
+    <a class="m-link" href="contact.html" data-reveal style="--d: 200ms">Fala connosco <span class="m-arrow" aria-hidden="true">→</span></a>
+  </section>
 
   <!-- FOOTER -->
   <footer class="footer footer-dark ft">
@@ -131,6 +126,7 @@
             <li><span>Branding</span></li>
             <li><span>Web</span></li>
             <li><span>Social Media</span></li>
+            <li><span>Vídeo, Motion e Fotografia</span></li>
             <li><span>Estratégia</span></li>
           </ul>
         </div>
@@ -149,6 +145,7 @@
     <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=39"></script>
+  <script src="main.js?v=103"></script>
+  <script src="motion.js?v=103"></script>
 </body>
 </html>

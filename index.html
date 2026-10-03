@@ -6,13 +6,14 @@
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>MEAN AGENCY — Branding, Web &amp; Digital</title>
-  <meta name="description" content="Mean Agency — creative & digital agency. Branding, web and campaigns that stand out." />
+  <meta name="description" content="MEAN é uma agência criativa do Porto. Branding, web, social media, vídeo e estratégia, sem dividir o que devia nascer junto." />
   <link rel="preload" as="image" href="assets/intro-logo.webp?v=41" type="image/webp" />
-  <link rel="stylesheet" href="style.css?v=91" />
+  <link rel="stylesheet" href="style.css?v=103" />
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500)})(document.documentElement)</script>
 </head>
-<body>
+<body class="page-home">
 
-  <!-- SEPARADOR / PRELOADER (animação MEAN) — só na 1ª abertura do site -->
+  <!-- LOADING (animação MEAN) — só na 1.ª abertura do site -->
   <div class="preloader" id="preloader" data-duration="1440">
     <picture>
       <source srcset="assets/intro-logo.webp?v=41" type="image/webp" />
@@ -32,10 +33,9 @@
     <div class="nav-left-group">
       <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
       <nav class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="index.html" aria-current="page">Home</a>
         <a href="work.html">Work</a>
         <a href="about.html">About</a>
-        <a href="index-intro.html">Intro</a>
       </nav>
     </div>
     <div class="nav-right-group">
@@ -46,35 +46,131 @@
     </div>
   </header>
 
-  <!-- HOME / HERO -->
-  <section class="home">
-    <video class="home-bg" autoplay muted loop playsinline poster="assets/bg-poster.jpg?v=3">
-      <source src="assets/bg.mp4?v=3" type="video/mp4" />
-    </video>
-    <div class="home-inner">
-      <div class="home-top">
-        <div class="home-content">
-          <p class="home-kicker">MEAN AGENCY</p>
-          <h1 class="home-title">Marcas com opinião,<br />feitas por quem as constrói.</h1>
-          <p class="home-sub">Branding, web, social media e estratégia — sem dividir o que devia nascer junto.</p>
-        </div>
-        <ul class="home-services">
-          <li>Branding</li>
-          <li>Web</li>
-          <li>Social Media</li>
-          <li>Estratégia</li>
-        </ul>
-      </div>
-      <div class="home-bottom">
-        <a href="work.html" class="home-teaser">
-          <span class="home-teaser-eyebrow">O que fazemos</span>
-          <span class="home-teaser-link">Ver o nosso trabalho →</span>
-        </a>
-      </div>
-    </div>
-  </section>
+  <main>
 
-  <!-- FOOTER -->
+    <!-- 1. ABERTURA — vídeo dos projetos em ecrã inteiro, sem nada por cima, sem som -->
+    <section class="m-hero" data-hero aria-label="Vídeo dos projetos da MEAN">
+      <div class="m-hero-media">
+        <video class="m-hero-video" autoplay muted loop playsinline preload="auto" poster="assets/work-bg-poster.jpg?v=29">
+          <source src="assets/work-bg.mp4?v=29" type="video/mp4" />
+        </video>
+      </div>
+    </section>
+
+    <!-- o resto da página sobe por cima do vídeo -->
+    <div class="m-sheet">
+
+      <!-- 2. FRASE DE APRESENTAÇÃO (texto provisório) -->
+      <section class="m-statement">
+        <p class="m-label" data-reveal>MEAN · Agência criativa, Porto</p>
+        <h1 class="m-statement-text" data-split="scrub">Frase de apresentação da MEAN. Uma frase longa, que diz quem somos, o que fazemos e o que nos distingue das outras agências. Texto provisório, a substituir pela frase final.</h1>
+      </section>
+
+      <!-- 3. PROJETOS EM DESTAQUE — 4 projetos (provisórios) -->
+      <section class="m-featured" aria-labelledby="destaques">
+        <div class="m-head">
+          <h2 class="m-label" id="destaques" data-reveal>Projetos em destaque</h2>
+          <a class="m-link" href="work.html" data-reveal>Todos os projetos <span class="m-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="m-grid" data-stagger="90">
+
+          <a class="m-tile m-tile--lg" href="projeto.html" data-cursor="Ver">
+            <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+            <div class="m-cap" data-reveal>
+              <span class="m-cap-name"><span>Projeto 01</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+              <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+            </div>
+          </a>
+
+          <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+            <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+            <div class="m-cap" data-reveal>
+              <span class="m-cap-name"><span>Projeto 02</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+              <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+            </div>
+          </a>
+
+          <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="Ver">
+            <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+            <div class="m-cap" data-reveal>
+              <span class="m-cap-name"><span>Projeto 03</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+              <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+            </div>
+          </a>
+
+          <a class="m-tile m-tile--full" href="projeto.html" data-cursor="Ver">
+            <div class="m-media m-media--ph" data-media><span>Imagem do projeto</span></div>
+            <div class="m-cap" data-reveal>
+              <span class="m-cap-name"><span>Projeto 04</span><span aria-hidden="true">↳ Frase curta do projeto</span></span>
+              <span class="m-cap-meta"><span class="m-cap-type">Tipo de trabalho</span><span class="m-cap-sector">Setor</span></span>
+            </div>
+          </a>
+
+        </div>
+      </section>
+
+      <!-- 4. O QUE FAZEMOS — versão curta (a completa está no About) -->
+      <section class="m-svc" aria-labelledby="fazemos">
+        <div class="m-head">
+          <h2 class="m-label" id="fazemos" data-reveal>O que fazemos</h2>
+          <a class="m-link" href="about.html#servicos" data-reveal>Tudo o que fazemos <span class="m-arrow" aria-hidden="true">→</span></a>
+        </div>
+        <p class="m-svc-lead" data-split="rise">Cinco disciplinas que trabalham como uma só.</p>
+
+        <ul class="m-svc-list">
+          <li>
+            <span class="m-rule" data-line></span>
+            <a class="m-svc-row" href="about.html#servicos">
+              <span class="m-svc-num">01</span>
+              <span class="m-svc-name" data-split="rise">Branding</span>
+              <span class="m-svc-desc" data-reveal>A base que decide como a marca é lembrada.</span>
+              <span class="m-svc-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <span class="m-rule" data-line></span>
+            <a class="m-svc-row" href="about.html#servicos">
+              <span class="m-svc-num">02</span>
+              <span class="m-svc-name" data-split="rise">Web</span>
+              <span class="m-svc-desc" data-reveal>Sites feitos para funcionar, carregar e converter.</span>
+              <span class="m-svc-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <span class="m-rule" data-line></span>
+            <a class="m-svc-row" href="about.html#servicos">
+              <span class="m-svc-num">03</span>
+              <span class="m-svc-name" data-split="rise">Social Media</span>
+              <span class="m-svc-desc" data-reveal>Presença com direção, não posts a encher o calendário.</span>
+              <span class="m-svc-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <span class="m-rule" data-line></span>
+            <a class="m-svc-row" href="about.html#servicos">
+              <span class="m-svc-num">04</span>
+              <span class="m-svc-name" data-split="rise">Vídeo, Motion e Fotografia</span>
+              <span class="m-svc-desc" data-reveal>Imagem pensada para a marca, parada ou em movimento.</span>
+              <span class="m-svc-arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <span class="m-rule" data-line></span>
+            <a class="m-svc-row" href="about.html#servicos">
+              <span class="m-svc-num">05</span>
+              <span class="m-svc-name" data-split="rise">Estratégia</span>
+              <span class="m-svc-desc" data-reveal>A primeira página, não a última.</span>
+              <span class="m-svc-arrow" aria-hidden="true">→</span>
+            </a>
+            <span class="m-rule" data-line></span>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 5. FOOTER -->
   <footer class="footer footer-dark ft">
     <div class="ft-top">
       <p class="ft-statement">Vamos construir a tua próxima marca, juntos.</p>
@@ -94,6 +190,7 @@
             <li><span>Branding</span></li>
             <li><span>Web</span></li>
             <li><span>Social Media</span></li>
+            <li><span>Vídeo, Motion e Fotografia</span></li>
             <li><span>Estratégia</span></li>
           </ul>
         </div>
@@ -112,6 +209,7 @@
     <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=41"></script>
+  <script src="main.js?v=103"></script>
+  <script src="motion.js?v=103"></script>
 </body>
 </html>

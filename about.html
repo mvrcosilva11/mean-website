@@ -6,7 +6,9 @@
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>About — MEAN AGENCY</title>
-  <link rel="stylesheet" href="style.css?v=89" />
+  <meta name="description" content="A MEAN é uma agência criativa do Porto, com opinião. Quem somos, no que acreditamos e o que fazemos." />
+  <link rel="stylesheet" href="style.css?v=103" />
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500)})(document.documentElement)</script>
 </head>
 <body class="page-about">
 
@@ -17,8 +19,7 @@
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="work.html">Work</a>
-        <a href="about.html">About</a>
-        <a href="index-intro.html">Intro</a>
+        <a href="about.html" aria-current="page">About</a>
       </nav>
     </div>
     <div class="nav-right-group">
@@ -29,123 +30,228 @@
     </div>
   </header>
 
-  <!-- ABOUT — layout inspirado em pixelmatters.com/about-us -->
-  <main class="ab">
+  <!-- ABOUT — conteúdos e ordem em PLANEAMENTO.md -->
+  <main class="m-about">
 
-    <!-- 1. HERO CENTRADO -->
-    <section class="ab-lead reveal">
-      <p class="ab-kicker">About</p>
-      <h1 class="ab-lead-statement">
-        Onde pessoas com opinião se juntam pelo amor ao ofício.
-      </h1>
-      <p class="ab-lead-words" aria-hidden="true">
-        <span>Diretos.</span><span>Estratégicos.</span><span>Sem paninhos quentes.</span>
-      </p>
-      <p class="ab-lead-sub reveal">
-        Somos uma agência criativa baseada no Porto. Fazemos branding, web, social media e estratégia — sem dividir o que devia nascer junto.
-      </p>
-    </section>
-
-    <!-- 2. GRELHA DE VALORES -->
-    <section class="ab-values">
-      <div class="ab-values-head">
-        <h2 class="ab-section-title reveal">No que acreditamos</h2>
-        <p class="ab-section-lead reveal">Chamamo-nos <strong>MEAN</strong> porque temos opinião e não pedimos desculpa por isso. Estes são os princípios que não negociamos.</p>
-      </div>
-      <div class="ab-values-grid">
-        <article class="ab-value reveal"><span class="ab-value-num">01</span><h3 class="ab-value-title">Sem paninhos quentes.</h3><p class="ab-value-text">Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar uma vez a entregar mediocridade educadamente.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">02</span><h3 class="ab-value-title">Junto, não aos bocados.</h3><p class="ab-value-text">Identidade, web, social, estratégia. Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade de uma marca.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">03</span><h3 class="ab-value-title">Discorda de nós.</h3><p class="ab-value-text">Um brief é um ponto de partida, não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">04</span><h3 class="ab-value-title">Nada de frases vazias.</h3><p class="ab-value-text">"Soluções à medida" não diz nada a ninguém. Escrevemos coisas que só fazem sentido ditas por ti. O resto é enchimento.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">05</span><h3 class="ab-value-title">Não somos para todos.</h3><p class="ab-value-text">Se procuras alguém que concorde sempre contigo, há muitas agências assim. Nós ficamos com quem quer ser desafiado a sério.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">06</span><h3 class="ab-value-title">Cada marca é um caso.</h3><p class="ab-value-text">Não temos fórmula, não temos template, não copiamos o que funcionou noutro cliente. O que funcionou lá pode não significar nada aqui.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">07</span><h3 class="ab-value-title">Estratégia desde o início.</h3><p class="ab-value-text">Não é a última página do documento, é a primeira. Se só aparece depois do visual pronto, já chegou tarde.</p></article>
-        <article class="ab-value reveal"><span class="ab-value-num">08</span><h3 class="ab-value-title">O nome não é acidente.</h3><p class="ab-value-text">Escolhemos MEAN a pensar nisto. Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.</p></article>
+    <!-- 1. ABERTURA -->
+    <section class="m-ahero">
+      <p class="m-label" data-reveal>About</p>
+      <h1 class="m-ahero-title" data-split="rise">Somos uma agência criativa baseada no Porto. Fazemos branding, web, social media e estratégia. <span class="m-accent">Sem dividir o que devia nascer junto.</span></h1>
+      <div class="m-symbols" aria-hidden="true"><span class="m-sym">M</span><span class="m-sym">E</span><span class="m-sym">A</span><span class="m-sym">N</span><span class="m-sym">M</span><span class="m-sym">E</span><span class="m-sym is-accent">A</span><span class="m-sym">N</span><span class="m-sym">M</span><span class="m-sym">E</span><span class="m-sym">A</span><span class="m-sym">N</span><span class="m-sym">M</span><span class="m-sym">E</span><span class="m-sym">A</span><span class="m-sym">N</span></div>
+      <div class="m-ahero-photo-wrap">
+        <div class="m-media m-media--ph m-ahero-photo" data-media><span>Fotografia da equipa</span></div>
       </div>
     </section>
 
-    <!-- 3. A VIDA NA MEAN (blocos com media) -->
-    <section class="ab-life">
-      <h2 class="ab-section-title reveal">A vida na MEAN</h2>
-      <div class="ab-life-grid">
-        <article class="ab-life-card reveal">
-          <div class="ab-life-media" aria-hidden="true"></div>
-          <h3 class="ab-life-title">As ferramentas certas</h3>
-          <p class="ab-life-text">Sem processos herdados só porque "é assim que se faz". Escolhemos o que serve o projeto, não o que enche um portfólio de metodologias.</p>
-        </article>
-        <article class="ab-life-card reveal">
-          <div class="ab-life-media" aria-hidden="true"></div>
-          <h3 class="ab-life-title">Aprendizagem constante</h3>
-          <p class="ab-life-text">O que funcionava há dois anos já pode não funcionar hoje. Testamos, lemos, desfazemos e refazemos — sempre.</p>
-        </article>
-        <article class="ab-life-card reveal">
-          <div class="ab-life-media" aria-hidden="true"></div>
-          <h3 class="ab-life-title">Um padrão, não uma exceção</h3>
-          <p class="ab-life-text">Não há projeto "menor" onde relaxamos o critério. O nível é o mesmo do primeiro ao último dia.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 4. TESTEMUNHO EM DESTAQUE -->
-    <section class="ab-quotes reveal">
-      <blockquote class="ab-quote">
-        <p>"[Espaço para um testemunho de cliente. Substitui por uma citação real.]"</p>
-        <cite>— Cliente, Empresa</cite>
-      </blockquote>
-    </section>
-
-    <!-- 5. O QUE FAZEMOS -->
-    <section class="ab-values">
-      <div class="ab-values-head">
-        <h2 class="ab-section-title reveal">O que fazemos</h2>
-        <p class="ab-section-lead reveal">Quatro disciplinas que trabalham como uma só.</p>
-      </div>
-      <div class="ab-values-grid ab-values-grid--2">
-        <article class="ab-value reveal"><span class="ab-value-num">01</span><h3 class="ab-value-title">Branding</h3><p class="ab-value-text">Nome, identidade visual, tom de voz. A base que decide como a marca é lembrada — ou esquecida.</p><ul class="ab-tags"><li>Naming</li><li>Identidade visual</li><li>Tom de voz</li><li>Guidelines</li></ul></article>
-        <article class="ab-value reveal"><span class="ab-value-num">02</span><h3 class="ab-value-title">Web</h3><p class="ab-value-text">Sites que não são só bonitos. São feitos para funcionar, carregar e converter.</p><ul class="ab-tags"><li>UX/UI</li><li>Desenvolvimento</li><li>E-commerce</li><li>Otimização</li></ul></article>
-        <article class="ab-value reveal"><span class="ab-value-num">03</span><h3 class="ab-value-title">Social Media</h3><p class="ab-value-text">Presença com direção, não posts a preencher o calendário.</p><ul class="ab-tags"><li>Conteúdo</li><li>Direção de arte</li><li>Gestão</li><li>Campanhas</li></ul></article>
-        <article class="ab-value reveal"><span class="ab-value-num">04</span><h3 class="ab-value-title">Estratégia</h3><p class="ab-value-text">A primeira página, não a última. Direção antes de decoração.</p><ul class="ab-tags"><li>Posicionamento</li><li>Arquitetura de marca</li><li>Research</li></ul></article>
-      </div>
-    </section>
-
-    <!-- 6. EQUIPA -->
-    <section class="ab-team">
-      <h2 class="ab-section-title reveal">Quem faz</h2>
-      <div class="ab-team-grid">
-        <article class="ab-member reveal">
-          <div class="ab-member-photo" aria-hidden="true"></div>
-          <h3 class="ab-member-name">Nome Apelido</h3>
-          <p class="ab-member-role">Co-fundador · Design &amp; Branding</p>
-        </article>
-        <article class="ab-member reveal">
-          <div class="ab-member-photo" aria-hidden="true"></div>
-          <h3 class="ab-member-name">Nome Apelido</h3>
-          <p class="ab-member-role">Co-fundador · Estratégia &amp; Web</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- 7. ONDE ESTAMOS -->
-    <section class="ab-locations">
-      <h2 class="ab-section-title reveal">Onde estamos</h2>
-      <div class="ab-loc reveal">
-        <div class="ab-loc-info">
-          <h3 class="ab-loc-city">Porto</h3>
-          <p class="ab-loc-addr">[Morada do estúdio]<br />Porto, Portugal</p>
-          <a href="https://maps.google.com/?q=Porto" target="_blank" rel="noopener" class="ab-cta-link">Ver no mapa <span aria-hidden="true">→</span></a>
-        </div>
-        <div class="ab-loc-photos" aria-hidden="true">
-          <div class="ab-loc-photo"></div>
-          <div class="ab-loc-photo"></div>
-          <div class="ab-loc-photo"></div>
+    <!-- 2. EQUIPA -->
+    <section class="m-sec" aria-labelledby="equipa">
+      <div class="m-sec-side"><h2 class="m-label" id="equipa" data-reveal>Quem faz</h2></div>
+      <div class="m-sec-main">
+        <p class="m-lead" data-split="rise">Falas diretamente com quem faz.</p>
+        <p class="m-body" data-reveal>Não escondemos ninguém atrás de um cargo bonito. As decisões sobre o teu projeto são tomadas por quem está a trabalhar nele, não por alguém que só aparece para apresentar o que os outros fizeram.</p>
+        <div class="m-team-grid" data-stagger="110">
+          <article class="m-member" data-reveal>
+            <div class="m-ph">Retrato</div>
+            <h3 class="m-member-name">Nome Apelido</h3>
+            <p class="m-member-role">Cofundador · Design e Branding</p>
+          </article>
+          <article class="m-member" data-reveal>
+            <div class="m-ph">Retrato</div>
+            <h3 class="m-member-name">Nome Apelido</h3>
+            <p class="m-member-role">Cofundador · Estratégia e Web</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- 8. CTA -->
-    <section class="ab-cta reveal">
-      <h2 class="ab-cta-title">Não somos para todos.<br />Talvez sejamos para ti.</h2>
-      <a href="contact.html" class="ab-cta-link">Trabalha connosco <span aria-hidden="true">→</span></a>
+    <!-- 3. CLIENTES -->
+    <section class="m-sec" aria-labelledby="clientes">
+      <div class="m-sec-side"><h2 class="m-label" id="clientes" data-reveal>Clientes</h2></div>
+      <div class="m-sec-main">
+        <p class="m-lead" data-split="rise">Marcas com quem já trabalhámos.</p>
+        <p class="m-body" data-reveal>Parágrafo curto sobre os clientes e o tipo de relação que temos com eles. Texto provisório.</p>
+        <div class="m-logos" data-stagger="45"><div class="m-logo" data-reveal>Logótipo 01</div><div class="m-logo" data-reveal>Logótipo 02</div><div class="m-logo" data-reveal>Logótipo 03</div><div class="m-logo" data-reveal>Logótipo 04</div><div class="m-logo" data-reveal>Logótipo 05</div><div class="m-logo" data-reveal>Logótipo 06</div><div class="m-logo" data-reveal>Logótipo 07</div><div class="m-logo" data-reveal>Logótipo 08</div></div>
+      </div>
+    </section>
+
+    <!-- 4. NÚMERO EM DESTAQUE — por decidir (ver PLANEAMENTO.md); entra aqui quando houver um número verdadeiro -->
+
+    <!-- 5. MANIFESTO -->
+    <section class="m-sec" aria-labelledby="manifesto">
+      <div class="m-sec-side m-sec-side--sticky">
+        <h2 class="m-label" id="manifesto" data-reveal>No que acreditamos</h2>
+        <p class="m-mani-count" aria-hidden="true" data-reveal><span id="maniCount">01</span><small>/ 08</small></p>
+      </div>
+      <div class="m-sec-main">
+        <p class="m-lead" data-split="rise">Chamamo-nos MEAN porque temos opinião e não pedimos desculpa por isso.</p>
+        <p class="m-body" data-reveal>Não acreditamos em marcas que agradam a todos, porque essas normalmente não significam nada para ninguém. Preferimos construir algo com que algumas pessoas se identifiquem completamente a construir algo que ninguém odeie, mas que também ninguém lembre.</p>
+        <p class="m-body" data-reveal>A estratégia entra desde o primeiro dia, não no fim para justificar o resto. Achamos que uma marca sem direção clara é só design bonito à procura de um propósito.</p>
+        <ol class="m-mani" data-focus-list data-focus-counter="#maniCount">
+          <li>
+            <span class="m-mani-num">01</span>
+            <div>
+              <h3 class="m-mani-title">Sem paninhos quentes.</h3>
+              <p class="m-mani-text">Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar uma vez a entregar mediocridade educadamente.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">02</span>
+            <div>
+              <h3 class="m-mani-title">Junto, não aos bocados.</h3>
+              <p class="m-mani-text">Identidade, web, social, estratégia. Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade de uma marca.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">03</span>
+            <div>
+              <h3 class="m-mani-title">Discorda de nós.</h3>
+              <p class="m-mani-text">Um brief é um ponto de partida, não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">04</span>
+            <div>
+              <h3 class="m-mani-title">Nada de frases vazias.</h3>
+              <p class="m-mani-text">“Soluções à medida” não diz nada a ninguém. Escrevemos coisas que só fazem sentido ditas por ti. O resto é enchimento.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">05</span>
+            <div>
+              <h3 class="m-mani-title">Não somos para todos.</h3>
+              <p class="m-mani-text">Se procuras alguém que concorde sempre contigo, há muitas agências assim. Nós ficamos com quem quer ser desafiado a sério.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">06</span>
+            <div>
+              <h3 class="m-mani-title">Cada marca é um caso.</h3>
+              <p class="m-mani-text">Não temos fórmula, não temos template, não copiamos o que funcionou noutro cliente. O que funcionou lá pode não significar nada aqui.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">07</span>
+            <div>
+              <h3 class="m-mani-title">Estratégia desde o início.</h3>
+              <p class="m-mani-text">Não é a última página do documento, é a primeira. Se só aparece depois do visual pronto, já chegou tarde.</p>
+            </div>
+          </li>
+          <li>
+            <span class="m-mani-num">08</span>
+            <div>
+              <h3 class="m-mani-title">O nome não é acidente.</h3>
+              <p class="m-mani-text">Escolhemos MEAN a pensar nisto. Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 6. O QUE FAZEMOS — versão completa, com as ramificações (listas em rascunho) -->
+    <section class="m-sec" id="servicos" aria-labelledby="fazemos">
+      <div class="m-sec-side"><h2 class="m-label" id="fazemos" data-reveal>O que fazemos</h2></div>
+      <div class="m-sec-main">
+        <p class="m-lead" data-split="rise">Cinco disciplinas que trabalham como uma só.</p>
+        <ol class="m-disc">
+          <li>
+            <span class="m-disc-num">01</span>
+            <h3 class="m-disc-name" data-split="rise">Branding</h3>
+            <div class="m-disc-body">
+              <p class="m-disc-pitch" data-reveal>Nome, identidade visual, tom de voz. A base que decide como a marca é lembrada — ou esquecida.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Estratégia de marca</li><li data-reveal>Posicionamento</li><li data-reveal>Naming</li><li data-reveal>Identidade visual</li><li data-reveal>Logótipo</li><li data-reveal>Tom de voz</li><li data-reveal>Manual de marca</li><li data-reveal>Rebranding</li><li data-reveal>Embalagem</li><li data-reveal>Materiais impressos</li><li data-reveal>Sinalética</li><li data-reveal>Ilustração</li></ul>
+            </div>
+          </li>
+          <li>
+            <span class="m-disc-num">02</span>
+            <h3 class="m-disc-name" data-split="rise">Web</h3>
+            <div class="m-disc-body">
+              <p class="m-disc-pitch" data-reveal>Sites que não são só bonitos. São feitos para funcionar, carregar e converter.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>UX/UI</li><li data-reveal>Web design</li><li data-reveal>Desenvolvimento</li><li data-reveal>Landing pages</li><li data-reveal>E-commerce</li><li data-reveal>Portfólios</li><li data-reveal>SEO</li><li data-reveal>Otimização e performance</li><li data-reveal>Textos para web</li><li data-reveal>Manutenção</li></ul>
+            </div>
+          </li>
+          <li>
+            <span class="m-disc-num">03</span>
+            <h3 class="m-disc-name" data-split="rise">Social Media</h3>
+            <div class="m-disc-body">
+              <p class="m-disc-pitch" data-reveal>Presença com direção, não posts a preencher o calendário.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Estratégia de conteúdo</li><li data-reveal>Direção de arte</li><li data-reveal>Gestão de redes</li><li data-reveal>Calendário editorial</li><li data-reveal>Design de publicações</li><li data-reveal>Campanhas pagas</li><li data-reveal>Relatórios</li></ul>
+            </div>
+          </li>
+          <li>
+            <span class="m-disc-num">04</span>
+            <h3 class="m-disc-name" data-split="rise">Vídeo, Motion e Fotografia</h3>
+            <div class="m-disc-body">
+              <p class="m-disc-pitch" data-reveal>Imagem pensada para a marca, parada ou em movimento.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Vídeo de marca</li><li data-reveal>Reels e conteúdo curto</li><li data-reveal>Motion design</li><li data-reveal>Animação de logótipo</li><li data-reveal>Fotografia de produto</li><li data-reveal>Fotografia de espaço e equipa</li><li data-reveal>Edição e pós-produção</li></ul>
+            </div>
+          </li>
+          <li>
+            <span class="m-disc-num">05</span>
+            <h3 class="m-disc-name" data-split="rise">Estratégia</h3>
+            <div class="m-disc-body">
+              <p class="m-disc-pitch" data-reveal>A primeira página, não a última. Direção antes de decoração.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Diagnóstico de marca</li><li data-reveal>Research</li><li data-reveal>Posicionamento</li><li data-reveal>Arquitetura de marca</li><li data-reveal>Plano de comunicação</li><li data-reveal>Campanhas</li><li data-reveal>Consultoria</li></ul>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 7. TESTEMUNHOS (provisórios) -->
+    <section class="m-sec" aria-labelledby="testemunhos">
+      <div class="m-sec-side"><h2 class="m-label" id="testemunhos" data-reveal>Testemunhos</h2></div>
+      <div class="m-sec-main">
+        <div class="m-quotes" data-slider data-reveal tabindex="0" aria-roledescription="carrossel" aria-label="Testemunhos de clientes">
+          <div class="m-quotes-stage">
+            <figure class="m-quote" data-slide>
+              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
+              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+            </figure>
+            <figure class="m-quote" data-slide>
+              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
+              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+            </figure>
+            <figure class="m-quote" data-slide>
+              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
+              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+            </figure>
+          </div>
+          <div class="m-quotes-nav">
+            <span class="m-quotes-count" data-count>01 — 03</span>
+            <button class="m-btn-round" type="button" data-prev aria-label="Testemunho anterior">←</button>
+            <button class="m-btn-round" type="button" data-next aria-label="Testemunho seguinte">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. ONDE ESTAMOS -->
+    <section class="m-sec" aria-labelledby="onde">
+      <div class="m-sec-side"><h2 class="m-label" id="onde" data-reveal>Onde estamos</h2></div>
+      <div class="m-sec-main">
+        <div class="m-where">
+          <div>
+            <p class="m-where-city" data-split="rise">Porto</p>
+            <div class="m-where-info" data-reveal>
+              <span>Morada do estúdio (provisório)</span>
+              <span>Porto, Portugal</span>
+              <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
+              <a class="m-link" href="https://maps.google.com/?q=Porto" target="_blank" rel="noopener">Ver no mapa <span class="m-arrow" aria-hidden="true">→</span></a>
+            </div>
+          </div>
+          <div class="m-where-photos" data-stagger="110">
+            <div class="m-ph" data-reveal>Estúdio</div>
+            <div class="m-ph" data-reveal>Estúdio</div>
+            <div class="m-ph" data-reveal>Estúdio</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FECHO -->
+    <section class="m-cta">
+      <h2 class="m-cta-title" data-split="rise">Não somos para todos. Talvez sejamos para ti.</h2>
+      <a class="m-link" href="contact.html" data-reveal style="--d: 200ms">Trabalha connosco <span class="m-arrow" aria-hidden="true">→</span></a>
     </section>
 
   </main>
@@ -170,6 +276,7 @@
             <li><span>Branding</span></li>
             <li><span>Web</span></li>
             <li><span>Social Media</span></li>
+            <li><span>Vídeo, Motion e Fotografia</span></li>
             <li><span>Estratégia</span></li>
           </ul>
         </div>
@@ -188,6 +295,7 @@
     <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=39"></script>
+  <script src="main.js?v=103"></script>
+  <script src="motion.js?v=103"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* ── Reset & base ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Cursor personalizado (círculo M da MEAN) ── */
+/* ── Cursor personalizado: base. A forma final (circunferência + ponto) está mais abaixo, em "Cursor:" ── */
 @media (pointer: fine) {
   * { cursor: none !important; }
 }
@@ -1168,23 +1168,37 @@ h3 { font-size: 1.1rem; }
 /* Home: transparente enquanto o vídeo está à vista */
 .page-home .nav.scrolled:not(.nav-solid) { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
-/* ── Cursor: bolinha + rasto de 3. O grupo inteiro faz "negativo" sobre o que está por baixo,
-      por isso as bolinhas podem sobrepor-se sem se anularem umas às outras ── */
+/* ── Cursor: circunferência com um ponto no centro (como a capa do livro do Rick Rubin)
+      + rasto de 3 pontos. O grupo inteiro faz "negativo" sobre o que está por baixo ── */
 .cursor-layer {
   position: fixed; inset: 0; z-index: 99999; pointer-events: none;
   mix-blend-mode: difference;
 }
 .cursor-layer.is-view { mix-blend-mode: normal; }
 .cursor-layer .cursor-dot { position: absolute; z-index: 1; mix-blend-mode: normal; }
-.cursor-layer .cursor-dot--trail { z-index: 0; }
 
-/* cresce sobre ligações; vira etiqueta "Ver" sobre os projetos */
+/* a principal: circunferência + ponto */
 .cursor-dot {
   display: grid; place-items: center;
-  transition: opacity .2s ease, width .45s var(--m-ease), height .45s var(--m-ease), background-color .3s ease;
+  width: 34px; height: 34px;
+  background: transparent; border: 1.5px solid #fff;
+  transition: opacity .2s ease, width .45s var(--m-ease), height .45s var(--m-ease),
+              background-color .3s ease, border-color .3s ease;
 }
-.cursor-dot.is-link { width: 46px; height: 46px; }
-.cursor-dot.is-view { width: 92px; height: 92px; background: var(--accent); mix-blend-mode: normal; }
+.cursor-dot::before {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%; background: #fff;
+  transition: transform .3s var(--m-ease), opacity .2s ease;
+}
+/* o rasto: 3 pontos iguais ao do centro */
+.cursor-layer .cursor-dot--trail { z-index: 0; width: 5px; height: 5px; border: 0; background: #fff; }
+.cursor-dot--trail::before { content: none; }
+
+/* cresce sobre ligações; vira círculo vermelho com "Ver" sobre os projetos */
+.cursor-dot.is-link { width: 56px; height: 56px; }
+.cursor-dot.is-view { width: 92px; height: 92px; background: var(--accent); border-color: var(--accent); mix-blend-mode: normal; }
+.cursor-dot.is-view::before { opacity: 0; transform: scale(0); }
 .cursor-label {
   font-size: .8rem; font-weight: 600; letter-spacing: .01em; color: var(--bg); white-space: nowrap;
   opacity: 0; transform: scale(.6);

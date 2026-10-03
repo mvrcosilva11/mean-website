@@ -95,13 +95,14 @@ if (projeto && window.PROJETOS) {
   setTimeout(hide, dur + 4000); // segurança
 })();
 
-// Cursor personalizado: bolinha + rasto de 3 bolinhas (4 no total), em modo "negativo".
+// Cursor personalizado: circunferência com um ponto no centro + rasto de 3 pontos, em modo "negativo".
+// (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto, .cursor-dot--trail o rasto)
 // A mistura "difference" está no grupo .cursor-layer (ver CSS): branco sobre preto, negativo sobre imagens.
 (function () {
   // ignora em dispositivos touch (não há cursor)
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
   const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const OPAC = calm ? [1] : [1, 0.7, 0.45, 0.22];   // desvanece proporcionalmente ao longo do rasto
+  const OPAC = calm ? [1] : [1, 0.8, 0.55, 0.3];    // desvanece proporcionalmente ao longo do rasto
   const N = OPAC.length;
   const DELAY = 115;                                 // ms entre bolinhas → espaçamento (igual a 60 e a 120 Hz)
   const layer = document.createElement('div');

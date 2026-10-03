@@ -23,7 +23,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - `style.css`: a base é a do sócio. A camada nova fica no fim do ficheiro, com classes começadas por `m-`.
 - `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
 - Sem JavaScript, ou com "reduzir movimento" ligado no sistema, o conteúdo aparece todo, sem animação.
-- **Cursor** (`main.js`, todas as páginas): bolinha branca em negativo com um rasto de 3 bolinhas que desvanecem. Cresce sobre ligações e vira círculo vermelho com "Ver" sobre os projetos.
+- **Cursor** (`main.js` + `style.css`, todas as páginas): circunferência com um ponto no centro, como a capa do livro do Rick Rubin, em negativo sobre o que está por baixo. Ao mexer, o ponto deixa um rasto de 3 pontos que desvanecem. A circunferência cresce sobre ligações e vira círculo vermelho com "Ver" sobre os projetos.
 - **Mudança de página** (`main.js`, todas as páginas): uma cortina vermelho-escuro cobre a página, a página seguinte abre com o logo animado da abertura e só depois se revela. Num recarregamento o logo não aparece. O bloco do logo (`#preloader`) está no topo do `<body>` de cada página.
 - Blocos cinzentos: `m-media m-media--ph` (capas de projeto) e `m-ph` (fotografias). Para pôr a imagem real, troca-se o bloco por `<div class="m-media" data-media><img src="…" alt="…"></div>`.
 

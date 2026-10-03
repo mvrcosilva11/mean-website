@@ -21,7 +21,9 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 ### Como está montado
 
 - `style.css`: a base é a do sócio. A camada nova fica no fim do ficheiro, com classes começadas por `m-`.
-- `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
+- **Referências de proporção e movimento** (2026-10-03): madeinevolve.com para proporções e dinâmicas, twks.ch para o header a meio do ecrã, flabbergast.agency para a abertura do vídeo. Destas referências vêm só a escala, o espaçamento e o movimento. Ficaram de fora as linhas verticais de fundo, as maiúsculas e a fonte monoespaçada do Evolve. Está tudo na camada "MEAN v3" no fim do `style.css`.
+- **Proporções:** margens estreitas, títulos de página à largura do ecrã com entrelinha curta, texto corrido pequeno (13 a 15 px) em colunas estreitas com avanço na primeira linha, listas compactas.
+- `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-blur`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
 - Sem JavaScript, ou com "reduzir movimento" ligado no sistema, o conteúdo aparece todo, sem animação.
 - **Cursor** (`main.js` + `style.css`, todas as páginas): circunferência com um ponto no centro, como a capa do livro do Rick Rubin, em negativo sobre o que está por baixo. Sem rasto. A circunferência cresce sobre ligações. Sobre os projetos estica na horizontal para uma pill só com contorno, sem fundo, com o texto em maiúsculas lá dentro ("VER", vem do atributo `data-cursor`).
 - **Mudança de página** (`main.js`, todas as páginas): uma cortina vermelho-escuro cobre a página, a página seguinte abre com o logo animado da abertura e só depois se revela. Num recarregamento o logo não aparece. O bloco do logo (`#preloader`) está no topo do `<body>` de cada página.
@@ -51,11 +53,13 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 
 ### Como se comporta
 
-- **Abertura:** o vídeo fica preso ao ecrã. Ao descer, o resto da página sobe por cima dele como uma folha, e o vídeo escurece e aproxima-se ligeiramente. Quando fica tapado, pára de tocar.
-- **Menu:** transparente sobre o vídeo. Esconde-se ao descer e volta ao subir.
-- **Frase:** acende palavra a palavra com o scroll.
+- **Abertura:** depois do logo animado fica um ecrã em branco. Ao centro aparece um bloco vermelho pequeno, o vermelho recolhe e mostra o vídeo, o bloco alarga e cresce até ocupar o ecrã inteiro. Dura cerca de 2,5 segundos.
+- **Vídeo:** tem um grão de película suave por cima. Fica preso ao ecrã: ao descer, o resto da página sobe por cima dele como uma folha, e o vídeo escurece e aproxima-se ligeiramente. Quando fica tapado, pára de tocar.
+- **Menu:** abre a meio do ecrã, sobre o vídeo. Com o scroll sobe ao ritmo da página e fica preso no topo, sempre à vista. Isto acontece só na Home; nas outras páginas o menu está logo no topo.
+- **Frase:** acende linha a linha com o scroll.
+- **Etiquetas:** as letras aparecem uma a uma, por ordem aleatória.
 - **Destaques:** as capas abrem de baixo para cima, em sequência. Ao passar o cursor, a imagem aproxima-se, o cursor estica para uma pill com "VER" e o nome dá lugar à frase curta do projeto.
-- **O que fazemos:** ao passar o cursor numa disciplina, as outras apagam-se e a seta avança.
+- **O que fazemos:** ao passar o cursor numa disciplina, a linha inteira inverte (fundo claro, texto escuro), de imediato.
 
 ### Frases das disciplinas na Home (rascunho)
 
@@ -175,7 +179,7 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 
 ### Como se comporta
 
-- **Abertura:** a frase sobe palavra a palavra.
+- **Abertura:** o título entra desfocado e ganha foco. No Work é igual.
 - **Manifesto:** a etiqueta e o contador ficam fixos à esquerda. O princípio que está a meio do ecrã fica aceso, os outros apagam-se, e o contador acompanha (01 a 08).
 - **O que fazemos:** os serviços de cada disciplina entram em cascata.
 - **Testemunhos:** setas, contador e teclas de seta do teclado.

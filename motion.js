@@ -4,13 +4,16 @@
      data-reveal            sobe e aparece ao entrar no ecrã
      data-line              fio que se desenha da esquerda para a direita
      data-media             bloco de imagem que abre de baixo para cima
-     data-split="rise"      texto que sobe palavra a palavra
-     data-split="scrub"     texto que acende palavra a palavra com o scroll
+     data-blur              título que entra desfocado e ganha foco
+     data-split="rise"      texto que sobe linha a linha
+     data-split="scrub"     texto que acende linha a linha com o scroll
      data-stagger="90"      atrasa os filhos em cadeia (ms); data-stagger-mod="3" recomeça a cada 3
-     data-hero              vídeo de abertura (escala e escurece ao descer)
+     data-hero              vídeo de abertura (abre de um bloco pequeno ao centro; escala e escurece ao descer)
      data-focus-list        lista em que a linha a meio do ecrã ganha foco
      data-slider            carrossel (data-slide, data-prev, data-next, data-count)
-     data-cursor="Ver"      etiqueta no cursor
+     data-cursor="Ver"      texto da pill do cursor
+   Sem atributo: as etiquetas .m-label entram letra a letra; na Home o header abre a meio do ecrã
+   e sobe para o topo com o scroll.
    Respeita "reduzir movimento": nesse caso tudo aparece sem animação.
    ============================================================ */
 (function () {
@@ -49,9 +52,43 @@
     return $$('.wi', el);
   }
   var scrubs = [];
-  $$('[data-split]').forEach(function (el) {
+  var splits = $$('[data-split]');
+  splits.forEach(function (el) {
     var words = splitWords(el);
     if (el.getAttribute('data-split') === 'scrub') scrubs.push({ el: el, words: words, n: -1 });
+  });
+  // Em que linha ficou cada palavra: as palavras da mesma linha entram juntas (e acendem juntas).
+  // Refaz-se quando a janela muda de largura.
+  function measureLines() {
+    splits.forEach(function (el) {
+      var top = null, line = -1;
+      $$('.w', el).forEach(function (w) {
+        var t = w.offsetTop;
+        if (top === null || Math.abs(t - top) > 3) { line++; top = t; }
+        var wi = w.firstChild;
+        wi.style.setProperty('--i', line);
+        wi._line = line;
+      });
+      el._lines = line + 1;
+    });
+    scrubs.forEach(function (s) { s.n = -1; });
+  }
+  measureLines();
+
+  /* ── 1b. Etiquetas: as letras aparecem uma a uma, por ordem aleatória ── */
+  if (!reduce) $$('.m-label').forEach(function (el) {
+    var text = el.textContent;
+    var sr = document.createElement('span'); sr.className = 'm-sr'; sr.textContent = text;   // para leitores de ecrã
+    var vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
+    var span = Math.min(720, 260 + text.length * 22);
+    text.split('').forEach(function (ch) {
+      if (ch === ' ') { vis.appendChild(document.createTextNode(' ')); return; }
+      var s = document.createElement('span'); s.className = 'm-ch'; s.textContent = ch;
+      s.style.setProperty('--cd', Math.round(Math.random() * span) + 'ms');
+      vis.appendChild(s);
+    });
+    el.textContent = '';
+    el.appendChild(sr); el.appendChild(vis);
   });
 
   /* ── 2. Atrasos em cadeia ── */
@@ -62,10 +99,9 @@
       child.style.setProperty('--d', ((mod ? i % mod : i) * step) + 'ms');
     });
   });
-  $$('.m-symbols .m-sym').forEach(function (s, i) { s.style.setProperty('--i', i); });
 
   /* ── 3. Revelar ao entrar no ecrã ── */
-  var revealSel = '[data-reveal], [data-line], [data-media], [data-split="rise"], .m-symbols';
+  var revealSel = '[data-reveal], [data-line], [data-media], [data-blur], [data-split="rise"]';
   var io = null;
   function observeAll() {
     var els = $$(revealSel);
@@ -105,7 +141,7 @@
       active: -1
     };
   });
-  var lastY = window.scrollY, heroPaused = false;
+  var heroPaused = false;
 
   function updateHero(y) {
     if (!hero) return;
@@ -129,10 +165,10 @@
       var r = s.el.getBoundingClientRect();
       var start = vh * 0.86, end = vh * 0.42;
       var p = clamp((start - r.top) / (r.height + start - end), 0, 1);
-      var n = Math.round(p * s.words.length);
+      var n = Math.round(p * (s.el._lines || 1));          // quantas linhas já acenderam
       if (n === s.n) return;
       s.n = n;
-      for (var i = 0; i < s.words.length; i++) s.words[i].classList.toggle('on', i < n);
+      for (var i = 0; i < s.words.length; i++) s.words[i].classList.toggle('on', s.words[i]._line < n);
     });
   }
 
@@ -156,14 +192,27 @@
     });
   }
 
+  // Home: o header abre a meio do ecrã e sobe com o scroll, ao ritmo da página, até prender no topo.
+  // Com o menu do telemóvel aberto fica no topo, para o painel não o tapar.
+  var isHome = !!hero && document.body.classList.contains('page-home');
   function updateNav(y) {
-    if (!nav) return;
+    if (!nav || !isHome) return;
     var menuOpen = navLinks && navLinks.classList.contains('open');
-    var goingDown = y > lastY + 4, goingUp = y < lastY - 4;
-    if (menuOpen || y < 140) nav.classList.remove('nav--hidden');
-    else if (goingDown) nav.classList.add('nav--hidden');
-    else if (goingUp) nav.classList.remove('nav--hidden');
-    if (goingDown || goingUp) lastY = y;
+    var h = hero.offsetHeight || window.innerHeight;
+    var top = menuOpen ? 0 : Math.max(0, (h - nav.offsetHeight) / 2 - y);
+    nav.style.setProperty('--nav-y', top.toFixed(1) + 'px');
+  }
+  var navToggle = document.querySelector('.nav-toggle');
+  if (navToggle && isHome) {
+    var dockTimer = 0;
+    var dock = function () {
+      nav.classList.add('nav--docking');
+      updateNav(window.scrollY);
+      clearTimeout(dockTimer);
+      dockTimer = setTimeout(function () { nav.classList.remove('nav--docking'); }, 600);
+    };
+    navToggle.addEventListener('click', dock);
+    if (navLinks) navLinks.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) dock(); });
   }
 
   var ticking = false;
@@ -177,7 +226,14 @@
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  var resizeTimer = 0;
+  window.addEventListener('resize', function () {
+    onScroll();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function () { measureLines(); onScroll(); }, 160);
+  });
+  window.addEventListener('load', function () { measureLines(); onScroll(); });
+  updateNav(window.scrollY);   // posição do header antes da primeira pintura
 
   /* ── 5. Cursor: cresce sobre ligações, estica para uma pill com texto sobre os projetos ── */
   if (finePointer) {
@@ -234,6 +290,13 @@
     go(0);
   });
 
+  /* ── 6b. Abertura da Home ──
+     Ecrã em branco, bloco pequeno ao centro com o vídeo, que alarga e cresce até ocupar o ecrã
+     (a coreografia está no CSS: @keyframes m-open). Aqui só se marca o fim, com .is-open no <html>. */
+  var heroMedia = hero ? hero.querySelector('.m-hero-media') : null;
+  var opened = function () { root.classList.add('is-open'); };
+  if (!heroMedia || reduce) opened();
+
   /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
   // O vídeo da abertura só começa a descarregar depois de o logo animado ter chegado, para não
   // competirem pela ligação; sem logo (recarregamento) começa logo. Com "reduzir movimento" fica o poster.
@@ -253,6 +316,10 @@
     if (heroVideo && !reduce && heroVideo.paused) { var pp = heroVideo.play(); if (pp && pp.catch) pp.catch(function () {}); }
     observeAll();
     onScroll();
+    if (heroMedia && !reduce) {
+      heroMedia.addEventListener('animationend', function (e) { if (e.animationName === 'm-open') opened(); });
+      setTimeout(opened, 2900);   // segurança
+    }
   }
   var pre = document.getElementById('preloader');
   if (pre && getComputedStyle(pre).display !== 'none') {

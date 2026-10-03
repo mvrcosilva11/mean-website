@@ -95,28 +95,20 @@ if (projeto && window.PROJETOS) {
   setTimeout(hide, dur + 4000); // segurança
 })();
 
-// Cursor personalizado: circunferência com um ponto no centro + rasto de 3 pontos, em modo "negativo".
-// (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto, .cursor-dot--trail o rasto;
+// Cursor personalizado: circunferência com um ponto no centro, em modo "negativo" (sem rasto).
+// (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto;
 //  sobre os projetos a circunferência estica para uma pill com texto, ver motion.js)
 // A mistura "difference" está no grupo .cursor-layer (ver CSS): branco sobre preto, negativo sobre imagens.
 (function () {
   // ignora em dispositivos touch (não há cursor)
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-  const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const OPAC = calm ? [1] : [1, 0.8, 0.55, 0.3];    // desvanece proporcionalmente ao longo do rasto
-  const N = OPAC.length;
-  const DELAY = 115;                                 // ms entre bolinhas → espaçamento (igual a 60 e a 120 Hz)
   const layer = document.createElement('div');
   layer.className = 'cursor-layer';
   layer.setAttribute('aria-hidden', 'true');
-  const dots = [];
-  for (let i = 0; i < N; i++) {
-    const el = document.createElement('div');
-    el.className = i ? 'cursor-dot cursor-dot--trail' : 'cursor-dot';
-    el.style.opacity = 0;
-    layer.appendChild(el);
-    dots.push(el);
-  }
+  const dot = document.createElement('div');
+  dot.className = 'cursor-dot';
+  dot.style.opacity = 0;
+  layer.appendChild(dot);
   // fundo escuro da pill que aparece sobre os projetos (fica fora do grupo "negativo", ver CSS)
   const back = document.createElement('div');
   back.className = 'cursor-back';
@@ -124,14 +116,18 @@ if (projeto && window.PROJETOS) {
   document.body.appendChild(back);
   document.body.appendChild(layer);
 
-  let mx = 0, my = 0, visible = false, placed = false;
-  const hist = [];                                   // posições recentes {x, y, t}, a mais nova primeiro
+  let visible = false, placed = false;
   const show = v => {
     visible = v;
-    dots.forEach((el, i) => { el.style.opacity = v ? OPAC[i] : 0; });
+    dot.style.opacity = v ? 1 : 0;
     back.style.visibility = v ? '' : 'hidden';
   };
-  const place = (x, y) => { mx = x; my = y; if (!placed) { placed = true; hist.length = 0; } };
+  const place = (x, y) => {
+    placed = true;
+    const tr = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
+    dot.style.transform = tr;
+    back.style.transform = tr;
+  };
 
   // ao mudar de página o rato não se mexeu: retoma a posição do último clique
   try {
@@ -149,26 +145,6 @@ if (projeto && window.PROJETOS) {
   }, { passive: true });
   document.addEventListener('mouseleave', () => show(false));
   document.addEventListener('mouseenter', () => { if (placed) show(true); });
-
-  (function loop(now) {
-    requestAnimationFrame(loop);
-    if (!placed) return;
-    now = now || performance.now();
-    hist.unshift({ x: mx, y: my, t: now });
-    const oldest = now - DELAY * (N - 1) - 60;
-    while (hist.length > 2 && hist[hist.length - 2].t < oldest) hist.pop();
-    let j = 0;
-    for (let i = 0; i < N; i++) {
-      const target = now - i * DELAY;                // bolinha i = onde o cursor estava há i × DELAY ms
-      while (j < hist.length - 1 && hist[j].t > target) j++;
-      const a = hist[j], b = hist[j ? j - 1 : 0];    // a = amostra anterior ao alvo, b = a seguinte
-      const k = b.t > a.t ? Math.min(1, Math.max(0, (target - a.t) / (b.t - a.t))) : 0;
-      const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k;
-      const tr = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
-      dots[i].style.transform = tr;
-      if (!i) back.style.transform = tr;
-    }
-  })();
 })();
 
 // Nav: scrolled class + hamburger

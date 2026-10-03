@@ -181,7 +181,7 @@
 
   /* ── 5. Cursor: cresce sobre ligações, estica para uma pill com texto sobre os projetos ── */
   if (finePointer) {
-    var dot = document.querySelector('.cursor-dot');   // a circunferência (os pontos do rasto vêm depois)
+    var dot = document.querySelector('.cursor-dot');   // a circunferência do cursor (criada no main.js)
     if (dot) {
       var layer = dot.parentNode && dot.parentNode.classList.contains('cursor-layer') ? dot.parentNode : null;
       var back = document.querySelector('.cursor-back');

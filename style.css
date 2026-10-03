@@ -1168,8 +1168,8 @@ h3 { font-size: 1.1rem; }
 /* Home: transparente enquanto o vídeo está à vista */
 .page-home .nav.scrolled:not(.nav-solid) { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
-/* ── Cursor: circunferência com um ponto no centro (como a capa do livro do Rick Rubin)
-      + rasto de 3 pontos. O grupo inteiro faz "negativo" sobre o que está por baixo ── */
+/* ── Cursor: circunferência com um ponto no centro (como a capa do livro do Rick Rubin).
+      O grupo faz "negativo" sobre o que está por baixo ── */
 .cursor-layer {
   position: fixed; inset: 0; z-index: 99999; pointer-events: none;
   mix-blend-mode: difference;
@@ -1190,10 +1190,6 @@ h3 { font-size: 1.1rem; }
   border-radius: 50%; background: #fff;
   transition: transform .35s var(--m-ease), opacity .2s ease;
 }
-/* o rasto: 3 pontos iguais ao do centro */
-.cursor-layer .cursor-dot--trail { z-index: 0; width: 5px; height: 5px; border: 0; background: #fff; }
-.cursor-dot--trail::before { content: none; }
-
 /* sobre ligações: a circunferência cresce */
 .cursor-dot.is-link { width: 56px; height: 56px; }
 
@@ -1201,7 +1197,6 @@ h3 { font-size: 1.1rem; }
    o ponto sai e o texto entra em maiúsculas. A largura (--pill-w) é medida pelo motion.js. */
 .cursor-dot.is-view { width: var(--pill-w, 72px); }
 .cursor-dot.is-view::before { opacity: 0; transform: scale(0); }
-.cursor-layer.is-view .cursor-dot--trail { opacity: 0 !important; }   /* a pill fica limpa, sem rasto */
 .cursor-label {
   font-size: 10.5px; font-weight: 600; line-height: 1;
   letter-spacing: .14em; margin-right: -.14em;      /* compensa o espaço depois da última letra */

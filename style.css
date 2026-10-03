@@ -1193,7 +1193,7 @@ h3 { font-size: 1.1rem; }
 /* sobre ligações: a circunferência cresce */
 .cursor-dot.is-link { width: 56px; height: 56px; }
 
-/* sobre os projetos: a circunferência estica na horizontal para uma pill só com contorno,
+/* sobre os projetos: a circunferência estica na horizontal para uma pill só com contorno (sem fundo),
    o ponto sai e o texto entra em maiúsculas. A largura (--pill-w) é medida pelo motion.js. */
 .cursor-dot.is-view { width: var(--pill-w, 72px); }
 .cursor-dot.is-view::before { opacity: 0; transform: scale(0); }
@@ -1204,16 +1204,6 @@ h3 { font-size: 1.1rem; }
   opacity: 0; transition: opacity .12s ease;
 }
 .cursor-dot.is-view .cursor-label { opacity: 1; transition: opacity .3s ease .16s; }
-
-/* fundo escuro por baixo da pill, fora do grupo "negativo": garante que o texto se lê
-   sobre qualquer imagem (o "negativo" sozinho desaparece sobre tons médios) */
-.cursor-back {
-  position: fixed; top: 0; left: 0; z-index: 99998; pointer-events: none;
-  width: 34px; height: 34px; border-radius: 999px;
-  background: rgba(10, 10, 10, .86); opacity: 0;
-  transition: opacity .25s ease, width .6s var(--m-ease);
-}
-.cursor-back.is-view { width: var(--pill-w, 72px); opacity: 1; }
 
 /* ── Base do movimento ── */
 .js [data-reveal] {

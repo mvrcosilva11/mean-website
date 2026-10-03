@@ -97,7 +97,7 @@ if (projeto && window.PROJETOS) {
 
 // Cursor personalizado: circunferência com um ponto no centro, em modo "negativo" (sem rasto).
 // (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto;
-//  sobre os projetos a circunferência estica para uma pill com texto, ver motion.js)
+//  sobre os projetos a circunferência estica para uma pill só com contorno e texto, sem fundo, ver motion.js)
 // A mistura "difference" está no grupo .cursor-layer (ver CSS): branco sobre preto, negativo sobre imagens.
 (function () {
   // ignora em dispositivos touch (não há cursor)
@@ -109,24 +109,13 @@ if (projeto && window.PROJETOS) {
   dot.className = 'cursor-dot';
   dot.style.opacity = 0;
   layer.appendChild(dot);
-  // fundo escuro da pill que aparece sobre os projetos (fica fora do grupo "negativo", ver CSS)
-  const back = document.createElement('div');
-  back.className = 'cursor-back';
-  back.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(back);
   document.body.appendChild(layer);
 
   let visible = false, placed = false;
-  const show = v => {
-    visible = v;
-    dot.style.opacity = v ? 1 : 0;
-    back.style.visibility = v ? '' : 'hidden';
-  };
+  const show = v => { visible = v; dot.style.opacity = v ? 1 : 0; };
   const place = (x, y) => {
     placed = true;
-    const tr = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
-    dot.style.transform = tr;
-    back.style.transform = tr;
+    dot.style.transform = 'translate(' + x + 'px,' + y + 'px) translate(-50%,-50%)';
   };
 
   // ao mudar de página o rato não se mexeu: retoma a posição do último clique

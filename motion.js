@@ -184,7 +184,6 @@
     var dot = document.querySelector('.cursor-dot');   // a circunferência do cursor (criada no main.js)
     if (dot) {
       var layer = dot.parentNode && dot.parentNode.classList.contains('cursor-layer') ? dot.parentNode : null;
-      var back = document.querySelector('.cursor-back');
       var label = document.createElement('span');
       label.className = 'cursor-label';
       dot.appendChild(label);
@@ -194,11 +193,9 @@
           if (label.textContent !== text) label.textContent = text;
           var w = Math.max(64, Math.ceil(label.offsetWidth) + 40) + 'px';
           dot.style.setProperty('--pill-w', w);
-          if (back) back.style.setProperty('--pill-w', w);
         }
         dot.classList.toggle('is-view', on);
         if (layer) layer.classList.toggle('is-view', on);
-        if (back) back.classList.toggle('is-view', on);
       };
       document.addEventListener('mouseover', function (e) {
         var t = e.target.closest ? e.target.closest('[data-cursor]') : null;

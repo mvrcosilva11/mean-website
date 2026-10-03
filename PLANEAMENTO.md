@@ -163,19 +163,19 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 
 | # | Secção | O que a referência tem | Conteúdo MEAN | Estado |
 |---|---|---|---|---|
-| 1 | **Abertura** | Uma frase a dizer quem são, em tipografia gigante. Fila do símbolo da marca repetido. Fotografia grande da equipa. | Frase: "Somos uma agência criativa baseada no Porto. Fazemos branding, web, social media e estratégia. Sem dividir o que devia nascer junto." Fila de círculos M·E·A·N. Fotografia da equipa. | Frase ✅ · Símbolo ✅ · Fotografia ❌ |
-| 2 | **Equipa** | Título, duas linhas sobre as pessoas, grelha de pessoas (retrato, nome, função). | "Falas diretamente com quem faz." Texto de apoio. 2 fundadores. | Texto ✅ · Nomes ❌ · Funções ❌ · Retratos ❌ |
-| 3 | **Clientes** | Título, um parágrafo, 8 logótipos. | "Marcas com quem já trabalhámos." Parágrafo curto. 8 espaços para logótipos. | Título ✏️ · Parágrafo ❌ · Logótipos ❌ |
-| 4 | **Número em destaque** | Uma etiqueta e um número enorme (prémios). | Fora da página até haver um número verdadeiro. | por decidir |
-| 5 | **Manifesto** | Título, parágrafos de introdução, princípios numerados. | "Chamamo-nos MEAN porque temos opinião…", 2 parágrafos, 8 princípios (título + texto). | ✅ |
-| 6 | **O que fazemos (versão completa)** | Disciplinas numeradas: nome, uma frase, lista de serviços. | 5 disciplinas, uma frase cada, listas de 7 a 12 serviços. | Secção ✅ · Listas ✏️ |
-| 7 | **Testemunhos** | Carrossel (citação, nome, cargo), contador e setas. | Carrossel com 3 citações provisórias. | Secção ✅ · Citações ❌ |
-| 8 | **Onde estamos** | Cidade, fotografias do espaço, morada com ligação ao mapa, email. | Porto, morada provisória, email, 3 espaços para fotografias. | Cidade ✅ · Email ✅ · Morada ❌ · Fotografias ❌ |
-| 9 | **Fecho e footer** | Frase final a convidar ao contacto, contactos, redes. | "Não somos para todos. Talvez sejamos para ti." e ligação "Trabalha connosco". Footer igual ao resto do site. | ✅ |
+| 1 | **Abertura** | Uma frase a dizer quem são, em tipografia gigante. | Frase: "Somos uma agência criativa baseada no Porto." | ✅ |
+| 2 | **Clientes** | Título, um parágrafo, 8 logótipos. | "Marcas com quem já trabalhámos." Parágrafo curto. 8 espaços para logótipos. | Título ✏️ · Parágrafo ❌ · Logótipos ❌ |
+| 3 | **Número em destaque** | Uma etiqueta e um número enorme (prémios). | Fora da página até haver um número verdadeiro. | por decidir |
+| 4 | **Manifesto** | Título, parágrafos de introdução, princípios numerados. | "Chamamo-nos MEAN porque temos opinião…", 2 parágrafos, 8 princípios (título + texto). | ✅ |
+| 5 | **O que fazemos (versão completa)** | Disciplinas numeradas: nome, uma frase, lista de serviços. | 5 disciplinas, uma frase cada, listas de 7 a 12 serviços. | Secção ✅ · Listas ✏️ |
+| 6 | **Testemunhos** | Carrossel (citação, nome, cargo), contador e setas. | Carrossel com 3 citações provisórias. | Secção ✅ · Citações ❌ |
+| 7 | **Fecho e footer** | Frase final a convidar ao contacto, contactos, redes. | "Não somos para todos. Talvez sejamos para ti." e ligação "Trabalha connosco". Footer igual ao resto do site. | ✅ |
+
+**Retirado da página a 2026-10-03, por decisão do Marco:** a fila de círculos M·E·A·N e a fotografia da equipa na abertura, a secção Equipa, a secção Onde estamos (dados do estúdio, localização e fotografias), e o resto da frase de abertura ("Fazemos branding, web, social media e estratégia. Sem dividir o que devia nascer junto."). Tudo isto está no histórico do git (commit 72f91f3) se for para recuperar.
 
 ### Como se comporta
 
-- **Abertura:** a frase sobe palavra a palavra. Os círculos M·E·A·N aparecem em sequência. A fotografia abre de baixo para cima.
+- **Abertura:** a frase sobe palavra a palavra.
 - **Manifesto:** a etiqueta e o contador ficam fixos à esquerda. O princípio que está a meio do ecrã fica aceso, os outros apagam-se, e o contador acompanha (01 a 08).
 - **O que fazemos:** os serviços de cada disciplina entram em cascata.
 - **Testemunhos:** setas, contador e teclas de seta do teclado.
@@ -197,19 +197,15 @@ Riscar o que a MEAN não faz e acrescentar o que falta.
 
 ### Conteúdo em falta (o que precisamos de reunir)
 
-- [ ] Fotografia da equipa para a abertura
-- [ ] Nomes, funções e retratos dos 2 fundadores
 - [ ] Lista de clientes e respetivos logótipos (com autorização para os mostrar)
 - [ ] Parágrafo da secção de clientes
 - [ ] Validar as listas de serviços por disciplina
 - [ ] 2 a 3 testemunhos reais (citação, nome, cargo, empresa)
-- [ ] Morada do estúdio e 3 a 4 fotografias do espaço
 
 ### Decisões em aberto
 
-1. **Frase de abertura:** está a do texto original ("Somos uma agência criativa baseada no Porto…"). A versão anterior da página tinha "Onde pessoas com opinião se juntam pelo amor ao ofício.". Confirmar qual fica.
-2. **"A vida na MEAN":** a versão anterior tinha esta secção (3 blocos). Saiu da página porque a referência não a tem. Confirmar se volta.
-3. **Número em destaque:** que número usar, ou não ter a secção.
-4. **Testemunhos e clientes:** se não houver conteúdo real a tempo, estas secções saem até haver.
-5. **Newsletter no footer:** entra? Obriga a ter política de privacidade.
-6. **Idioma:** só português, ou também inglês?
+1. **"A vida na MEAN":** a versão anterior tinha esta secção (3 blocos). Saiu da página porque a referência não a tem. Confirmar se volta.
+2. **Número em destaque:** que número usar, ou não ter a secção.
+3. **Testemunhos e clientes:** se não houver conteúdo real a tempo, estas secções saem até haver.
+4. **Newsletter no footer:** entra? Obriga a ter política de privacidade.
+5. **Idioma:** só português, ou também inglês?

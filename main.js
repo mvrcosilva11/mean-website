@@ -79,13 +79,16 @@ if (projeto && window.PROJETOS) {
   // sem suporte para WebP animado: logo parado
   img.onerror = () => { img.onerror = () => setTimeout(hide, 300); img.src = still; };
   pre.appendChild(img);
-  // O ficheiro vem da cache mas entra como blob: assim a animação recomeça sempre do início.
+  // O ficheiro entra como blob: assim a animação recomeça sempre do início.
   // (um WebP que só toca uma vez pode ficar parado no último frame quando o browser reutiliza a imagem)
-  if (window.fetch && window.URL && URL.createObjectURL) {
-    fetch(anim)
-      .then(r => { if (!r.ok) throw new Error('intro'); return r.blob(); })
-      .then(b => { blobUrl = URL.createObjectURL(b); img.src = blobUrl; })
-      .catch(() => { img.src = anim; });
+  // O script inline da página já começou a descarregá-lo (window.__meanIntro).
+  const canBlob = window.fetch && window.URL && URL.createObjectURL;
+  const blob = window.__meanIntro || (canBlob
+    ? fetch(anim).then(r => { if (!r.ok) throw new Error('intro'); return r.blob(); })
+    : null);
+  if (blob && canBlob) {
+    blob.then(b => { blobUrl = URL.createObjectURL(b); img.src = blobUrl; })
+        .catch(() => { img.src = anim; });
   } else {
     img.src = anim;
   }

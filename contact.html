@@ -7,14 +7,16 @@
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>Contact — MEAN AGENCY</title>
   <meta name="description" content="Fala com a MEAN AGENCY. Branding, web e estratégia — sem rodeios, respondemos em menos de 24h." />
-  <link rel="stylesheet" href="style.css?v=104" />
+  <link rel="stylesheet" href="style.css?v=105" />
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500)})(document.documentElement)</script>
 </head>
 <body class="page-contact">
 
   <!-- LOGO ANIMADO: na 1.ª abertura do site e a cada mudança de página (num recarregamento não aparece) -->
   <div class="preloader" id="preloader" data-duration="1440" data-anim="assets/intro-logo.webp?v=41" data-still="assets/intro-logo.png?v=41"></div>
-  <script>(function(){try{var s=sessionStorage,p=document.getElementById('preloader'),n=s.getItem('mean_nav');s.removeItem('mean_nav');if(s.getItem('mean_intro_seen')&&!n)p.parentNode.removeChild(p)}catch(e){}})()</script>
+  <script>(function(){var p=document.getElementById('preloader');try{var s=sessionStorage,n=s.getItem('mean_nav');s.removeItem('mean_nav');if(s.getItem('mean_intro_seen')&&!n){p.parentNode.removeChild(p);return}}catch(e){}
+  /* começa já a descarregar o logo (antes de o main.js chegar) */
+  if(window.fetch)try{window.__meanIntro=fetch(p.getAttribute('data-anim'),{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()})}catch(e){}})()</script>
 
   <!-- NAV -->
   <header class="nav nav-over">
@@ -161,7 +163,7 @@
     <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=104"></script>
-  <script src="motion.js?v=104"></script>
+  <script src="main.js?v=105"></script>
+  <script src="motion.js?v=105"></script>
 </body>
 </html>

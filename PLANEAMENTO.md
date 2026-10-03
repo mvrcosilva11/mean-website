@@ -34,9 +34,40 @@ Legenda: ✅ temos · ✏️ temos rascunho, falta validar · ❌ falta
 | 0 | **Loading** | (não tem) | Logo MEAN animado sobre vermelho escuro, só na primeira abertura. | ✅ feito |
 | 1 | **Abertura com vídeo** | Vídeo do trabalho em ecrã inteiro, com botão para o ver completo. | Vídeo dos projetos (`assets/work-bg.mp4`, 31 s) em ecrã inteiro, com o menu por cima. | Vídeo ✅ (hoje a home usa outro vídeo, trocar) · O que fica por cima ❌ decidir |
 | 2 | **Frase de apresentação** | Ao descer, uma frase longa em tipografia grande: o que são e porque confiar neles. | Uma frase: quem é a MEAN, o que faz, o que a distingue. Rascunho: "Somos uma agência criativa do Porto, com opinião. Fazemos branding, web, social media e estratégia, sem dividir o que devia nascer junto." | ✏️ |
-| 3 | **Projetos em destaque (4)** | Projetos em blocos grandes: nome, frase curta, tipo de trabalho, setor, imagem ou vídeo, ligação ao caso. | 4 projetos, cada um com nome, frase curta, tipo de trabalho, setor, capa e ligação à página do projeto. Ligação final para o Work. | ❌ (o site ainda não tem nenhum projeto carregado) |
+| 3 | **Projetos em destaque (4)** | Grelha de tamanhos mistos: um bloco grande, dois pequenos ao lado, um a toda a largura. Por baixo de cada imagem: nome, tipo de trabalho, setor. | 4 projetos nessa grelha (ver "Projetos em destaque: grelha" abaixo). Ligação para o Work. | Grelha ✅ definida · Projetos ❌ (o site ainda não tem nenhum carregado) |
 | 4 | **O que fazemos (ramificações)** | Uma linha de introdução e 4 disciplinas, cada uma a abrir numa lista longa de serviços (8 a 14). | As disciplinas da MEAN, cada uma com todos os serviços que oferece. Rascunho abaixo. | Disciplinas ✅ · Listas ✏️ |
 | 5 | **Footer** | Frase final a convidar ao contacto, emails, redes sociais, moradas, newsletter. | Frase "Vamos construir a tua próxima marca, juntos.", menu, email, Porto, Instagram, LinkedIn. | ✅ |
+
+### Projetos em destaque: grelha
+
+Definido a 2026-10-03 a partir da grelha de projetos da homepage da referência.
+
+```
+┌───────────────────────────┐ ┌────────────┐ ┌────────────┐
+│                           │ │            │ │            │
+│         PROJETO 1         │ │ PROJETO 2  │ │ PROJETO 3  │
+│          (grande)         │ │ (pequeno)  │ │ (pequeno)  │
+│                           │ └────────────┘ └────────────┘
+│                           │ Nome     Tipo  Nome     Tipo
+└───────────────────────────┘
+Nome         Tipo       Setor
+
+┌─────────────────────────────────────────────────────────┐
+│                        PROJETO 4                        │
+│                     (largura total)                     │
+└─────────────────────────────────────────────────────────┘
+Nome                      Tipo                       Setor
+```
+
+- **Linha 1:** um bloco grande à esquerda (metade da largura) e dois pequenos à direita, alinhados pelo topo.
+- **Linha 2:** um bloco a toda a largura.
+- **Legenda por baixo de cada imagem:** nome do projeto à esquerda, tipo de trabalho ao centro ou à direita, setor a cinzento (só nos blocos grande e de largura total).
+- **Ao passar o cursor:** o nome dá lugar a uma seta e à frase curta do projeto.
+- **Imagens:** sem cantos arredondados, margens e intervalos estreitos. Cada bloco leva à página do projeto.
+- **Telemóvel:** os blocos empilham numa coluna, pela mesma ordem.
+
+Por projeto precisamos de: nome, frase curta, tipo de trabalho, setor e capa.
+Proporções das capas: bloco grande e pequenos 3:2 (ex.: 1800×1200), bloco de largura total 2:1 (ex.: 2400×1200). Podem ser imagem ou vídeo curto.
 
 ### "O que fazemos": rascunho das ramificações
 
@@ -66,6 +97,8 @@ Sequência rápida de imagens do trabalho, lista de todas as pessoas que passara
 4. **Quinta disciplina:** vídeo, motion e fotografia ficam dentro de Social Media ou passam a disciplina própria?
 5. **"O que fazemos" em duas páginas:** a Home fica com a versão completa (ramificações) e o About com a curta, ou o About deixa de a ter?
 6. **Página Intro:** continua no menu, ou sai agora que a Home é a principal?
+7. **Mesma grelha na página Work:** a grelha de tamanhos mistos repete-se no Work para todos os projetos, ou o Work mantém a lista em linhas?
+8. **Barra flutuante:** a referência tem uma barra fixa no fundo do ecrã com uma frase e um botão para o Work. Entra?
 
 ---
 

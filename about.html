@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>About — MEAN AGENCY</title>
-  <meta name="description" content="A MEAN é uma agência criativa do Porto, com opinião. Quem somos, no que acreditamos e o que fazemos." />
-  <link rel="stylesheet" href="style.css?v=112" />
-  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500)})(document.documentElement)</script>
+  <meta name="description" content="MEAN is an opinionated creative agency from Porto. Who we are, what we believe and what we do." />
+  <link rel="stylesheet" href="style.css?v=113" />
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}if(sessionStorage.getItem('mean_fast')){sessionStorage.removeItem('mean_fast');d.classList.add('is-open','is-fast')}}catch(e){}})(document.documentElement)</script>
 </head>
 <body class="page-about">
 
@@ -18,10 +18,10 @@
   /* começa já a descarregar o logo (antes de o main.js chegar) */
   if(window.fetch)try{window.__meanIntro=fetch(p.getAttribute('data-anim'),{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()})}catch(e){}})()</script>
 
-  <!-- NAV -->
+  <!-- NAV: igual em todas as páginas. Tudo em texto, do mesmo tamanho. -->
   <header class="nav nav-over">
     <div class="nav-left-group">
-      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-branco.png?v=30" alt="MEAN" /></a>
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-mean-white.png?v=113" alt="MEAN" /></a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="work.html">Work</a>
@@ -29,7 +29,8 @@
       </nav>
     </div>
     <div class="nav-right-group">
-      <a href="contact.html" class="btn btn-primary nav-cta">Contact</a>
+      <a href="contact.html" class="nav-cta">Contact</a>
+      <button class="nav-lang" type="button" data-lang-switch aria-label="Mudar para português">PT</button>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -42,16 +43,16 @@
     <!-- 1. ABERTURA -->
     <section class="m-ahero">
       <p class="m-label" data-reveal>About</p>
-      <h1 class="m-ahero-title" data-blur>Somos uma agência criativa baseada no Porto.</h1>
+      <h1 class="m-ahero-title" data-blur>We are a creative agency based in Porto.</h1>
     </section>
 
     <!-- 2. CLIENTES -->
     <section class="m-sec" aria-labelledby="clientes">
-      <div class="m-sec-side"><h2 class="m-label" id="clientes" data-reveal>Clientes</h2></div>
+      <div class="m-sec-side"><h2 class="m-label" id="clientes" data-reveal>Clients</h2></div>
       <div class="m-sec-main">
-        <p class="m-lead" data-split="rise">Marcas com quem já trabalhámos.</p>
-        <p class="m-body" data-reveal>Parágrafo curto sobre os clientes e o tipo de relação que temos com eles. Texto provisório.</p>
-        <div class="m-logos" data-stagger="45"><div class="m-logo" data-reveal>Logótipo 01</div><div class="m-logo" data-reveal>Logótipo 02</div><div class="m-logo" data-reveal>Logótipo 03</div><div class="m-logo" data-reveal>Logótipo 04</div><div class="m-logo" data-reveal>Logótipo 05</div><div class="m-logo" data-reveal>Logótipo 06</div><div class="m-logo" data-reveal>Logótipo 07</div><div class="m-logo" data-reveal>Logótipo 08</div></div>
+        <p class="m-lead" data-split="rise">Brands we've worked with.</p>
+        <p class="m-body" data-reveal>A short paragraph about our clients and the kind of relationship we have with them. Placeholder text.</p>
+        <div class="m-logos" data-stagger="45"><div class="m-logo" data-reveal>Logo 01</div><div class="m-logo" data-reveal>Logo 02</div><div class="m-logo" data-reveal>Logo 03</div><div class="m-logo" data-reveal>Logo 04</div><div class="m-logo" data-reveal>Logo 05</div><div class="m-logo" data-reveal>Logo 06</div><div class="m-logo" data-reveal>Logo 07</div><div class="m-logo" data-reveal>Logo 08</div></div>
       </div>
     </section>
 
@@ -60,68 +61,68 @@
     <!-- 4. MANIFESTO -->
     <section class="m-sec" aria-labelledby="manifesto">
       <div class="m-sec-side m-sec-side--sticky">
-        <h2 class="m-label" id="manifesto" data-reveal>No que acreditamos</h2>
+        <h2 class="m-label" id="manifesto" data-reveal>What we believe</h2>
         <p class="m-mani-count" aria-hidden="true" data-reveal><span id="maniCount">01</span><small>/ 08</small></p>
       </div>
       <div class="m-sec-main">
-        <p class="m-lead" data-split="rise">Chamamo-nos MEAN porque temos opinião e não pedimos desculpa por isso.</p>
-        <p class="m-body" data-reveal>Não acreditamos em marcas que agradam a todos, porque essas normalmente não significam nada para ninguém. Preferimos construir algo com que algumas pessoas se identifiquem completamente a construir algo que ninguém odeie, mas que também ninguém lembre.</p>
-        <p class="m-body" data-reveal>A estratégia entra desde o primeiro dia, não no fim para justificar o resto. Achamos que uma marca sem direção clara é só design bonito à procura de um propósito.</p>
+        <p class="m-lead" data-split="rise">We're called MEAN because we have opinions and we don't apologise for them.</p>
+        <p class="m-body" data-reveal>We don't believe in brands that please everyone, because those usually mean nothing to anyone. We'd rather build something a few people fully identify with than something nobody hates but nobody remembers either.</p>
+        <p class="m-body" data-reveal>Strategy comes in on day one, not at the end to justify the rest. We think a brand without clear direction is just pretty design looking for a purpose.</p>
         <ol class="m-mani" data-focus-list data-focus-counter="#maniCount">
           <li>
             <span class="m-mani-num">01</span>
             <div>
-              <h3 class="m-mani-title">Sem paninhos quentes.</h3>
-              <p class="m-mani-text">Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar uma vez a entregar mediocridade educadamente.</p>
+              <h3 class="m-mani-title">No sugarcoating.</h3>
+              <p class="m-mani-text">If something isn't going to work, we say so before you move ahead. We'd rather bother you once than politely deliver mediocrity.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">02</span>
             <div>
-              <h3 class="m-mani-title">Junto, não aos bocados.</h3>
-              <p class="m-mani-text">Identidade, web, social, estratégia. Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade de uma marca.</p>
+              <h3 class="m-mani-title">Together, not in pieces.</h3>
+              <p class="m-mani-text">Identity, web, social, strategy. Either they're born together or they're born limping. Whoever splits them is selling you half a brand.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">03</span>
             <div>
-              <h3 class="m-mani-title">Discorda de nós.</h3>
-              <p class="m-mani-text">Um brief é um ponto de partida, não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.</p>
+              <h3 class="m-mani-title">Disagree with us.</h3>
+              <p class="m-mani-text">A brief is a starting point, not a bible. You pay us to think with you, not to take dictation.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">04</span>
             <div>
-              <h3 class="m-mani-title">Nada de frases vazias.</h3>
-              <p class="m-mani-text">“Soluções à medida” não diz nada a ninguém. Escrevemos coisas que só fazem sentido ditas por ti. O resto é enchimento.</p>
+              <h3 class="m-mani-title">No empty phrases.</h3>
+              <p class="m-mani-text">“Tailor-made solutions” says nothing to anyone. We write things that only make sense coming from you. The rest is filler.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">05</span>
             <div>
-              <h3 class="m-mani-title">Não somos para todos.</h3>
-              <p class="m-mani-text">Se procuras alguém que concorde sempre contigo, há muitas agências assim. Nós ficamos com quem quer ser desafiado a sério.</p>
+              <h3 class="m-mani-title">We're not for everyone.</h3>
+              <p class="m-mani-text">If you're looking for someone who always agrees with you, there are plenty of agencies like that. We stick with those who want to be truly challenged.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">06</span>
             <div>
-              <h3 class="m-mani-title">Cada marca é um caso.</h3>
-              <p class="m-mani-text">Não temos fórmula, não temos template, não copiamos o que funcionou noutro cliente. O que funcionou lá pode não significar nada aqui.</p>
+              <h3 class="m-mani-title">Every brand is its own case.</h3>
+              <p class="m-mani-text">We have no formula, no template, and we don't copy what worked for another client. What worked there may mean nothing here.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">07</span>
             <div>
-              <h3 class="m-mani-title">Estratégia desde o início.</h3>
-              <p class="m-mani-text">Não é a última página do documento, é a primeira. Se só aparece depois do visual pronto, já chegou tarde.</p>
+              <h3 class="m-mani-title">Strategy from the start.</h3>
+              <p class="m-mani-text">It's not the last page of the document, it's the first. If it only shows up once the visuals are done, it's already late.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">08</span>
             <div>
-              <h3 class="m-mani-title">O nome não é acidente.</h3>
-              <p class="m-mani-text">Escolhemos MEAN a pensar nisto. Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.</p>
+              <h3 class="m-mani-title">The name is no accident.</h3>
+              <p class="m-mani-text">We chose MEAN with this in mind. If you haven't figured out why yet, it's because you haven't worked with us yet.</p>
             </div>
           </li>
         </ol>
@@ -130,48 +131,48 @@
 
     <!-- 5. O QUE FAZEMOS — versão completa, com as ramificações (listas em rascunho) -->
     <section class="m-sec" id="servicos" aria-labelledby="fazemos">
-      <div class="m-sec-side"><h2 class="m-label" id="fazemos" data-reveal>O que fazemos</h2></div>
+      <div class="m-sec-side"><h2 class="m-label" id="fazemos" data-reveal>What we do</h2></div>
       <div class="m-sec-main">
-        <p class="m-lead" data-split="rise">Cinco disciplinas que trabalham como uma só.</p>
+        <p class="m-lead" data-split="rise">Five disciplines working as one.</p>
         <ol class="m-disc">
           <li>
             <span class="m-disc-num">01</span>
             <h3 class="m-disc-name" data-split="rise">Branding</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>Nome, identidade visual, tom de voz. A base que decide como a marca é lembrada — ou esquecida.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Estratégia de marca</li><li data-reveal>Posicionamento</li><li data-reveal>Naming</li><li data-reveal>Identidade visual</li><li data-reveal>Logótipo</li><li data-reveal>Tom de voz</li><li data-reveal>Manual de marca</li><li data-reveal>Rebranding</li><li data-reveal>Embalagem</li><li data-reveal>Materiais impressos</li><li data-reveal>Sinalética</li><li data-reveal>Ilustração</li></ul>
+              <p class="m-disc-pitch" data-reveal>Name, visual identity, tone of voice. The foundation that decides how a brand is remembered — or forgotten.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand strategy</li><li data-reveal>Positioning</li><li data-reveal>Naming</li><li data-reveal>Visual identity</li><li data-reveal>Logo</li><li data-reveal>Tone of voice</li><li data-reveal>Brand guidelines</li><li data-reveal>Rebranding</li><li data-reveal>Packaging</li><li data-reveal>Print materials</li><li data-reveal>Signage</li><li data-reveal>Illustration</li></ul>
             </div>
           </li>
           <li>
             <span class="m-disc-num">02</span>
             <h3 class="m-disc-name" data-split="rise">Web</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>Sites que não são só bonitos. São feitos para funcionar, carregar e converter.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>UX/UI</li><li data-reveal>Web design</li><li data-reveal>Desenvolvimento</li><li data-reveal>Landing pages</li><li data-reveal>E-commerce</li><li data-reveal>Portfólios</li><li data-reveal>SEO</li><li data-reveal>Otimização e performance</li><li data-reveal>Textos para web</li><li data-reveal>Manutenção</li></ul>
+              <p class="m-disc-pitch" data-reveal>Websites that aren't just pretty. They're built to work, load and convert.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>UX/UI</li><li data-reveal>Web design</li><li data-reveal>Development</li><li data-reveal>Landing pages</li><li data-reveal>E-commerce</li><li data-reveal>Portfolios</li><li data-reveal>SEO</li><li data-reveal>Optimisation and performance</li><li data-reveal>Web copywriting</li><li data-reveal>Maintenance</li></ul>
             </div>
           </li>
           <li>
             <span class="m-disc-num">03</span>
             <h3 class="m-disc-name" data-split="rise">Social Media</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>Presença com direção, não posts a preencher o calendário.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Estratégia de conteúdo</li><li data-reveal>Direção de arte</li><li data-reveal>Gestão de redes</li><li data-reveal>Calendário editorial</li><li data-reveal>Design de publicações</li><li data-reveal>Campanhas pagas</li><li data-reveal>Relatórios</li></ul>
+              <p class="m-disc-pitch" data-reveal>Presence with direction, not posts to pad out a calendar.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Content strategy</li><li data-reveal>Art direction</li><li data-reveal>Social media management</li><li data-reveal>Editorial calendar</li><li data-reveal>Post design</li><li data-reveal>Paid campaigns</li><li data-reveal>Reporting</li></ul>
             </div>
           </li>
           <li>
             <span class="m-disc-num">04</span>
-            <h3 class="m-disc-name" data-split="rise">Vídeo, Motion e Fotografia</h3>
+            <h3 class="m-disc-name" data-split="rise">Video, Motion &amp; Photography</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>Imagem pensada para a marca, parada ou em movimento.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Vídeo de marca</li><li data-reveal>Reels e conteúdo curto</li><li data-reveal>Motion design</li><li data-reveal>Animação de logótipo</li><li data-reveal>Fotografia de produto</li><li data-reveal>Fotografia de espaço e equipa</li><li data-reveal>Edição e pós-produção</li></ul>
+              <p class="m-disc-pitch" data-reveal>Imagery made for the brand, still or moving.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand video</li><li data-reveal>Reels and short-form content</li><li data-reveal>Motion design</li><li data-reveal>Logo animation</li><li data-reveal>Product photography</li><li data-reveal>Space and team photography</li><li data-reveal>Editing and post-production</li></ul>
             </div>
           </li>
           <li>
             <span class="m-disc-num">05</span>
-            <h3 class="m-disc-name" data-split="rise">Estratégia</h3>
+            <h3 class="m-disc-name" data-split="rise">Strategy</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>A primeira página, não a última. Direção antes de decoração.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Diagnóstico de marca</li><li data-reveal>Research</li><li data-reveal>Posicionamento</li><li data-reveal>Arquitetura de marca</li><li data-reveal>Plano de comunicação</li><li data-reveal>Campanhas</li><li data-reveal>Consultoria</li></ul>
+              <p class="m-disc-pitch" data-reveal>The first page, not the last. Direction before decoration.</p>
+              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand audit</li><li data-reveal>Research</li><li data-reveal>Positioning</li><li data-reveal>Brand architecture</li><li data-reveal>Communication plan</li><li data-reveal>Campaigns</li><li data-reveal>Consulting</li></ul>
             </div>
           </li>
         </ol>
@@ -180,27 +181,27 @@
 
     <!-- 6. TESTEMUNHOS (provisórios) -->
     <section class="m-sec" aria-labelledby="testemunhos">
-      <div class="m-sec-side"><h2 class="m-label" id="testemunhos" data-reveal>Testemunhos</h2></div>
+      <div class="m-sec-side"><h2 class="m-label" id="testemunhos" data-reveal>Testimonials</h2></div>
       <div class="m-sec-main">
-        <div class="m-quotes" data-slider data-reveal tabindex="0" aria-roledescription="carrossel" aria-label="Testemunhos de clientes">
+        <div class="m-quotes" data-slider data-reveal tabindex="0" aria-roledescription="carrossel" aria-label="Client testimonials">
           <div class="m-quotes-stage">
             <figure class="m-quote" data-slide>
-              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
-              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+              <blockquote>“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”</blockquote>
+              <figcaption><strong>Client name</strong>Role, Company</figcaption>
             </figure>
             <figure class="m-quote" data-slide>
-              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
-              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+              <blockquote>“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”</blockquote>
+              <figcaption><strong>Client name</strong>Role, Company</figcaption>
             </figure>
             <figure class="m-quote" data-slide>
-              <blockquote>“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”</blockquote>
-              <figcaption><strong>Nome do cliente</strong>Cargo, Empresa</figcaption>
+              <blockquote>“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”</blockquote>
+              <figcaption><strong>Client name</strong>Role, Company</figcaption>
             </figure>
           </div>
           <div class="m-quotes-nav">
             <span class="m-quotes-count" data-count>01 — 03</span>
-            <button class="m-btn-round" type="button" data-prev aria-label="Testemunho anterior">←</button>
-            <button class="m-btn-round" type="button" data-next aria-label="Testemunho seguinte">→</button>
+            <button class="m-btn-round" type="button" data-prev aria-label="Previous testimonial">←</button>
+            <button class="m-btn-round" type="button" data-next aria-label="Next testimonial">→</button>
           </div>
         </div>
       </div>
@@ -208,52 +209,49 @@
 
     <!-- 7. FECHO -->
     <section class="m-cta">
-      <h2 class="m-cta-title" data-split="rise">Não somos para todos. Talvez sejamos para ti.</h2>
-      <a class="m-link" href="contact.html" data-reveal style="--d: 200ms">Trabalha connosco <span class="m-arrow" aria-hidden="true">→</span></a>
+      <h2 class="m-cta-title" data-split="rise">We're not for everyone. Maybe we're for you.</h2>
+      <a class="m-link" href="contact.html" data-reveal style="--d: 200ms">Work with us <span class="m-arrow" aria-hidden="true">→</span></a>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer footer-dark ft">
-    <div class="ft-top">
-      <p class="ft-statement">Vamos construir a tua próxima marca, juntos.</p>
-      <nav class="ft-nav">
-        <div class="ft-col">
-          <span class="ft-col-title">Estúdio</span>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="work.html">Work</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div class="ft-col">
-          <span class="ft-col-title">Serviços</span>
-          <ul>
-            <li><span>Branding</span></li>
-            <li><span>Web</span></li>
-            <li><span>Social Media</span></li>
-            <li><span>Vídeo, Motion e Fotografia</span></li>
-            <li><span>Estratégia</span></li>
-          </ul>
-        </div>
-      </nav>
-    </div>
-    <div class="ft-bottom">
-      <div class="ft-bottom-left">
-        <a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
-        <span>Porto, Portugal</span>
+  <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
+  <footer class="m-foot">
+    <div class="m-foot-in">
+      <div class="m-foot-top">
+        <a class="m-foot-name" href="index.html">MEAN Agency</a>
+        <p class="m-foot-desc"><span>Creative agency.</span><span>Porto, Portugal.</span><span>2026 © MEAN Agency.</span><span>All rights reserved.</span></p>
+        <nav class="m-foot-nav" aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="work.html">Work</a>
+          <a href="about.html" aria-current="page">About</a>
+          <a href="contact.html">Contact</a>
+        </nav>
       </div>
-      <div class="ft-social">
-        <a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-white.png?v=113" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
+      <div class="m-foot-bottom">
+        <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
+        <a class="m-foot-link" href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="m-foot-blocks">
+          <div class="m-foot-block">
+            <h3>Contact</h3>
+            <p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a><span>We reply within 24h</span></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Studio</h3>
+            <p><span>Porto, Portugal</span></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Services</h3>
+            <p><span>Branding</span><span>Web</span><span>Social Media</span><span>Video, Motion &amp; Photography</span><span>Strategy</span></p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="ft-copy">2026 © MEAN AGENCY</div>
   </footer>
 
-  <script src="main.js?v=112"></script>
-  <script src="motion.js?v=112"></script>
+  <script src="i18n.js?v=113"></script>
+  <script src="main.js?v=113"></script>
+  <script src="motion.js?v=113"></script>
 </body>
 </html>

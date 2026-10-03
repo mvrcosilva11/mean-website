@@ -1,3 +1,6 @@
+// Textos escritos por JavaScript passam por aqui: em PT vêm do i18n.js, em EN ficam como estão.
+const meanT = s => (window.t ? window.t(s) : s);   // (nome próprio: o Lenis usa "T" no âmbito global)
+
 // Live clock in the header (HH:MM:SS)
 const clock = document.getElementById('clock');
 if (clock) {
@@ -30,7 +33,7 @@ if (projeto && window.PROJETOS) {
       wrap.appendChild(im);
     });
   } else {
-    projeto.querySelector('.projeto-name').textContent = 'Projeto não encontrado';
+    projeto.querySelector('.projeto-name').textContent = meanT('Project not found');
   }
   // Horizontal scroll + progress bar
   const scroller = document.getElementById('projeto-scroll');
@@ -318,26 +321,26 @@ if (form) form.addEventListener('submit', e => {
 
   if (!name || !email || !message) {
     feedback.classList.add('error');
-    feedback.textContent = 'Por favor preenche todos os campos.';
+    feedback.textContent = meanT('Please fill in all fields.');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     feedback.classList.add('error');
-    feedback.textContent = 'Email inválido.';
+    feedback.textContent = meanT('Invalid email.');
     return;
   }
 
   // Simulate send (replace with real endpoint if needed)
   const btn = form.querySelector('button[type="submit"]');
   btn.disabled = true;
-  btn.textContent = 'A enviar…';
+  btn.textContent = meanT('Sending…');
 
   setTimeout(() => {
     form.reset();
     btn.disabled = false;
-    btn.textContent = 'Enviar mensagem';
+    btn.textContent = meanT('Send message');
     feedback.classList.add('success');
-    feedback.textContent = 'Mensagem enviada! Responderei em breve.';
+    feedback.textContent = meanT("Message sent! We'll reply soon.");
     setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 5000);
   }, 1200);
 });

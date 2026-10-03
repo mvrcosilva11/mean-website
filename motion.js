@@ -143,15 +143,21 @@
   });
   var heroPaused = false;
 
+  // Home: o primeiro troço de scroll ("pista") move só o header, do meio do ecrã até ao topo.
+  // A página (a folha que sobe sobre o vídeo) só começa a andar depois disso.
+  var isHome = !!hero && document.body.classList.contains('page-home');
+  function heroRun() {
+    if (!isHome || !nav) return 0;
+    return Math.max(0, ((hero.offsetHeight || window.innerHeight) - nav.offsetHeight) / 2);
+  }
   function updateHero(y) {
     if (!hero) return;
     var h = hero.offsetHeight || window.innerHeight;
-    var p = clamp(y / h, 0, 1);
+    var p = clamp((y - heroRun()) / h, 0, 1);
     if (!reduce) {
       hero.style.setProperty('--hero-s', (1 + p * 0.08).toFixed(4));
       hero.style.setProperty('--hero-dim', (p * 0.72).toFixed(3));
     }
-    if (nav) nav.classList.toggle('nav-solid', y > h - 80);
     if (heroVideo && !reduce) {           // não gastar bateria com o vídeo tapado
       if (p >= 1 && !heroPaused) { heroVideo.pause(); heroPaused = true; }
       else if (p < 1 && heroPaused) { var pr = heroVideo.play(); if (pr && pr.catch) pr.catch(function () {}); heroPaused = false; }
@@ -165,10 +171,14 @@
       var r = s.el.getBoundingClientRect();
       var start = vh * 0.86, end = vh * 0.42;
       var p = clamp((start - r.top) / (r.height + start - end), 0, 1);
-      var n = Math.round(p * (s.el._lines || 1));          // quantas linhas já acenderam
-      if (n === s.n) return;
-      s.n = n;
-      for (var i = 0; i < s.words.length; i++) s.words[i].classList.toggle('on', s.words[i]._line < n);
+      var front = p * ((s.el._lines || 1) + 0.6);          // "frente" de luz que percorre as linhas
+      var key = Math.round(front * 24);
+      if (key === s.n) return;
+      s.n = key;
+      for (var i = 0; i < s.words.length; i++) {
+        var lit = clamp(front - s.words[i]._line, 0, 1);  // 0 = por acender, 1 = acesa
+        s.words[i].style.setProperty('--o', (0.26 + 0.74 * lit).toFixed(2));
+      }
     });
   }
 
@@ -192,27 +202,75 @@
     });
   }
 
-  // Home: o header abre a meio do ecrã e sobe com o scroll, ao ritmo da página, até prender no topo.
+  // Home: o header abre a meio do ecrã; o scroll leva-o até ao topo, onde fica preso.
   // Com o menu do telemóvel aberto fica no topo, para o painel não o tapar.
-  var isHome = !!hero && document.body.classList.contains('page-home');
   function updateNav(y) {
     if (!nav || !isHome) return;
     var menuOpen = navLinks && navLinks.classList.contains('open');
-    var h = hero.offsetHeight || window.innerHeight;
-    var top = menuOpen ? 0 : Math.max(0, (h - nav.offsetHeight) / 2 - y);
+    var top = menuOpen ? 0 : Math.max(0, heroRun() - y);
     nav.style.setProperty('--nav-y', top.toFixed(1) + 'px');
   }
+  // Menu do telemóvel: enquanto está aberto, a nav deixa o "negativo" (o painel tem de ser opaco)
   var navToggle = document.querySelector('.nav-toggle');
-  if (navToggle && isHome) {
+  if (nav && navToggle) {
     var dockTimer = 0;
-    var dock = function () {
+    var syncMenu = function () {
+      nav.classList.toggle('nav--menu', !!(navLinks && navLinks.classList.contains('open')));
+      if (!isHome) return;
       nav.classList.add('nav--docking');
       updateNav(window.scrollY);
       clearTimeout(dockTimer);
-      dockTimer = setTimeout(function () { nav.classList.remove('nav--docking'); }, 600);
+      dockTimer = setTimeout(function () { nav.classList.remove('nav--docking'); }, 650);
     };
-    navToggle.addEventListener('click', dock);
-    if (navLinks) navLinks.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) dock(); });
+    navToggle.addEventListener('click', syncMenu);
+    if (navLinks) navLinks.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) syncMenu(); });
+  }
+
+  /* ── 4b. Home: sobre o vídeo, o header fica branco ou preto conforme o brilho do vídeo por baixo ──
+     (sem sombras e sem "negativo", que tinge o texto de cores sobre imagem). Lê uma miniatura do
+     vídeo algumas vezes por segundo. Fora do vídeo, a nav volta ao "negativo" normal do CSS. */
+  var navGroups = nav ? [nav.querySelector('.nav-left-group'), nav.querySelector('.nav-right-group')] : [];
+  var sheet = document.querySelector('.m-sheet');
+  var toneCanvas = null, toneCtx = null, toneOK = true;
+  function sampleTone() {
+    if (!toneOK) return;
+    var on = root.classList.contains('is-open') && !nav.classList.contains('nav--menu') &&
+             (!sheet || sheet.getBoundingClientRect().top > nav.getBoundingClientRect().bottom - 4);
+    nav.classList.toggle('nav--onvideo', on);
+    if (!on) { navGroups.forEach(function (g) { if (g) g.classList.remove('is-dark'); }); return; }
+    if (heroVideo.readyState < 2 || document.hidden) return;
+    try {
+      if (!toneCanvas) {
+        toneCanvas = document.createElement('canvas'); toneCanvas.width = 64; toneCanvas.height = 36;
+        toneCtx = toneCanvas.getContext('2d', { willReadFrequently: true });
+      }
+      toneCtx.drawImage(heroVideo, 0, 0, 64, 36);
+      var vw = heroVideo.videoWidth || 16, vh = heroVideo.videoHeight || 9;
+      var W = hero.clientWidth, H = hero.clientHeight;
+      var k = Math.max(W / vw, H / vh);                       // object-fit: cover
+      var offX = (vw * k - W) / 2, offY = (vh * k - H) / 2;
+      var dim = parseFloat(hero.style.getPropertyValue('--hero-dim')) || 0;
+      navGroups.forEach(function (g) {
+        if (!g) return;
+        var r = g.getBoundingClientRect();
+        var x0 = clamp(Math.floor((r.left + offX) / (vw * k) * 64), 0, 63), x1 = clamp(Math.ceil((r.right + offX) / (vw * k) * 64), x0 + 1, 64);
+        var y0 = clamp(Math.floor((r.top - 4 + offY) / (vh * k) * 36), 0, 35), y1 = clamp(Math.ceil((r.bottom + 4 + offY) / (vh * k) * 36), y0 + 1, 36);
+        var d = toneCtx.getImageData(x0, y0, x1 - x0, y1 - y0).data, sum = 0;
+        for (var i = 0; i < d.length; i += 4) sum += 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+        var lum = sum / (d.length / 4) / 255 * (1 - dim);
+        var dark = g.classList.contains('is-dark');
+        if (!dark && lum > 0.56) g.classList.add('is-dark');         // fundo claro → texto preto
+        else if (dark && lum < 0.44) g.classList.remove('is-dark');  // fundo escuro → texto branco
+      });
+    } catch (e) { toneOK = false; nav.classList.remove('nav--onvideo'); }
+  }
+  if (isHome && nav && heroVideo) setInterval(sampleTone, 160);
+
+  /* ── 4c. O header sai de cena quando o footer chega ao topo (o footer tem o seu próprio menu) ── */
+  var foot = document.querySelector('.m-foot');
+  function updateFoot() {
+    if (!nav || !foot) return;
+    nav.classList.toggle('nav--away', foot.getBoundingClientRect().top < nav.offsetHeight + 46);
   }
 
   var ticking = false;
@@ -221,7 +279,7 @@
     ticking = true;
     requestAnimationFrame(function () {
       var y = window.scrollY;
-      updateHero(y); updateScrub(); updateFocus(); updateNav(y);
+      updateHero(y); updateScrub(); updateFocus(); updateNav(y); updateFoot();
       ticking = false;
     });
   }
@@ -291,8 +349,9 @@
   });
 
   /* ── 6b. Abertura da Home ──
-     Ecrã em branco, bloco pequeno ao centro com o vídeo, que alarga e cresce até ocupar o ecrã
-     (a coreografia está no CSS: @keyframes m-open). Aqui só se marca o fim, com .is-open no <html>. */
+     Ecrã em branco, depois o vídeo abre de uma janela pequena ao centro, que alarga e cresce até
+     ocupar o ecrã (a coreografia está no CSS: @keyframes m-open). Aqui só se marca o fim, com .is-open
+     no <html>. Se a página chegar já com .is-open (troca de língua), a abertura não se repete. */
   var heroMedia = hero ? hero.querySelector('.m-hero-media') : null;
   var opened = function () { root.classList.add('is-open'); };
   if (!heroMedia || reduce) opened();
@@ -318,7 +377,7 @@
     onScroll();
     if (heroMedia && !reduce) {
       heroMedia.addEventListener('animationend', function (e) { if (e.animationName === 'm-open') opened(); });
-      setTimeout(opened, 2900);   // segurança
+      setTimeout(opened, 3500);   // segurança
     }
   }
   var pre = document.getElementById('preloader');

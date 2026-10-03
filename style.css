@@ -1161,8 +1161,6 @@ h3 { font-size: 1.1rem; }
 /* ── Nav: alinhada à margem da página, sempre à vista ── */
 .nav { padding: 0 var(--m-gut); }
 .nav-links a[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1.5px; }
-/* Home: transparente enquanto o vídeo está à vista */
-.page-home .nav.scrolled:not(.nav-solid) { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
 /* ── Cursor: circunferência com um ponto no centro (como a capa do livro do Rick Rubin).
       O grupo faz "negativo" sobre o que está por baixo ── */
@@ -1545,48 +1543,65 @@ h3 { font-size: 1.1rem; }
   --m-display: clamp(2.9rem, 9.4vw, 13.5rem);     /* títulos de página: ocupam a largura do ecrã */
 }
 
-/* ── Nav: detalhe pequeno e apertado ── */
-.nav-left-group { gap: 2rem; }
-.nav-logo { height: 20px; }
-.nav-links { gap: 1.35rem; }
-.nav-links a { font-size: .8125rem; font-weight: 500; letter-spacing: -.02em; }
-.nav-cta { padding: .42rem 1rem; font-size: .78rem; }
-/* O desfoque do fundo vive num pseudo-elemento. Com backdrop-filter na própria .nav, o painel do menu
-   no telemóvel (position: fixed) ficava preso à barra e abria sem fundo depois de descer a página. */
-.nav.scrolled { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
-.nav.scrolled::before {
-  content: ""; display: block; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: rgba(10, 10, 10, .82); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+/* ── Nav: tudo em texto, do mesmo tamanho, sem fundo e sem pill.
+      Usa "negativo" (difference): lê-se sobre o vídeo, sobre imagens e sobre texto, sem sombras. ── */
+.nav, .nav.scrolled, .nav.nav-over {
+  background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; border: 0;
+  mix-blend-mode: difference;
 }
-.page-home .nav.scrolled:not(.nav-solid)::before { display: none; }
+.nav.nav--menu, .nav.scrolled.nav--menu { mix-blend-mode: normal; background: var(--bg); }   /* menu aberto no telemóvel: painel opaco */
+/* sobre o vídeo da Home: sem "negativo"; branco ou preto conforme o brilho do vídeo (motion.js) */
+.nav.nav--onvideo { mix-blend-mode: normal; }
+.nav--onvideo .nav-links a, .nav--onvideo .nav-cta, .nav--onvideo .nav-lang { transition: color .3s linear; }
+.nav--onvideo .nav-logo { transition: filter .3s linear; }
+.nav--onvideo .nav-toggle span { transition: background-color .3s linear, transform .3s var(--ease), opacity .3s; }
+.nav.nav--onvideo .is-dark a, .nav.nav--onvideo .is-dark a:hover, .nav.nav--onvideo .is-dark a[aria-current="page"],
+.nav.nav--onvideo .is-dark .nav-lang { color: #0a0a0a; }
+.nav--onvideo .is-dark .nav-logo { filter: invert(1); }
+.nav--onvideo .is-dark .nav-toggle span { background: #0a0a0a; }
+/* o header sai de cena quando o footer chega ao topo */
+.nav { transition: opacity .3s linear; }
+.nav.nav--away { opacity: 0; pointer-events: none; }
+.nav-left-group { gap: 2rem; }
+.nav-right-group { gap: 1.35rem; }
+.nav-logo { height: 15px; }
+.nav-links { gap: 1.35rem; }
+.nav-links a, .nav-cta, .nav-lang {
+  font: inherit; font-size: .8125rem; font-weight: 500; line-height: 1; letter-spacing: -.02em;
+  color: #fff; text-decoration: none;
+}
+.nav-cta, .nav-lang { display: inline-block; padding: 0; margin: 0; background: none; border: 0; border-radius: 0; }
+.nav-lang { cursor: pointer; }
+.nav-links a:hover, .nav-cta:hover, .nav-lang:hover,
+.nav-links a[aria-current="page"], .nav-cta[aria-current="page"] {
+  color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px;
+}
+.nav-toggle span { background: #fff; }
+.nav-links a:focus-visible, .nav-cta:focus-visible, .nav-lang:focus-visible, .nav-logo-link:focus-visible { outline: 1px solid #fff; outline-offset: 4px; }
 @media (max-width: 768px) {
   .nav-links a { font-size: 1.5rem; letter-spacing: -.03em; }   /* menu aberto no telemóvel */
 }
 /* entrada: os elementos do menu sobem um a um quando a página abre */
 .js:not(.is-ready) .nav-logo-link, .js:not(.is-ready) .nav-links a,
-.js:not(.is-ready) .nav-cta, .js:not(.is-ready) .nav-toggle { opacity: 0; }
-.js.is-ready .nav-logo-link, .js.is-ready .nav-links a, .js.is-ready .nav-cta, .js.is-ready .nav-toggle {
-  animation: m-nav-in .95s var(--m-ease) backwards;
+.js:not(.is-ready) .nav-cta, .js:not(.is-ready) .nav-lang, .js:not(.is-ready) .nav-toggle { opacity: 0; }
+.js.is-ready .nav-logo-link, .js.is-ready .nav-links a, .js.is-ready .nav-cta, .js.is-ready .nav-lang, .js.is-ready .nav-toggle {
+  animation: m-nav-in 1.1s var(--m-ease) backwards; animation-delay: var(--nav-d, 0ms);
 }
-.js.is-ready .nav-links a:nth-child(1) { animation-delay: 70ms; }
-.js.is-ready .nav-links a:nth-child(2) { animation-delay: 140ms; }
-.js.is-ready .nav-links a:nth-child(3) { animation-delay: 210ms; }
-.js.is-ready .nav-cta { animation-delay: 280ms; }
-.js.is-ready .nav-toggle { animation-delay: 340ms; }
-@keyframes m-nav-in { from { opacity: 0; transform: translate3d(0, 14px, 0); } }
+.nav-links a:nth-child(1) { --nav-d: 60ms; }
+.nav-links a:nth-child(2) { --nav-d: 120ms; }
+.nav-links a:nth-child(3) { --nav-d: 180ms; }
+.nav-cta { --nav-d: 240ms; }
+.nav-lang { --nav-d: 300ms; }
+.nav-toggle { --nav-d: 360ms; }
+@keyframes m-nav-in { from { opacity: 0; transform: translate3d(0, 12px, 0); } }
 
-/* Home: o header abre a meio do ecrã, sobre o vídeo; com o scroll sobe ao ritmo da página
-   e fica preso no topo. A posição (--nav-y) é atualizada pelo motion.js. */
+/* Home: o header abre a meio do ecrã, sobre o vídeo. O primeiro scroll move só o header até ao topo;
+   só depois a página começa a andar (ver .m-sheet mais abaixo). A posição (--nav-y) vem do motion.js. */
 .js .page-home .nav { top: calc(50vh - var(--nav-h) / 2); top: var(--nav-y, calc(50svh - var(--nav-h) / 2)); }
-.js .page-home .nav.nav--docking { transition: top .55s var(--m-ease), border-color .3s var(--ease), background .3s var(--ease); }
-/* faixa escura muito leve atrás do header, para se ler sobre frames claros do vídeo */
-.js .page-home .nav::after {
-  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 36vh; transform: translateY(-50%);
-  z-index: -1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0), rgba(0, 0, 0, .34) 50%, rgba(0, 0, 0, 0));
-  transition: opacity .3s var(--ease);
-}
-.js .page-home .nav.nav-solid::after { opacity: 0; }
+.js .page-home .nav.nav--docking { transition: top .6s var(--m-ease), opacity .3s linear; }
+
+/* língua: enquanto o português não é aplicado, a página não aparece (evita ver o inglês a piscar) */
+html.i18n-wait body { visibility: hidden; }
 
 /* ── Hovers imediatos ── */
 .m-link { font-size: var(--m-text); letter-spacing: -.02em; transition: color .12s linear; }
@@ -1607,8 +1622,8 @@ h3 { font-size: 1.1rem; }
   transition: transform 1.15s var(--m-ease);
   transition-delay: calc(var(--i, 0) * 90ms + var(--d, 0ms));
 }
-/* acende linha a linha com o scroll */
-.js [data-split="scrub"] .wi { opacity: .26; transition: opacity .45s ease; }
+/* acende linha a linha com o scroll (a opacidade de cada linha vem do motion.js, em contínuo) */
+.js [data-split="scrub"] .wi { opacity: var(--o, .26); transition: opacity .25s linear; }
 /* títulos de página: entram desfocados e ganham foco */
 .js [data-blur] {
   opacity: 0; filter: blur(.16em); transform: translate3d(0, .05em, 0);
@@ -1618,37 +1633,32 @@ h3 { font-size: 1.1rem; }
 .js [data-blur].is-in { opacity: 1; filter: blur(0); transform: none; }
 
 /* ── Home: abertura ──
-   Depois do logo animado fica um ecrã em branco. Ao centro aparece um bloco vermelho pequeno, o vermelho
-   recolhe e mostra o vídeo, o bloco alarga e cresce até ocupar o ecrã inteiro. Só então entra o header.
+   Depois do logo animado fica um ecrã em branco, limpo. A seguir o vídeo abre a partir de uma janela
+   pequena ao centro: a janela desenrola-se, alarga e cresce até ocupar o ecrã inteiro. Só então entra
+   o header. É tudo clip-path e transform (sem mexer no tamanho do vídeo), para correr liso no Safari.
    O motion.js põe .is-open no <html> quando a abertura acaba. */
-.m-hero::before { display: none; }                     /* o escurecimento passou para a faixa do header */
-.m-hero-media { overflow: hidden; }
+.m-hero::before { display: none; }
 .js .m-hero-video { opacity: 1; transform: none; transition: none; }
-.js .page-home { --ob1: max(7.1vw, 46px); --ob2: 26vw; }      /* meia largura do bloco: em pé, depois deitado */
+.js .page-home { --ob1: max(7.1vw, 46px); --ob2: 26vw; }      /* meia largura da janela: em pé, depois deitada */
 .js:not(.is-open) .page-home .m-hero { background: var(--brand-white, #f4f4f1); }
-.js:not(.is-ready) .page-home .m-hero-media { inset: calc(50% - 25vh) calc(50% - var(--ob1)); border-radius: 12px; opacity: 0; }
-.js.is-ready:not(.is-open) .page-home .m-hero-media { animation: m-open 2.45s linear both; }
+.js:not(.is-ready) .page-home .m-hero-media {
+  clip-path: inset(25% calc(50% - var(--ob1)) 75% calc(50% - var(--ob1)) round 12px);
+}
+.js:not(.is-ready) .page-home .m-hero-video { transform: scale(1.2); }
+.js.is-ready:not(.is-open) .page-home .m-hero-media { animation: m-open 2.4s linear .62s both; }
+.js.is-ready:not(.is-open) .page-home .m-hero-video { animation: m-open-zoom 2.4s cubic-bezier(.33, 0, .15, 1) .62s both; }
 @keyframes m-open {
-  0%   { inset: calc(50% - 25vh) calc(50% - var(--ob1)); border-radius: 12px; opacity: 0; transform: scale(.94); animation-timing-function: cubic-bezier(.19, 1, .22, 1); }
-  10%  { opacity: 1; transform: none; }
-  44%  { inset: calc(50% - 25vh) calc(50% - var(--ob1)); border-radius: 12px; opacity: 1; transform: none; animation-timing-function: cubic-bezier(.77, 0, .175, 1); }
-  66%  { inset: calc(50% - 25vh) calc(50% - var(--ob2)); border-radius: 12px; opacity: 1; transform: none; animation-timing-function: cubic-bezier(.77, 0, .175, 1); }
-  100% { inset: 0px 0px; border-radius: 0px; opacity: 1; transform: none; }
+  0%   { clip-path: inset(25% calc(50% - var(--ob1)) 75% calc(50% - var(--ob1)) round 12px); animation-timing-function: cubic-bezier(.65, 0, .2, 1); }
+  27%  { clip-path: inset(25% calc(50% - var(--ob1)) 25% calc(50% - var(--ob1)) round 12px); animation-timing-function: cubic-bezier(.7, 0, .2, 1); }
+  60%  { clip-path: inset(25% calc(50% - var(--ob2)) 25% calc(50% - var(--ob2)) round 12px); animation-timing-function: cubic-bezier(.75, 0, .15, 1); }
+  100% { clip-path: inset(0% 0% 0% 0% round 0px); }
 }
-/* o bloco começa vermelho; o vermelho recolhe de cima para baixo e deixa ver o vídeo */
-.js:not(.is-open) .page-home .m-hero-media::before {
-  content: ""; position: absolute; inset: 0; z-index: 1; background: var(--accent); transform-origin: 50% 100%;
-}
-.js.is-ready:not(.is-open) .page-home .m-hero-media::before { animation: m-open-red 2.45s linear both; }
-@keyframes m-open-red {
-  0%, 22% { transform: scaleY(1); animation-timing-function: cubic-bezier(.77, 0, .175, 1); }
-  42%, 100% { transform: scaleY(0); }
-}
+@keyframes m-open-zoom { from { transform: scale(1.2); } to { transform: scale(1); } }
 /* grão de película, suave, por cima do vídeo */
 .m-hero-media::after {
   content: ""; position: absolute; inset: -64px; z-index: 2; pointer-events: none;
   background: url("assets/grain.webp") 0 0 / 180px 180px;
-  opacity: .34;
+  opacity: .2;
   animation: m-grain .64s steps(1, end) infinite;
 }
 @keyframes m-grain {
@@ -1662,13 +1672,13 @@ h3 { font-size: 1.1rem; }
   87.5% { transform: translate3d(48px, -41px, 0); }
 }
 /* na Home o header só entra quando o vídeo já ocupa o ecrã */
-.js.is-ready .page-home .nav-logo-link { animation-delay: 2300ms; }
-.js.is-ready .page-home .nav-links a:nth-child(1) { animation-delay: 2370ms; }
-.js.is-ready .page-home .nav-links a:nth-child(2) { animation-delay: 2440ms; }
-.js.is-ready .page-home .nav-links a:nth-child(3) { animation-delay: 2510ms; }
-.js.is-ready .page-home .nav-cta { animation-delay: 2580ms; }
-.js.is-ready .page-home .nav-toggle { animation-delay: 2640ms; }
-.js:not(.is-open) .page-home .nav::after { opacity: 0; }
+.js.is-ready:not(.is-fast) .page-home .nav-logo-link,
+.js.is-ready:not(.is-fast) .page-home .nav-links a,
+.js.is-ready:not(.is-fast) .page-home .nav-cta,
+.js.is-ready:not(.is-fast) .page-home .nav-lang,
+.js.is-ready:not(.is-fast) .page-home .nav-toggle { animation-delay: calc(2650ms + var(--nav-d, 0ms)); }
+/* primeiro scroll: a página só começa a subir depois de o header chegar ao topo */
+.js .page-home .m-sheet { margin-top: calc(50vh - var(--nav-h) / 2); margin-top: calc(50svh - var(--nav-h) / 2); }
 
 /* ── Home: frase de apresentação — bloco alto e estreito à esquerda ── */
 .m-statement { padding: var(--m-sec) var(--m-gut); row-gap: clamp(1.25rem, 2vw, 2rem); }
@@ -1788,6 +1798,67 @@ h3 { font-size: 1.1rem; }
   .js [data-blur], .js .m-label .m-ch, .js .m-label[data-reveal]::before {
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
-  .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
+  .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-lang, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
+  .js .page-home .m-hero-media, .js .page-home .m-hero-video { clip-path: none !important; transform: none !important; animation: none !important; }
   .m-hero-media::after { animation: none; }
+}
+
+/* ============================================================
+   FOOTER — proporções de esrbespoke.au, identidade MEAN
+   Ecrã inteiro a preto, texto e logo a branco. Texto a 14 px com entrelinha de 14 px, em maiúsculas
+   espaçadas; grelha de 12 colunas com 16 px de intervalo; margens de 28 px (cima/baixo) e 32 px (lados);
+   logo com 32% da largura do ecrã, a meio da altura; contactos em baixo, a partir da 9.ª coluna.
+   Em ecrãs largos o footer está preso ao ecrã e é revelado pela página a subir.
+   ============================================================ */
+.m-foot { position: relative; background: #000; color: #fff; }
+.m-foot-in {
+  display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
+  padding: 28px 32px; background: #000; color: #fff;
+  font-size: 14px; line-height: 14px; font-weight: 400; letter-spacing: .09em; text-transform: uppercase;
+}
+.m-foot a { color: inherit; text-decoration: none; }
+.m-foot a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.m-foot-top, .m-foot-bottom {
+  flex: 1 1 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 16px;
+}
+.m-foot-top { align-items: start; }
+.m-foot-bottom { align-items: end; }
+.m-foot-name { grid-column: 1 / span 3; justify-self: start; }
+.m-foot-desc { grid-column: 4 / span 4; }
+.m-foot-desc span, .m-foot-block p > * { display: block; }
+.m-foot-nav { grid-column: 9 / span 3; display: grid; row-gap: 3.5px; justify-items: start; }
+.m-foot-nav a { position: relative; }
+.m-foot-nav a[aria-current="page"]::before {                 /* quadrado que marca a página atual */
+  content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: #fff;
+}
+.m-foot-logo { display: block; flex: none; width: 32vw; }
+.m-foot-logo img { display: block; width: 100%; height: auto; }
+.m-foot a.m-foot-logo:hover { text-decoration: none; }
+.m-foot-social { grid-column: 1 / span 3; justify-self: start; }
+.m-foot-link { grid-column: 4 / span 3; justify-self: start; }
+.m-foot-blocks { grid-column: 9 / -1; display: grid; row-gap: 32px; }
+.m-foot-block h3 { margin: 0 0 14px; font: inherit; letter-spacing: inherit; color: rgba(255, 255, 255, .45); }
+.m-foot-block p { margin: 0; }
+.m-foot a:focus-visible { outline: 1px solid #fff; outline-offset: 4px; }
+
+/* revelação: o conteúdo fica preso ao ecrã e o footer funciona como janela */
+@media (min-width: 769px) and (min-height: 620px) {
+  .m-foot { height: 100vh; height: 100svh; clip-path: inset(0); }
+  .m-foot-in { position: fixed; left: 0; right: 0; bottom: 0; height: 100vh; height: 100svh; min-height: 0; }
+}
+
+/* telemóvel: 6 colunas; nome e descrição em cima, contactos a meio, redes e logo a toda a largura em baixo */
+@media (max-width: 768px) {
+  .m-foot-in { padding: 28px 18px; }
+  .m-foot-top { flex: none; grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 40px; }
+  .m-foot-name { grid-column: 1 / span 3; }
+  .m-foot-desc { grid-column: 4 / -1; }
+  .m-foot-nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 14px 22px; }
+  .m-foot-nav a[aria-current="page"]::before { display: none; }
+  .m-foot-nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .m-foot-bottom { order: 2; grid-template-columns: repeat(6, minmax(0, 1fr)); align-content: end; row-gap: 64px; padding-top: 72px; }
+  .m-foot-blocks { grid-column: 1 / -1; grid-row: 1; }
+  .m-foot-social { grid-column: 1 / span 3; grid-row: 2; }
+  .m-foot-link { grid-column: 4 / -1; grid-row: 2; justify-self: end; }
+  .m-foot-logo { order: 3; width: 100%; margin-top: 12px; }
 }

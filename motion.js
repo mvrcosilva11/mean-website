@@ -235,7 +235,16 @@
   });
 
   /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
-  if (reduce && heroVideo) { heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }
+  // O vídeo da abertura só começa a descarregar depois de o logo animado ter chegado, para não
+  // competirem pela ligação; sem logo (recarregamento) começa logo. Com "reduzir movimento" fica o poster.
+  if (heroVideo && !reduce) {
+    var kick = function () {
+      heroVideo.preload = 'auto';
+      var pk = heroVideo.play(); if (pk && pk.catch) pk.catch(function () {});
+    };
+    if (window.__meanIntro && document.getElementById('preloader')) window.__meanIntro.then(kick, kick);
+    else kick();
+  }
   var started = false;
   function start() {
     if (started) return;

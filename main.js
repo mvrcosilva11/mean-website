@@ -66,7 +66,10 @@ if (projeto && window.PROJETOS) {
   const dur = parseInt(pre.dataset.duration, 10) || 1440;
   const anim = pre.dataset.anim || 'assets/intro-logo.webp?v=41';
   const still = pre.dataset.still || 'assets/intro-logo.png?v=41';
-  let done = false, timer = 0, blobUrl = '';
+  // Se o logo não chegar a tempo (ligação lenta), a página abre sem ele: 2,5 s contados desde o
+  // início do carregamento, com um mínimo de 0,7 s a partir daqui.
+  const WAIT = Math.max(700, 2500 - (window.performance ? performance.now() : 0));
+  let done = false, started = false, timer = 0, blobUrl = '';
   const hide = () => {
     if (done) return; done = true;
     pre.classList.add('done');
@@ -75,7 +78,7 @@ if (projeto && window.PROJETOS) {
   const img = new Image();
   img.className = 'preloader-anim'; img.id = 'introAnim'; img.alt = 'MEAN';
   // esconde quando a animação acaba (o tempo conta a partir do momento em que a imagem está pronta)
-  img.onload = () => { clearTimeout(timer); timer = setTimeout(hide, dur + 150); };
+  img.onload = () => { started = true; clearTimeout(timer); timer = setTimeout(hide, dur + 150); };
   // sem suporte para WebP animado: logo parado
   img.onerror = () => { img.onerror = () => setTimeout(hide, 300); img.src = still; };
   pre.appendChild(img);
@@ -87,12 +90,13 @@ if (projeto && window.PROJETOS) {
     ? fetch(anim).then(r => { if (!r.ok) throw new Error('intro'); return r.blob(); })
     : null);
   if (blob && canBlob) {
-    blob.then(b => { blobUrl = URL.createObjectURL(b); img.src = blobUrl; })
-        .catch(() => { img.src = anim; });
+    blob.then(b => { if (done) return; blobUrl = URL.createObjectURL(b); img.src = blobUrl; })
+        .catch(() => { if (!done) img.src = anim; });
   } else {
     img.src = anim;
   }
-  setTimeout(hide, dur + 4000); // segurança
+  setTimeout(() => { if (!started) hide(); }, WAIT);   // não prende ninguém à espera de uma animação
+  setTimeout(hide, WAIT + dur + 1500);                 // segurança
 })();
 
 // Cursor personalizado: circunferência com um ponto no centro, em modo "negativo" (sem rasto).

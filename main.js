@@ -56,69 +56,102 @@ if (projeto && window.PROJETOS) {
   }
 }
 
-// Separador / preloader: só na 1ª abertura do site (por sessão); some quando a animação acaba
+// Logo animado em ecrã inteiro: na 1.ª abertura do site e a cada mudança de página.
+// Num recarregamento, o script inline de cada página já retirou o #preloader e isto não corre.
 (function () {
   const pre = document.getElementById('preloader');
   if (!pre) return;
-  // já visto nesta sessão → remove sem animação
-  if (sessionStorage.getItem('mean_intro_seen')) { pre.remove(); return; }
-  sessionStorage.setItem('mean_intro_seen', '1');
+  try { sessionStorage.setItem('mean_intro_seen', '1'); } catch (e) {}
   if (new URLSearchParams(location.search).has('introhold')) return; // dev: mantém o loading visível p/ inspeção
-  const img = document.getElementById('introAnim');
-  const dur = parseInt(pre.dataset.duration, 10) || 2800;
-  let done = false;
+  const dur = parseInt(pre.dataset.duration, 10) || 1440;
+  const anim = pre.dataset.anim || 'assets/intro-logo.webp?v=41';
+  const still = pre.dataset.still || 'assets/intro-logo.png?v=41';
+  let done = false, timer = 0, blobUrl = '';
   const hide = () => {
     if (done) return; done = true;
     pre.classList.add('done');
-    setTimeout(() => pre.remove(), 700);
+    setTimeout(() => { pre.remove(); if (blobUrl) URL.revokeObjectURL(blobUrl); }, 700);
   };
-  if (img) {
-    // logo animado (WebP/APNG com transparência) toca uma vez; esconde quando acaba
-    const start = () => setTimeout(hide, dur + 150);
-    if (img.complete) start();
-    else {
-      img.addEventListener('load', start, { once: true });
-      img.addEventListener('error', () => setTimeout(hide, 600), { once: true });
-    }
-    setTimeout(hide, dur + 4000); // fallback de segurança
+  const img = new Image();
+  img.className = 'preloader-anim'; img.id = 'introAnim'; img.alt = 'MEAN';
+  // esconde quando a animação acaba (o tempo conta a partir do momento em que a imagem está pronta)
+  img.onload = () => { clearTimeout(timer); timer = setTimeout(hide, dur + 150); };
+  // sem suporte para WebP animado: logo parado
+  img.onerror = () => { img.onerror = () => setTimeout(hide, 300); img.src = still; };
+  pre.appendChild(img);
+  // O ficheiro vem da cache mas entra como blob: assim a animação recomeça sempre do início.
+  // (um WebP que só toca uma vez pode ficar parado no último frame quando o browser reutiliza a imagem)
+  if (window.fetch && window.URL && URL.createObjectURL) {
+    fetch(anim)
+      .then(r => { if (!r.ok) throw new Error('intro'); return r.blob(); })
+      .then(b => { blobUrl = URL.createObjectURL(b); img.src = blobUrl; })
+      .catch(() => { img.src = anim; });
   } else {
-    setTimeout(hide, 1300);
+    img.src = anim;
   }
+  setTimeout(hide, dur + 4000); // segurança
 })();
 
-// Cursor personalizado: uma só bolinha (sem rasto), em modo "negativo" (ver .cursor-dot no CSS)
+// Cursor personalizado: bolinha + rasto de 3 bolinhas (4 no total), em modo "negativo".
+// A mistura "difference" está no grupo .cursor-layer (ver CSS): branco sobre preto, negativo sobre imagens.
 (function () {
   // ignora em dispositivos touch (não há cursor)
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
-  const N = 1;
-  const OPAC = [1];
+  const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const OPAC = calm ? [1] : [1, 0.7, 0.45, 0.22];   // desvanece proporcionalmente ao longo do rasto
+  const N = OPAC.length;
+  const DELAY = 115;                                 // ms entre bolinhas → espaçamento (igual a 60 e a 120 Hz)
+  const layer = document.createElement('div');
+  layer.className = 'cursor-layer';
+  layer.setAttribute('aria-hidden', 'true');
   const dots = [];
   for (let i = 0; i < N; i++) {
     const el = document.createElement('div');
-    el.className = 'cursor-dot';
-    el.style.opacity = OPAC[i];
-    document.body.appendChild(el);
-    dots.push({ el });
+    el.className = i ? 'cursor-dot cursor-dot--trail' : 'cursor-dot';
+    el.style.opacity = 0;
+    layer.appendChild(el);
+    dots.push(el);
   }
-  const GAP = 7;                                   // intervalo (frames) entre bolinhas → espaçamento
-  let mx = window.innerWidth / 2, my = window.innerHeight / 2, visible = true;
-  const hist = [];
-  const show = v => dots.forEach((d, i) => d.el.style.opacity = v ? OPAC[i] : 0);
-  window.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    if (!visible) { visible = true; show(true); }
-  });
-  document.addEventListener('mouseleave', () => { visible = false; show(false); });
-  document.addEventListener('mouseenter', () => { visible = true; show(true); });
-  (function loop() {
-    hist.unshift({ x: mx, y: my });
-    const maxLen = (N - 1) * GAP + 1;
-    if (hist.length > maxLen) hist.length = maxLen;
-    for (let i = 0; i < N; i++) {
-      const p = hist[Math.min(i * GAP, hist.length - 1)];   // bolinha i = posição de i*GAP frames atrás
-      dots[i].el.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px) translate(-50%,-50%)';
+  document.body.appendChild(layer);
+
+  let mx = 0, my = 0, visible = false, placed = false;
+  const hist = [];                                   // posições recentes {x, y, t}, a mais nova primeiro
+  const show = v => { visible = v; dots.forEach((el, i) => { el.style.opacity = v ? OPAC[i] : 0; }); };
+  const place = (x, y) => { mx = x; my = y; if (!placed) { placed = true; hist.length = 0; } };
+
+  // ao mudar de página o rato não se mexeu: retoma a posição do último clique
+  try {
+    const saved = sessionStorage.getItem('mean_cursor');
+    sessionStorage.removeItem('mean_cursor');
+    if (saved) {
+      const xy = saved.split(',').map(Number);
+      if (xy.length === 2 && isFinite(xy[0]) && isFinite(xy[1])) { place(xy[0], xy[1]); show(true); }
     }
+  } catch (e) {}
+
+  window.addEventListener('mousemove', e => {
+    place(e.clientX, e.clientY);
+    if (!visible) show(true);
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => show(false));
+  document.addEventListener('mouseenter', () => { if (placed) show(true); });
+
+  (function loop(now) {
     requestAnimationFrame(loop);
+    if (!placed) return;
+    now = now || performance.now();
+    hist.unshift({ x: mx, y: my, t: now });
+    const oldest = now - DELAY * (N - 1) - 60;
+    while (hist.length > 2 && hist[hist.length - 2].t < oldest) hist.pop();
+    let j = 0;
+    for (let i = 0; i < N; i++) {
+      const target = now - i * DELAY;                // bolinha i = onde o cursor estava há i × DELAY ms
+      while (j < hist.length - 1 && hist[j].t > target) j++;
+      const a = hist[j], b = hist[j ? j - 1 : 0];    // a = amostra anterior ao alvo, b = a seguinte
+      const k = b.t > a.t ? Math.min(1, Math.max(0, (target - a.t) / (b.t - a.t))) : 0;
+      const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k;
+      dots[i].style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
+    }
   })();
 })();
 
@@ -202,32 +235,46 @@ document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => obser
   onScroll();
 })();
 
-// Transição de página — wipe vermelho ao navegar entre páginas do site
+// Transição de página: uma cortina (na cor do loading) cobre a página ao sair;
+// a página seguinte abre com o logo animado (#preloader) e só depois se revela.
 (function () {
+  const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const trans = document.createElement('div');
   trans.className = 'page-trans';
+  trans.setAttribute('aria-hidden', 'true');
   document.body.appendChild(trans);
   const EASE = 'transform .55s cubic-bezier(.76,0,.24,1)';
-  // ao carregar: revela (a não ser que o preloader de entrada esteja a mostrar)
-  if (!document.getElementById('preloader')) {
-    trans.style.transformOrigin = 'right center';
-    trans.style.transform = 'scaleX(1)';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      trans.style.transition = EASE;
-      trans.style.transform = 'scaleX(0)';
-    }));
-  }
+  let leaving = false;
   // ao clicar num link interno: cobre e depois navega
   document.addEventListener('click', e => {
-    const a = e.target.closest('a');
-    if (!a) return;
+    if (e.defaultPrevented || leaving || calm) return;
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;   // abrir noutro separador, etc.
+    const a = e.target.closest ? e.target.closest('a') : null;
+    if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
     const href = a.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('http') || a.target === '_blank') return;
+    if (!href || href.charAt(0) === '#') return;
+    let url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (!/^(https?|file):$/.test(url.protocol) || url.origin !== location.origin) return;   // externos, mailto:, tel:
+    if (url.pathname === location.pathname && url.search === location.search && url.hash) return; // âncora na própria página
     e.preventDefault();
+    leaving = true;
+    try {
+      sessionStorage.setItem('mean_nav', '1');                                        // a página seguinte mostra o logo
+      if (e.detail) sessionStorage.setItem('mean_cursor', e.clientX + ',' + e.clientY); // e o cursor fica onde estava
+    } catch (err) {}
     trans.style.transition = EASE;
     trans.style.transformOrigin = 'left center';
     trans.style.transform = 'scaleX(1)';
-    setTimeout(() => { window.location.href = href; }, 520);
+    setTimeout(() => { window.location.href = url.href; }, 520);
+  });
+  // "voltar atrás" pode trazer a página tal como ficou (cortina fechada): abre-a outra vez
+  window.addEventListener('pageshow', e => {
+    if (!e.persisted) return;
+    leaving = false;
+    trans.style.transition = 'none';
+    trans.style.transform = 'scaleX(0)';
+    try { sessionStorage.removeItem('mean_nav'); } catch (err) {}
   });
 })();
 

@@ -79,7 +79,7 @@ body.page-home-intro { background: var(--bordo); }
 .preloader {
   position: fixed;
   inset: 0;
-  background: #681a1a; /* = cor queimada no vídeo → sem emendas */
+  background: #681a1a;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1056,9 +1056,9 @@ h3 { font-size: 1.1rem; }
 .ab-member-name { transition: color .3s var(--ease); }
 .ab-member:hover .ab-member-name { color: var(--ab-red); }
 [data-parallax] { will-change: transform; }
-/* wipe de transição entre páginas */
+/* cortina de transição entre páginas (mesma cor do loading: a página seguinte abre com o logo animado) */
 .page-trans {
-  position: fixed; inset: 0; z-index: 100001; background: #d33d3d;
+  position: fixed; inset: 0; z-index: 100001; background: #681a1a;
   transform: scaleX(0); transform-origin: left center; pointer-events: none;
 }
 
@@ -1136,7 +1136,11 @@ h3 { font-size: 1.1rem; }
   html { scroll-behavior: auto; }
 }
 
-/* Preloader: logo animado (WebP/APNG com transparência) */
+/* Preloader: logo animado (WebP com transparência). Aparece na 1.ª abertura e a cada mudança de página.
+   Só existe com JavaScript; se o script falhar, sai sozinho ao fim de 8 s. */
+.preloader { display: none; }
+.js .preloader { display: flex; animation: m-pre-safe .01s linear 8s forwards; }
+@keyframes m-pre-safe { to { opacity: 0; visibility: hidden; } }
 .preloader-anim { width: min(46vw, 420px); height: auto; display: block; }
 
 /* ============================================================
@@ -1164,7 +1168,17 @@ h3 { font-size: 1.1rem; }
 /* Home: transparente enquanto o vídeo está à vista */
 .page-home .nav.scrolled:not(.nav-solid) { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
 
-/* ── Cursor: cresce sobre ligações; vira etiqueta "Ver" sobre os projetos ── */
+/* ── Cursor: bolinha + rasto de 3. O grupo inteiro faz "negativo" sobre o que está por baixo,
+      por isso as bolinhas podem sobrepor-se sem se anularem umas às outras ── */
+.cursor-layer {
+  position: fixed; inset: 0; z-index: 99999; pointer-events: none;
+  mix-blend-mode: difference;
+}
+.cursor-layer.is-view { mix-blend-mode: normal; }
+.cursor-layer .cursor-dot { position: absolute; z-index: 1; mix-blend-mode: normal; }
+.cursor-layer .cursor-dot--trail { z-index: 0; }
+
+/* cresce sobre ligações; vira etiqueta "Ver" sobre os projetos */
 .cursor-dot {
   display: grid; place-items: center;
   transition: opacity .2s ease, width .45s var(--m-ease), height .45s var(--m-ease), background-color .3s ease;

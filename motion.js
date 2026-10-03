@@ -181,19 +181,24 @@
 
   /* ── 5. Cursor: cresce sobre ligações, etiqueta sobre projetos ── */
   if (finePointer) {
-    var dot = document.querySelector('.cursor-dot');
+    var dot = document.querySelector('.cursor-dot');   // a bolinha principal (as do rasto vêm depois)
     if (dot) {
+      var layer = dot.parentNode && dot.parentNode.classList.contains('cursor-layer') ? dot.parentNode : null;
       var label = document.createElement('span');
       label.className = 'cursor-label';
       dot.appendChild(label);
+      var setView = function (on) {
+        dot.classList.toggle('is-view', on);
+        if (layer) layer.classList.toggle('is-view', on);   // o círculo vermelho não faz "negativo"
+      };
       document.addEventListener('mouseover', function (e) {
         var t = e.target.closest ? e.target.closest('[data-cursor]') : null;
         if (t) {
           label.textContent = t.getAttribute('data-cursor');
-          dot.classList.add('is-view'); dot.classList.remove('is-link');
+          setView(true); dot.classList.remove('is-link');
           return;
         }
-        dot.classList.remove('is-view');
+        setView(false);
         dot.classList.toggle('is-link', !!(e.target.closest && e.target.closest('a, button')));
       });
     }
@@ -223,7 +228,7 @@
     go(0);
   });
 
-  /* ── 7. Arranque: espera que o loading (ou a transição de página) saia ── */
+  /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
   if (reduce && heroVideo) { heroVideo.removeAttribute('autoplay'); heroVideo.pause(); }
   var started = false;
   function start() {
@@ -235,7 +240,7 @@
     onScroll();
   }
   var pre = document.getElementById('preloader');
-  if (pre && pre.style.display !== 'none') {
+  if (pre && getComputedStyle(pre).display !== 'none') {
     var mo = new MutationObserver(function () {
       if (!document.body.contains(pre) || pre.classList.contains('done')) { mo.disconnect(); setTimeout(start, 120); }
     });
@@ -243,6 +248,6 @@
     mo.observe(document.body, { childList: true });
     setTimeout(start, 7000);   // segurança
   } else {
-    setTimeout(start, reduce ? 0 : 380);   // deixa o wipe da transição de página sair
+    setTimeout(start, reduce ? 0 : 80);
   }
 })();

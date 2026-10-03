@@ -179,23 +179,32 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
 
-  /* ── 5. Cursor: cresce sobre ligações, etiqueta sobre projetos ── */
+  /* ── 5. Cursor: cresce sobre ligações, estica para uma pill com texto sobre os projetos ── */
   if (finePointer) {
-    var dot = document.querySelector('.cursor-dot');   // a bolinha principal (as do rasto vêm depois)
+    var dot = document.querySelector('.cursor-dot');   // a circunferência (os pontos do rasto vêm depois)
     if (dot) {
       var layer = dot.parentNode && dot.parentNode.classList.contains('cursor-layer') ? dot.parentNode : null;
+      var back = document.querySelector('.cursor-back');
       var label = document.createElement('span');
       label.className = 'cursor-label';
       dot.appendChild(label);
-      var setView = function (on) {
+      // sobre um projeto: a circunferência estica para uma pill à medida do texto
+      var setView = function (on, text) {
+        if (on) {
+          if (label.textContent !== text) label.textContent = text;
+          var w = Math.max(64, Math.ceil(label.offsetWidth) + 40) + 'px';
+          dot.style.setProperty('--pill-w', w);
+          if (back) back.style.setProperty('--pill-w', w);
+        }
         dot.classList.toggle('is-view', on);
-        if (layer) layer.classList.toggle('is-view', on);   // o círculo vermelho não faz "negativo"
+        if (layer) layer.classList.toggle('is-view', on);
+        if (back) back.classList.toggle('is-view', on);
       };
       document.addEventListener('mouseover', function (e) {
         var t = e.target.closest ? e.target.closest('[data-cursor]') : null;
         if (t) {
-          label.textContent = t.getAttribute('data-cursor');
-          setView(true); dot.classList.remove('is-link');
+          setView(true, t.getAttribute('data-cursor'));
+          dot.classList.remove('is-link');
           return;
         }
         setView(false);

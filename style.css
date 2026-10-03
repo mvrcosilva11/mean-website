@@ -1174,37 +1174,51 @@ h3 { font-size: 1.1rem; }
   position: fixed; inset: 0; z-index: 99999; pointer-events: none;
   mix-blend-mode: difference;
 }
-.cursor-layer.is-view { mix-blend-mode: normal; }
 .cursor-layer .cursor-dot { position: absolute; z-index: 1; mix-blend-mode: normal; }
 
-/* a principal: circunferência + ponto */
+/* a principal: circunferência + ponto.
+   O raio é em px (não 50%) para o círculo esticar para uma pill sem passar por uma elipse. */
 .cursor-dot {
   display: grid; place-items: center;
-  width: 34px; height: 34px;
+  width: 34px; height: 34px; border-radius: 999px; overflow: hidden;
   background: transparent; border: 1.5px solid #fff;
-  transition: opacity .2s ease, width .45s var(--m-ease), height .45s var(--m-ease),
-              background-color .3s ease, border-color .3s ease;
+  transition: opacity .2s ease, width .6s var(--m-ease), height .6s var(--m-ease);
 }
 .cursor-dot::before {
   content: ""; position: absolute; top: 50%; left: 50%;
   width: 5px; height: 5px; margin: -2.5px 0 0 -2.5px;
   border-radius: 50%; background: #fff;
-  transition: transform .3s var(--m-ease), opacity .2s ease;
+  transition: transform .35s var(--m-ease), opacity .2s ease;
 }
 /* o rasto: 3 pontos iguais ao do centro */
 .cursor-layer .cursor-dot--trail { z-index: 0; width: 5px; height: 5px; border: 0; background: #fff; }
 .cursor-dot--trail::before { content: none; }
 
-/* cresce sobre ligações; vira círculo vermelho com "Ver" sobre os projetos */
+/* sobre ligações: a circunferência cresce */
 .cursor-dot.is-link { width: 56px; height: 56px; }
-.cursor-dot.is-view { width: 92px; height: 92px; background: var(--accent); border-color: var(--accent); mix-blend-mode: normal; }
+
+/* sobre os projetos: a circunferência estica na horizontal para uma pill só com contorno,
+   o ponto sai e o texto entra em maiúsculas. A largura (--pill-w) é medida pelo motion.js. */
+.cursor-dot.is-view { width: var(--pill-w, 72px); }
 .cursor-dot.is-view::before { opacity: 0; transform: scale(0); }
+.cursor-layer.is-view .cursor-dot--trail { opacity: 0 !important; }   /* a pill fica limpa, sem rasto */
 .cursor-label {
-  font-size: .8rem; font-weight: 600; letter-spacing: .01em; color: var(--bg); white-space: nowrap;
-  opacity: 0; transform: scale(.6);
-  transition: opacity .2s ease, transform .45s var(--m-ease);
+  font-size: 10.5px; font-weight: 600; line-height: 1;
+  letter-spacing: .14em; margin-right: -.14em;      /* compensa o espaço depois da última letra */
+  text-transform: uppercase; color: #fff; white-space: nowrap;
+  opacity: 0; transition: opacity .12s ease;
 }
-.cursor-dot.is-view .cursor-label { opacity: 1; transform: none; }
+.cursor-dot.is-view .cursor-label { opacity: 1; transition: opacity .3s ease .16s; }
+
+/* fundo escuro por baixo da pill, fora do grupo "negativo": garante que o texto se lê
+   sobre qualquer imagem (o "negativo" sozinho desaparece sobre tons médios) */
+.cursor-back {
+  position: fixed; top: 0; left: 0; z-index: 99998; pointer-events: none;
+  width: 34px; height: 34px; border-radius: 999px;
+  background: rgba(10, 10, 10, .86); opacity: 0;
+  transition: opacity .25s ease, width .6s var(--m-ease);
+}
+.cursor-back.is-view { width: var(--pill-w, 72px); opacity: 1; }
 
 /* ── Base do movimento ── */
 .js [data-reveal] {

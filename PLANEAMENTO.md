@@ -23,7 +23,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - `style.css`: a base é a do sócio. A camada nova fica no fim do ficheiro, com classes começadas por `m-`.
 - `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
 - Sem JavaScript, ou com "reduzir movimento" ligado no sistema, o conteúdo aparece todo, sem animação.
-- **Cursor** (`main.js` + `style.css`, todas as páginas): circunferência com um ponto no centro, como a capa do livro do Rick Rubin, em negativo sobre o que está por baixo. Ao mexer, o ponto deixa um rasto de 3 pontos que desvanecem. A circunferência cresce sobre ligações e vira círculo vermelho com "Ver" sobre os projetos.
+- **Cursor** (`main.js` + `style.css`, todas as páginas): circunferência com um ponto no centro, como a capa do livro do Rick Rubin, em negativo sobre o que está por baixo. Ao mexer, o ponto deixa um rasto de 3 pontos que desvanecem. A circunferência cresce sobre ligações. Sobre os projetos estica na horizontal para uma pill só com contorno, com o texto em maiúsculas lá dentro ("VER", vem do atributo `data-cursor`), e o rasto esconde-se.
 - **Mudança de página** (`main.js`, todas as páginas): uma cortina vermelho-escuro cobre a página, a página seguinte abre com o logo animado da abertura e só depois se revela. Num recarregamento o logo não aparece. O bloco do logo (`#preloader`) está no topo do `<body>` de cada página.
 - Blocos cinzentos: `m-media m-media--ph` (capas de projeto) e `m-ph` (fotografias). Para pôr a imagem real, troca-se o bloco por `<div class="m-media" data-media><img src="…" alt="…"></div>`.
 
@@ -54,7 +54,7 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 - **Abertura:** o vídeo fica preso ao ecrã. Ao descer, o resto da página sobe por cima dele como uma folha, e o vídeo escurece e aproxima-se ligeiramente. Quando fica tapado, pára de tocar.
 - **Menu:** transparente sobre o vídeo. Esconde-se ao descer e volta ao subir.
 - **Frase:** acende palavra a palavra com o scroll.
-- **Destaques:** as capas abrem de baixo para cima, em sequência. Ao passar o cursor, a imagem aproxima-se, o cursor passa a círculo vermelho com "Ver" e o nome dá lugar à frase curta do projeto.
+- **Destaques:** as capas abrem de baixo para cima, em sequência. Ao passar o cursor, a imagem aproxima-se, o cursor estica para uma pill com "VER" e o nome dá lugar à frase curta do projeto.
 - **O que fazemos:** ao passar o cursor numa disciplina, as outras apagam-se e a seta avança.
 
 ### Frases das disciplinas na Home (rascunho)
@@ -130,7 +130,7 @@ Nome                      Tipo                       Setor
 - **Padrão do Work (8 blocos):** grande, pequeno, pequeno, largura total, pequeno, pequeno, grande, largura total. Para mais projetos, repete-se o padrão.
 - **Classes:** `m-tile--lg` (grande, metade da largura), `m-tile--sm` (pequeno, um quarto), `m-tile--full` (largura total).
 - **Legenda por baixo de cada imagem:** nome do projeto à esquerda, tipo de trabalho à direita, setor a cinzento (só nos blocos grande e de largura total).
-- **Ao passar o cursor:** a imagem aproxima-se, o cursor mostra "Ver" e o nome dá lugar a uma seta e à frase curta do projeto.
+- **Ao passar o cursor:** a imagem aproxima-se, o cursor estica para uma pill com "VER" e o nome dá lugar a uma seta e à frase curta do projeto.
 - **Imagens:** sem cantos arredondados, margens e intervalos estreitos. Cada bloco leva à página do projeto.
 - **Telemóvel:** os blocos empilham numa coluna, pela mesma ordem.
 

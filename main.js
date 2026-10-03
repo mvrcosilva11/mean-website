@@ -96,7 +96,8 @@ if (projeto && window.PROJETOS) {
 })();
 
 // Cursor personalizado: circunferência com um ponto no centro + rasto de 3 pontos, em modo "negativo".
-// (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto, .cursor-dot--trail o rasto)
+// (a forma está no CSS: .cursor-dot é a circunferência, ::before o ponto, .cursor-dot--trail o rasto;
+//  sobre os projetos a circunferência estica para uma pill com texto, ver motion.js)
 // A mistura "difference" está no grupo .cursor-layer (ver CSS): branco sobre preto, negativo sobre imagens.
 (function () {
   // ignora em dispositivos touch (não há cursor)
@@ -116,11 +117,20 @@ if (projeto && window.PROJETOS) {
     layer.appendChild(el);
     dots.push(el);
   }
+  // fundo escuro da pill que aparece sobre os projetos (fica fora do grupo "negativo", ver CSS)
+  const back = document.createElement('div');
+  back.className = 'cursor-back';
+  back.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(back);
   document.body.appendChild(layer);
 
   let mx = 0, my = 0, visible = false, placed = false;
   const hist = [];                                   // posições recentes {x, y, t}, a mais nova primeiro
-  const show = v => { visible = v; dots.forEach((el, i) => { el.style.opacity = v ? OPAC[i] : 0; }); };
+  const show = v => {
+    visible = v;
+    dots.forEach((el, i) => { el.style.opacity = v ? OPAC[i] : 0; });
+    back.style.visibility = v ? '' : 'hidden';
+  };
   const place = (x, y) => { mx = x; my = y; if (!placed) { placed = true; hist.length = 0; } };
 
   // ao mudar de página o rato não se mexeu: retoma a posição do último clique
@@ -154,7 +164,9 @@ if (projeto && window.PROJETOS) {
       const a = hist[j], b = hist[j ? j - 1 : 0];    // a = amostra anterior ao alvo, b = a seguinte
       const k = b.t > a.t ? Math.min(1, Math.max(0, (target - a.t) / (b.t - a.t))) : 0;
       const x = a.x + (b.x - a.x) * k, y = a.y + (b.y - a.y) * k;
-      dots[i].style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
+      const tr = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) translate(-50%,-50%)';
+      dots[i].style.transform = tr;
+      if (!i) back.style.transform = tr;
     }
   })();
 })();

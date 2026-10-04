@@ -1808,16 +1808,21 @@ html.i18n-wait body { visibility: hidden; }
 
 /* ============================================================
    FOOTER — proporções de esrbespoke.au, identidade MEAN
-   Ecrã inteiro a preto, texto e logo a branco. Texto a 14 px com entrelinha de 14 px, em maiúsculas
+   Ecrã inteiro no vermelho escuro da MEAN (o do ecrã do logo), com texto e logo no vermelho do
+   logótipo. As duas cores estão em --mean-red-dark e --mean-red. Texto a 14 px com entrelinha de 14 px, em maiúsculas
    espaçadas; grelha de 12 colunas com 16 px de intervalo; margens de 28 px (cima/baixo) e 32 px (lados);
    logo com 32% da largura do ecrã, a meio da altura; contactos em baixo, a partir da 9.ª coluna.
    Em ecrãs largos o footer está preso ao ecrã e é revelado pela página a subir.
    ============================================================ */
-.m-foot { position: relative; background: #000; color: #fff; }
+:root {
+  --mean-red-dark: #681a1a;   /* vermelho escuro: ecrã do logo, cortina entre páginas, footer */
+  --mean-red: #d33d3d;        /* vermelho do logótipo MEAN */
+}
+.m-foot { position: relative; background: var(--mean-red-dark); color: var(--mean-red); }
 .m-foot-in {
   display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
-  padding: 28px 32px; background: #000; color: #fff;
-  font-size: 14px; line-height: 14px; font-weight: 400; letter-spacing: .09em; text-transform: uppercase;
+  padding: 28px 32px; background: var(--mean-red-dark); color: var(--mean-red);
+  font-size: 14px; line-height: 14px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
 }
 .m-foot a { color: inherit; text-decoration: none; }
 .m-foot a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
@@ -1832,7 +1837,7 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-nav { grid-column: 9 / span 3; display: grid; row-gap: 3.5px; justify-items: start; }
 .m-foot-nav a { position: relative; }
 .m-foot-nav a[aria-current="page"]::before {                 /* quadrado que marca a página atual */
-  content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: #fff;
+  content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: currentColor;
 }
 .m-foot-logo { display: block; flex: none; width: 32vw; }
 .m-foot-logo img { display: block; width: 100%; height: auto; }
@@ -1840,9 +1845,13 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-social { grid-column: 1 / span 3; justify-self: start; }
 .m-foot-link { grid-column: 4 / span 3; justify-self: start; }
 .m-foot-blocks { grid-column: 9 / -1; display: grid; row-gap: 32px; }
-.m-foot-block h3 { margin: 0 0 14px; font: inherit; letter-spacing: inherit; color: rgba(255, 255, 255, .45); }
+.m-foot-block h3 { margin: 0 0 14px; font: inherit; letter-spacing: inherit; color: inherit; opacity: .68; }
 .m-foot-block p { margin: 0; }
-.m-foot a:focus-visible { outline: 1px solid #fff; outline-offset: 4px; }
+.m-foot a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+/* sobre o footer o cursor fica no vermelho dos textos (em "negativo" ficaria azulado sobre o vermelho escuro) */
+.cursor-layer.is-foot { mix-blend-mode: normal; }
+.cursor-layer.is-foot .cursor-dot { border-color: var(--mean-red); }
+.cursor-layer.is-foot .cursor-dot::before { background: var(--mean-red); }
 
 /* revelação: o conteúdo fica preso ao ecrã e o footer funciona como janela */
 @media (min-width: 769px) and (min-height: 620px) {

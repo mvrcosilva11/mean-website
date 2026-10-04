@@ -10,7 +10,7 @@
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=41',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="stylesheet" href="style.css?v=118" />
+  <link rel="stylesheet" href="style.css?v=119" />
 </head>
 <body class="page-contact">
 
@@ -138,7 +138,7 @@
           <a href="contact.html" aria-current="page">Talk with us</a>
         </nav>
       </div>
-      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-white.png?v=113" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
+      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-red-tight.png?v=119" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
       <div class="m-foot-bottom">
         <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
         <a class="m-foot-link" href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>
@@ -160,8 +160,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=118"></script>
-  <script src="main.js?v=118"></script>
-  <script src="motion.js?v=118"></script>
+  <script src="i18n.js?v=119"></script>
+  <script src="main.js?v=119"></script>
+  <script src="motion.js?v=119"></script>
 </body>
 </html>

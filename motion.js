@@ -275,10 +275,15 @@
 
   /* ── 4c. O header sai de cena quando o footer chega ao topo (o footer tem o seu próprio menu) ── */
   var foot = document.querySelector('.m-foot');
+  // …e o cursor passa ao vermelho dos textos enquanto está por cima do footer (ao mexer o rato e ao fazer scroll)
+  var cursorLayer = document.querySelector('.cursor-layer'), cursorY = -1;
   function updateFoot() {
-    if (!nav || !foot) return;
-    nav.classList.toggle('nav--away', foot.getBoundingClientRect().top < nav.offsetHeight + 46);
+    if (!foot) return;
+    var top = foot.getBoundingClientRect().top;
+    if (nav) nav.classList.toggle('nav--away', top < nav.offsetHeight + 46);
+    if (cursorLayer) cursorLayer.classList.toggle('is-foot', cursorY >= 0 && cursorY >= top);
   }
+  if (cursorLayer && foot) window.addEventListener('mousemove', function (e) { cursorY = e.clientY; updateFoot(); }, { passive: true });
 
   var ticking = false;
   function onScroll() {

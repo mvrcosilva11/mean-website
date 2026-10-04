@@ -157,12 +157,14 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
   observer.observe(el);
 });
 
-// About page: reveal elements already marked with .reveal in the HTML (com stagger por grupo)
-['.ab-team-grid', '.ab-manifesto .ab-list', '.ab-services .ab-list', '.ab-values-grid', '.ab-life-grid'].forEach(sel => {
-  const group = document.querySelector(sel);
-  if (group) group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 65) + 'ms'; });
+// Elementos já marcados com .reveal no HTML — blur-in ao entrar no ecrã, com stagger de 0.1s por grupo
+['.ab-team-grid', '.ab-manifesto .ab-list', '.ab-services .ab-list', '.ab-values-grid', '.ab-life-grid',
+ '.work-lead', '.ft2-top'].forEach(sel => {
+  document.querySelectorAll(sel).forEach(group => {
+    group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 100) + 'ms'; });
+  });
 });
-document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 // Parallax — elementos com data-parallax movem-se ao scroll
 (function () {
@@ -383,4 +385,100 @@ if (form) form.addEventListener('submit', e => {
     window.__lenis = lenis;   // referência (ex.: voltar-ao-topo pode usar lenis.scrollTo)
   };
   document.head.appendChild(s);
+})();
+
+// ── Contact: formulário por passos (âmbito → orçamento → prazo → dados) ──
+(function () {
+  const pf = document.getElementById('projectForm');
+  if (!pf) return;
+  const steps = [...pf.querySelectorAll('.cf-steps button')];
+  const sections = [...pf.querySelectorAll('.cf-section')];
+  const bar = pf.querySelector('.cf-steps');
+
+  function scrollToEl(el) {
+    const nav = document.querySelector('.nav');
+    const offset = (nav ? nav.offsetHeight : 64) + (bar ? bar.offsetHeight : 0) + 16;
+    if (window.__lenis) window.__lenis.scrollTo(el, { offset: -offset });
+    else el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  const nextOf = el => sections[sections.indexOf(el.closest('.cf-section')) + 1];
+
+  // resumo do passo final acompanha as escolhas
+  pf.addEventListener('change', e => {
+    if (e.target.type !== 'radio') return;
+    const out = pf.querySelector('[data-summary="' + e.target.name + '"]');
+    if (out) out.textContent = e.target.value;
+  });
+
+  // "Próximo passo" num cartão já escolhido avança para o passo seguinte
+  pf.addEventListener('click', e => {
+    const btn = e.target.closest('.cf-card-btn');
+    if (!btn) return;
+    const radio = btn.closest('.cf-card').querySelector('.cf-radio');
+    if (radio.checked) {
+      e.preventDefault();
+      const next = nextOf(btn);
+      if (next) scrollToEl(next);
+    }
+  });
+  // Enter num cartão (teclado) também avança
+  pf.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' || !e.target.classList.contains('cf-radio')) return;
+    e.preventDefault();
+    e.target.checked = true;
+    e.target.dispatchEvent(new Event('change', { bubbles: true }));
+    const next = nextOf(e.target);
+    if (next) scrollToEl(next);
+  });
+
+  // separadores da barra de passos
+  steps.forEach(b => b.addEventListener('click', () => {
+    const target = document.getElementById(b.dataset.go);
+    if (target) scrollToEl(target);
+  }));
+  function setActive(i) {
+    steps.forEach((b, j) => {
+      b.classList.toggle('is-active', j === i);
+      if (j === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) setActive(+en.target.dataset.step); });
+  }, { rootMargin: '-35% 0px -60% 0px' });
+  sections.forEach(s => io.observe(s));
+
+  // envio: abre o email do visitante já preenchido com o pedido
+  const fb = pf.querySelector('.cf-feedback');
+  pf.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = new FormData(pf);
+    const name = (d.get('name') || '').trim();
+    const email = (d.get('email') || '').trim();
+    const nameEl = pf.elements.name, emailEl = pf.elements.email;
+    nameEl.removeAttribute('aria-invalid'); emailEl.removeAttribute('aria-invalid');
+    fb.className = 'cf-feedback';
+
+    let err = '';
+    if (!name) { err = 'Escreve o teu nome.'; nameEl.setAttribute('aria-invalid', 'true'); }
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err = 'Escreve um email válido.'; emailEl.setAttribute('aria-invalid', 'true'); }
+    else if (!d.get('privacy')) err = 'Confirma que aceitas que usemos estes dados para te responder.';
+    if (err) { fb.classList.add('is-error'); fb.textContent = err; return; }
+
+    const body = [
+      'Foco: ' + d.get('scope'),
+      'Orçamento: ' + d.get('budget'),
+      'Prazo: ' + d.get('timeline'),
+      '',
+      'Nome: ' + name,
+      'Empresa: ' + ((d.get('company') || '').trim() || '—'),
+      'País: ' + ((d.get('country') || '').trim() || '—'),
+      'Email: ' + email,
+      '',
+      (d.get('message') || '').trim()
+    ].join('\n');
+    window.location.href = 'mailto:mean.geral@gmail.com'
+      + '?subject=' + encodeURIComponent('Pedido de projeto — ' + name)
+      + '&body=' + encodeURIComponent(body);
+    fb.textContent = 'A abrir o teu email com o pedido preenchido. Se não abrir, escreve-nos para mean.geral@gmail.com.';
+  });
 })();

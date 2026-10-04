@@ -9,9 +9,13 @@
   position: fixed;
   top: 0; left: 0;
   width: 22px; height: 22px;
+  /* forma do ballring desenhada em CSS (anel = border, bola central = gradiente);
+     sem máscara de imagem, que deixava o cursor invisível em conjunto com o blend */
+  box-sizing: border-box;
+  border: 2px solid #fff;
   border-radius: 50%;
+  background: radial-gradient(circle, #fff 2.4px, transparent 3px);
   /* efeito "negativo": branco + difference inverte a cor do que está por baixo */
-  background: #fff;
   mix-blend-mode: difference;
   transform: translate(-50%, -50%);
   pointer-events: none;
@@ -61,6 +65,11 @@
   opacity: .7; transition: opacity .3s var(--ease);
 }
 .hi-marquee-track img:hover { opacity: 1; }
+/* fade nas pontas da faixa (tipo mobagency.pt): as marcas esbatem-se ao entrar e sair */
+.hi-marquee-wrap {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
+}
 @keyframes hi-marq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .hi-marquee-track { animation: none; } }
 
@@ -116,6 +125,19 @@ body.page-home-intro { background: var(--bordo); }
 }
 
 html { scroll-behavior: auto; font-size: 16px; scrollbar-gutter: stable; }   /* auto: o Lenis trata da suavidade (evita conflito) */
+
+/* ── Barra de scroll da página com a cor da marca (tipo alltrue.co) ── */
+html::-webkit-scrollbar { width: 12px; }
+html::-webkit-scrollbar-track { background: var(--bg); }
+html::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 100px; }
+html::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
+/* na homepage Intro a calha acompanha o fundo bordô */
+html:has(body.page-home-intro)::-webkit-scrollbar-track { background: var(--bordo); }
+/* Firefox (não suporta ::-webkit-scrollbar) */
+@supports not selector(::-webkit-scrollbar) {
+  html { scrollbar-color: var(--accent) var(--bg); scrollbar-width: thin; }
+  html:has(body.page-home-intro) { scrollbar-color: var(--accent) var(--bordo); }
+}
 
 body {
   font-family: var(--font);
@@ -283,9 +305,15 @@ h3 { font-size: 1.1rem; }
   content: "";
   position: absolute; inset: -100px -150px;
   z-index: -1;
-  background: radial-gradient(ellipse at center,
-    rgba(83, 19, 22, .82) 30%,
-    rgba(83, 19, 22, 0) 75%);
+  /* closest-side: a elipse acaba exatamente nas bordas da caixa, por isso chega a 0 antes
+     de a caixa acabar (sem corte visível); várias paragens para uma queda suave, sem degraus */
+  background: radial-gradient(closest-side,
+    rgba(83, 19, 22, .82) 0%,
+    rgba(83, 19, 22, .82) 35%,
+    rgba(83, 19, 22, .6) 55%,
+    rgba(83, 19, 22, .32) 72%,
+    rgba(83, 19, 22, .12) 87%,
+    rgba(83, 19, 22, 0) 100%);
   pointer-events: none;
 }
 .hi-logo-mask { display: block; overflow: hidden; }
@@ -692,12 +720,14 @@ h3 { font-size: 1.1rem; }
   font-variant-numeric: tabular-nums;
 }
 
-/* ── Reveal animation ── */
+/* ── Reveal animation: "blur-in" ao entrar no ecrã (tipo cardenasdesigngroup.com) ──
+   opacidade 0→1, sobe 1.5rem e desfoca de 20px→0 em 1.2s */
 .reveal {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
+  opacity: 0; transform: translateY(1.5rem); filter: blur(20px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease),
+              background-color .3s var(--ease);
 }
-.reveal.visible { opacity: 1; transform: none; }
+.reveal.visible { opacity: 1; transform: none; filter: none; }
 
 /* ===== About page (dark, immersive) ===== */
 .ab { --ab-red: #d33d3d; padding: 0 clamp(1.25rem, 6vw, 6rem); }
@@ -872,13 +902,20 @@ h3 { font-size: 1.1rem; }
   padding: clamp(2.5rem, 6vh, 4.5rem) clamp(1.25rem, 4vw, 3rem) 0;
 }
 /* bloco com a largura do logo: os textos ficam dentro das margens dele */
-.ft2-inner { width: min(760px, 100%); margin: 0 auto; }
+.ft2-inner { width: 100%; margin: 0; }   /* conteúdo até às margens da página */
 .ft2-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem clamp(1.5rem, 4vw, 3rem); }
 .ft2-col { display: flex; flex-direction: column; gap: .3rem; }
 .ft2-label { font-size: .8rem; letter-spacing: .06em; text-transform: uppercase; opacity: .8; margin-bottom: .2rem; }
 .ft2-col a, .ft2-col p { font-size: clamp(1rem, 1.4vw, 1.2rem); line-height: 1.3; color: var(--brand-white); }
-.ft2-col a { width: fit-content; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .3s var(--ease); }
-.ft2-col a:hover { background-size: 100% 1px; }
+/* sublinhado: entra pela esquerda no hover e sai pela direita ao largar
+   (só o tamanho anima; a âncora troca de lado sem transição) */
+.ft2-col a {
+  width: fit-content;
+  background: linear-gradient(currentColor, currentColor) no-repeat;
+  background-position: 100% 100%; background-size: 0 1px;
+  transition: background-size .35s var(--ease);
+}
+.ft2-col a:hover { background-position: 0 100%; background-size: 100% 1px; }
 .ft2-logo { display: block; width: 100%; height: auto; margin-top: clamp(2.5rem, 8vh, 5rem); }
 .ft2-copy { padding: 1.25rem 0 1.5rem; font-size: .78rem; opacity: .8; }
 
@@ -1047,7 +1084,6 @@ h3 { font-size: 1.1rem; }
 }
 
 /* ===== Animation layer (MEAN) ===== */
-.reveal { transform: translateY(40px); }            /* entrada mais marcada */
 .ab-item { transition: background .35s var(--ease); }
 .ab-num { transition: color .3s var(--ease), transform .3s var(--ease); }
 .ab-item:hover .ab-num { transform: translateX(5px); }
@@ -1131,7 +1167,129 @@ h3 { font-size: 1.1rem; }
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+    filter: none !important;
   }
   [data-parallax] { transform: none !important; }
   html { scroll-behavior: auto; }
+}
+
+/* ===== Contact — formulário por passos (inspirado em wearedirect.co/contact) ===== */
+.cf {
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  padding: calc(var(--nav-h) + 1rem) clamp(1.25rem, 4vw, 3rem) clamp(4rem, 10vh, 7rem);
+}
+/* painel da marca à esquerda, fixo enquanto se faz scroll ao formulário */
+.cf-visual { position: sticky; top: calc(var(--nav-h) + 1rem); align-self: start; height: calc(100vh - var(--nav-h) - 2rem); }
+.cf-visual-card {
+  position: relative; height: 100%; overflow: hidden;
+  border-radius: calc(var(--radius) * 1.5); background: var(--bordo);
+  display: flex; align-items: center; justify-content: center;
+}
+.cf-visual-card img { width: 46%; height: auto; }
+.cf-visual-note { position: absolute; left: 1.5rem; right: 1.5rem; bottom: 1.25rem; font-size: .85rem; color: rgba(244, 244, 241, .75); }
+
+/* coluna direita */
+.cf-main { padding-top: clamp(1.5rem, 6vh, 4rem); min-width: 0; }
+.cf-kicker { font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.cf-title {
+  font-size: clamp(2.6rem, 6vw, 5.2rem); line-height: 1; letter-spacing: -.03em; font-weight: 600;
+  max-width: 11ch; margin: 1rem 0 clamp(2rem, 6vh, 4rem);
+}
+.cf-intro { color: #c9c9c6; max-width: 38ch; line-height: 1.5; }
+.cf-intro + .cf-intro { margin-top: .75rem; }
+.cf-intro a { color: var(--text); text-decoration: underline; text-underline-offset: 3px; }
+.cf-form { margin-top: clamp(3rem, 10vh, 6rem); }
+
+/* barra de passos (fica presa por baixo da nav) */
+.cf-steps {
+  position: sticky; top: var(--nav-h); z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--bg); padding-top: .75rem; border-bottom: 1px solid var(--border);
+}
+.cf-steps button {
+  position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: .25rem;
+  padding: 0 0 .9rem; border: 0; background: none; font: inherit; text-align: left;
+  color: #6b6b68; transition: color .3s var(--ease);
+}
+.cf-steps button::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform .4s var(--ease);
+}
+.cf-steps button.is-active { color: var(--text); }
+.cf-steps button.is-active::after { transform: scaleX(1); }
+.cf-steps button:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+.cf-step-num { font-size: .72rem; letter-spacing: .08em; font-variant-numeric: tabular-nums; }
+.cf-step-name { font-size: clamp(1rem, 1.5vw, 1.2rem); }
+
+/* passos */
+.cf-section { border: 0; margin: 0; padding: clamp(3rem, 8vh, 5rem) 0 0; min-width: 0; scroll-margin-top: calc(var(--nav-h) + 5rem); }
+.cf-section-title { padding: 0; margin-bottom: 1.5rem; font-size: clamp(1.8rem, 3.4vw, 2.8rem); font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+legend.cf-section-title { float: left; width: 100%; }   /* legend flutuante respeita o padding do fieldset */
+.cf-options { clear: both; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+
+/* cartões de escolha (rádios nativos, escondidos) */
+.cf-card {
+  position: relative; display: flex; flex-direction: column; gap: .5rem;
+  padding: 1.1rem 1.1rem 1rem; border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--surface); color: var(--text);
+  transition: background-color .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease);
+}
+.cf-card:hover { border-color: #4a4a4a; }
+.cf-radio { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.cf-card:has(.cf-radio:focus-visible) { outline: 2px solid var(--accent); outline-offset: 3px; }
+.cf-card-title { font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 600; letter-spacing: -.01em; }
+.cf-card-label { margin-top: .4rem; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: #8f8f8d; }
+.cf-card-list { display: flex; flex-direction: column; gap: .15rem; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: #a7a7a4; }
+.cf-card-small { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #8f8f8d; }
+.cf-card-value { font-size: clamp(1.4rem, 2.4vw, 2rem); font-weight: 600; letter-spacing: -.02em; }
+.cf-card-btn { margin-top: auto; padding-top: 1rem; display: flex; align-items: center; gap: .5rem; }
+.cf-card-btn-txt { flex: 1; padding: .55rem 1rem; border-radius: 100px; background: rgba(255, 255, 255, .06); text-align: center; font-size: .85rem; }
+.cf-card-icon { flex: none; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1px solid currentColor; display: grid; place-items: center; font-size: .9rem; }
+.cf-card .is-next { display: none; }
+/* cartão escolhido */
+.cf-card:has(.cf-radio:checked) { background: var(--accent); border-color: var(--accent); color: #fff; }
+.cf-card:has(.cf-radio:checked) :is(.cf-card-label, .cf-card-list, .cf-card-small) { color: rgba(255, 255, 255, .85); }
+.cf-card:has(.cf-radio:checked) .cf-card-btn-txt { background: #fff; color: var(--bordo); }
+.cf-card:has(.cf-radio:checked) .cf-card-icon { background: var(--bordo); border-color: var(--bordo); color: #fff; }
+.cf-card:has(.cf-radio:checked) .is-pick { display: none; }
+.cf-card:has(.cf-radio:checked) .is-next { display: inline; }
+
+/* passo final: resumo + campos */
+.cf-summary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 1.5rem; margin-bottom: 2.5rem; }
+.cf-summary-item:first-child { grid-column: 1 / -1; }
+.cf-summary-label { display: block; font-size: .8rem; color: #8f8f8d; }
+.cf-summary-value { display: flex; align-items: center; gap: .6rem; margin-top: .3rem; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: 600; }
+.cf-summary-value::before { content: ""; flex: none; width: .6rem; height: .6rem; border-radius: 50%; background: var(--accent); }
+.cf-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 1.5rem; }
+.cf-field { display: flex; flex-direction: column; gap: .35rem; }
+.cf-field--full { grid-column: 1 / -1; }
+.cf-field label { font-size: .85rem; }
+.cf-field input, .cf-field textarea {
+  padding: .6rem 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0;
+  background: transparent; color: var(--text); font: inherit; font-size: 1rem; outline: none;
+  transition: border-color .3s var(--ease);
+}
+.cf-field textarea { resize: vertical; min-height: 5.5rem; }
+.cf-field input::placeholder, .cf-field textarea::placeholder { color: #6b6b68; }
+.cf-field input:focus, .cf-field textarea:focus { border-bottom-color: var(--accent); }
+.cf-field [aria-invalid="true"] { border-bottom-color: var(--accent-2); }
+.cf-check { display: flex; align-items: flex-start; gap: .7rem; max-width: 46ch; margin-top: 1.8rem; font-size: .85rem; color: #a7a7a4; }
+.cf-check input { flex: none; width: 1rem; height: 1rem; margin-top: .15rem; accent-color: var(--accent); }
+.cf-submit { display: inline-flex; align-items: center; gap: .6rem; margin-top: 2.2rem; padding: 0; border: 0; background: none; font: inherit; color: var(--text); }
+.cf-submit-txt { padding: .7rem 1.4rem; border-radius: 100px; background: var(--accent); color: #fff; font-size: .95rem; font-weight: 600; transition: background-color .3s var(--ease); }
+.cf-submit-icon { width: 2.6rem; height: 2.6rem; border-radius: 50%; background: var(--bordo); color: #fff; display: grid; place-items: center; transition: transform .3s var(--ease); }
+.cf-submit:hover .cf-submit-txt { background: var(--accent-2); }
+.cf-submit:hover .cf-submit-icon { transform: translateX(4px); }
+.cf-submit:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 100px; }
+.cf-feedback { min-height: 1.3em; margin-top: 1rem; font-size: .9rem; color: var(--text); }
+.cf-feedback.is-error { color: var(--accent-2); }
+
+@media (max-width: 900px) {
+  .cf { grid-template-columns: 1fr; }
+  .cf-visual { display: none; }
+}
+@media (max-width: 560px) {
+  .cf-options, .cf-fields, .cf-summary { grid-template-columns: 1fr; }
 }

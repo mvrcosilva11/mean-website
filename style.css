@@ -61,6 +61,11 @@
   opacity: .7; transition: opacity .3s var(--ease);
 }
 .hi-marquee-track img:hover { opacity: 1; }
+/* fade nas pontas da faixa (tipo mobagency.pt): as marcas esbatem-se ao entrar e sair */
+.hi-marquee-wrap {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
+}
 @keyframes hi-marq { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .hi-marquee-track { animation: none; } }
 
@@ -283,9 +288,15 @@ h3 { font-size: 1.1rem; }
   content: "";
   position: absolute; inset: -100px -150px;
   z-index: -1;
-  background: radial-gradient(ellipse at center,
-    rgba(83, 19, 22, .82) 30%,
-    rgba(83, 19, 22, 0) 75%);
+  /* closest-side: a elipse acaba exatamente nas bordas da caixa, por isso chega a 0 antes
+     de a caixa acabar (sem corte visível); várias paragens para uma queda suave, sem degraus */
+  background: radial-gradient(closest-side,
+    rgba(83, 19, 22, .82) 0%,
+    rgba(83, 19, 22, .82) 35%,
+    rgba(83, 19, 22, .6) 55%,
+    rgba(83, 19, 22, .32) 72%,
+    rgba(83, 19, 22, .12) 87%,
+    rgba(83, 19, 22, 0) 100%);
   pointer-events: none;
 }
 .hi-logo-mask { display: block; overflow: hidden; }
@@ -1174,8 +1185,8 @@ h3 { font-size: 1.1rem; }
    O raio é em px (não 50%) para o círculo esticar para uma pill sem passar por uma elipse. */
 .cursor-dot {
   display: grid; place-items: center;
-  width: 34px; height: 34px; border-radius: 999px; overflow: hidden;
-  background: transparent; border: 1.5px solid #fff;
+  width: 22px; height: 22px; border-radius: 999px; overflow: hidden;
+  background: transparent; border: 2px solid #fff;
   transition: opacity .2s ease, width .6s var(--m-ease), height .6s var(--m-ease);
 }
 .cursor-dot::before {
@@ -1987,4 +1998,15 @@ html.i18n-wait body { visibility: hidden; }
   .m-pj-next .m-media { aspect-ratio: 16 / 10; }
   .m-pj-stack > .is-narrow, .m-pj-stack > .is-small { grid-column: 2 / -1; }
   .m-pj-chapter--flip .m-pj-stack > .is-narrow, .m-pj-chapter--flip .m-pj-stack > .is-small { grid-column: 1 / span 6; }
+}
+
+/* ── Intro: aparecimento com blur ao dar scroll (tipo cardenasdesigngroup.com) ──
+   opacidade 0→1, sobe 1.5rem e desfoca de 20px→0 em 1.2s. Só na Intro; as outras páginas usam o motion.js */
+.page-home-intro .reveal {
+  opacity: 0; transform: translateY(1.5rem); filter: blur(20px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease);
+}
+.page-home-intro .reveal.visible { opacity: 1; transform: none; filter: none; }
+@media (prefers-reduced-motion: reduce) {
+  .page-home-intro .reveal { transition: none; opacity: 1; transform: none; filter: none; }
 }

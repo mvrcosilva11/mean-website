@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
-  <title>Talk with us — MEAN AGENCY</title>
-  <meta name="description" content="Talk to MEAN AGENCY. Branding, web and strategy — no detours, we reply within 24 hours." />
+  <title>Intro — MEAN AGENCY</title>
+  <meta name="description" content="MEAN is a creative agency from Porto. Branding, web, social media, video and strategy, without splitting what should be born together." />
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=41',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
   <link rel="stylesheet" href="style.css?v=123" />
 </head>
-<body class="page-contact">
+<body class="page-home-intro">
 
   <!-- LOGO ANIMADO: na 1.ª abertura do site e a cada mudança de página (num recarregamento não aparece) -->
   <div class="preloader" id="preloader" data-duration="1440" data-anim="assets/intro-logo.webp?v=41" data-still="assets/intro-logo.png?v=41"></div>
@@ -26,11 +26,11 @@
         <a href="index.html">Home</a>
         <a href="work.html">Work</a>
         <a href="about.html">About</a>
-        <a href="index-intro.html">Intro</a>
+        <a href="index-intro.html" aria-current="page">Intro</a>
       </nav>
     </div>
     <div class="nav-right-group">
-      <a href="contact.html" class="nav-cta" aria-current="page">Talk with us</a>
+      <a href="contact.html" class="nav-cta">Talk with us</a>
       <button class="nav-lang" type="button" data-lang-switch aria-label="Mudar para português">PT</button>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -38,93 +38,51 @@
     </div>
   </header>
 
-  <!-- CONTACT -->
-  <main class="ab ct">
+  <!-- HERO: logo com animação de entrada + grelha de bolas que reage ao cursor -->
+  <section class="hi-hero">
+    <div class="hi-dots" aria-hidden="true"></div>
+    <div class="hi-inner">
+      <span class="hi-line hi-logo-mask">
+        <img class="hi-logo hi-line-in" src="assets/logo2-red.png?v=49" alt="MEAN — Creative Agency" />
+      </span>
+    </div>
+  </section>
 
-    <!-- HERO / STATEMENT -->
-    <section class="ab-hero ct-hero reveal">
-      <p class="ab-kicker">Talk with us</p>
-      <h1 class="ab-statement">
-        Let's talk about your project.
-        <span class="ab-em">No detours, no nonsense.</span>
-      </h1>
-    </section>
+  <!-- MARCAS: rollover horizontal contínuo, com fade nas pontas e blur ao aparecer -->
+  <section class="hi-marquee">
+    <p class="hi-marquee-label reveal">Brands we've worked with</p>
+    <div class="hi-marquee-wrap reveal"><div class="hi-marquee-track">
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="Brand" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+      <img src="assets/logo-branco.png?v=30" alt="" aria-hidden="true" />
+    </div></div>
+  </section>
 
-    <!-- INFO + FORM -->
-    <section class="ct-body">
-      <div class="ct-info reveal">
-        <h2 class="ct-info-title">Talk to us directly</h2>
-        <a class="ct-email" href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a>
-        <p class="ct-availability">We reply within 24 hours, every working day. No middlemen — whoever answers is who will work with you.</p>
-
-        <ul class="ct-social">
-          <li><a href="https://instagram.com/mean_agency" target="_blank" rel="noopener">Instagram <span aria-hidden="true">↗</span></a></li>
-          <li><a href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a></li>
-        </ul>
-
-        <div class="ct-loc">
-          <span class="ct-loc-label">Studio</span>
-          <span>Porto, Portugal</span>
-        </div>
-      </div>
-
-      <form class="ct-form reveal" id="contactForm" novalidate>
-        <div class="ct-field">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" required />
-        </div>
-        <div class="ct-field">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="email@example.com" required />
-        </div>
-        <div class="ct-field">
-          <label for="budget">Estimated budget</label>
-          <select id="budget" name="budget">
-            <option value="">Select an option</option>
-            <option>Under €3,000</option>
-            <option>€3,000 – €8,000</option>
-            <option>€8,000 – €20,000</option>
-            <option>Over €20,000</option>
-          </select>
-        </div>
-        <div class="ct-field">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" placeholder="Tell us what you have in mind…" required></textarea>
-        </div>
-        <button type="submit" class="ct-submit">Send message <span aria-hidden="true">→</span></button>
-        <p class="form-feedback" id="formFeedback" role="status"></p>
-      </form>
-    </section>
-
-    <!-- PROCESS -->
-    <section class="ab-manifesto ct-process">
-      <h2 class="ab-manifesto-title reveal">How it works</h2>
-      <ol class="ab-list">
-        <li class="ab-item reveal">
-          <span class="ab-num">01</span>
-          <div class="ab-item-body">
-            <h3 class="ab-item-title">You send the message</h3>
-            <p class="ab-item-text">You tell us what you need. No endless forms, just the essentials so we can start thinking.</p>
-          </div>
-        </li>
-        <li class="ab-item reveal">
-          <span class="ab-num">02</span>
-          <div class="ab-item-body">
-            <h3 class="ab-item-title">A 20-minute call</h3>
-            <p class="ab-item-text">A quick call, no strings attached, to see if we make sense for each other.</p>
-          </div>
-        </li>
-        <li class="ab-item reveal">
-          <span class="ab-num">03</span>
-          <div class="ab-item-body">
-            <h3 class="ab-item-title">A tailored proposal</h3>
-            <p class="ab-item-text">Scope, timings and costs, clear and in writing. No fine print and no surprises down the line.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-  </main>
+  <!-- BADGE flutuante: contacto -->
+  <a class="fab-contact" href="contact.html" aria-label="Contact">
+    <svg class="fab-ring" viewBox="0 0 120 120" aria-hidden="true">
+      <defs>
+        <path id="fabCircle" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" />
+      </defs>
+      <text>
+        <textPath href="#fabCircle" startOffset="0">CONTACT&nbsp;·&nbsp;CONTACT&nbsp;·&nbsp;CONTACT&nbsp;·&nbsp;</textPath>
+      </text>
+    </svg>
+    <img class="fab-center" src="assets/fab-badge.png?v=65" alt="" />
+  </a>
 
   <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
   <footer class="m-foot">
@@ -136,7 +94,7 @@
           <a href="index.html">Home</a>
           <a href="work.html">Work</a>
           <a href="about.html">About</a>
-          <a href="contact.html" aria-current="page">Talk with us</a>
+          <a href="contact.html">Talk with us</a>
         </nav>
       </div>
       <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-red-tight.png?v=119" alt="MEAN" width="1075" height="269" loading="lazy" /></a>

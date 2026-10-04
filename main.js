@@ -193,7 +193,7 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
   const group = document.querySelector(sel);
   if (group) group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 65) + 'ms'; });
 });
-document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.ab .reveal, .page-work .reveal, .page-home-intro .reveal').forEach(el => observer.observe(el));
 
 // Parallax — elementos com data-parallax movem-se ao scroll
 (function () {

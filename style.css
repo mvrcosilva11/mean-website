@@ -277,6 +277,12 @@ h3 { font-size: 1.1rem; }
 }
 .hi-logo-mask { display: block; overflow: hidden; }
 .hi-logo { width: 100%; height: auto; display: block; }
+/* Versão WebGL (main.js): bolas e logo desenhados juntos num canvas, para se poderem fundir.
+   O logo em imagem continua na página (dá a posição, a animação de entrada e o texto alternativo), mas não se vê. */
+.hi-canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; display: block; pointer-events: none; }
+.hi-hero.hi-gl .hi-dots { visibility: hidden; }
+.hi-hero.hi-gl .hi-logo { opacity: 0; }
+.hi-hero.hi-gl .hi-inner::before { display: none; }   /* sem véu: junto ao logo as bolas recolhem-se */
 
 .hi-kicker {
   font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;

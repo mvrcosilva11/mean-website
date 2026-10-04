@@ -1632,31 +1632,44 @@ html.i18n-wait body { visibility: hidden; }
 .js [data-blur].is-in { opacity: 1; filter: blur(0); transform: none; }
 
 /* ── Home: abertura ──
-   Um só gesto, sem paragens. O ecrã do logo encolhe para um cartão ao centro e deixa o ecrã em branco
-   à volta; o cartão passa do vermelho-escuro para o vídeo e cresce até ocupar o ecrã inteiro. O header
-   entra já perto do fim. O encolher está aqui (na .preloader); o crescer é calculado no motion.js.
-   Só clip-path, opacity e transform. O motion.js põe .is-open e .is-nav no <html>. */
+   O vídeo é o objeto. O ecrã do logo sobe como uma cortina e deixa ver o ecrã em branco, onde o vídeo
+   já está a tocar: pequeno, inteiro (sem recortes) e ao centro. Depois cresce, num só movimento, até
+   ser o fundo da página. O header entra quando o vídeo acaba de encher o ecrã.
+   São só transformações (translate / scale), sem máscaras: correm lisas em qualquer browser.
+   O motion.js põe .is-nav e .is-open no <html>; .is-bare = página aberta sem o ecrã do logo. */
 .m-hero::before { display: none; }
-.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, o cartão é escuro, nunca vazio */
+.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, a miniatura é escura, nunca vazia */
 .js .m-hero-video { opacity: 1; transform: none; transition: none; }
-.js .page-home { --ob1: max(7.1vw, 46px); }                    /* meia largura do cartão */
+.js .page-home { --mini: .3; }                                /* tamanho da miniatura, em fração do ecrã */
 .js:not(.is-open) .page-home .m-hero { background: var(--brand-white, #f4f4f1); }
-.js:not(.is-open) .page-home .m-hero-media { clip-path: inset(25% calc(50% - var(--ob1)) round 12px); opacity: 0; }
-.js:not(.is-open) .page-home .m-hero-video { transform: scale(1.16); }
+.js:not(.is-open) .page-home .m-hero-media { scale: var(--mini); translate: 0 9vh; }
+.js:not(.is-open) .page-home .m-hero-video { transform: scale(1.12); }
+.js.is-bare:not(.is-open) .page-home .m-hero-media { opacity: 0; }
+/* a miniatura assenta enquanto a cortina sobe e, sem chegar a parar, começa a crescer.
+   A moldura chega ao ecrã inteiro com decisão; quem assenta devagar é a imagem lá dentro (m-zoom). */
+.js.is-ready:not(.is-open) .page-home .m-hero-media {
+  animation: m-rise 1.3s cubic-bezier(.33, 1, .68, 1) both,
+             m-grow 1.5s cubic-bezier(.7, 0, .3, 1) .5s both;
+}
+.js.is-ready.is-bare:not(.is-open) .page-home .m-hero-media {
+  animation: m-rise 1.3s cubic-bezier(.33, 1, .68, 1) both,
+             m-show .6s ease both,
+             m-grow 1.5s cubic-bezier(.7, 0, .3, 1) .5s both;
+}
+.js.is-ready:not(.is-open) .page-home .m-hero-video { animation: m-zoom 2.3s cubic-bezier(.5, 0, .1, 1) .5s both; }
+@keyframes m-rise { from { translate: 0 9vh; } to { translate: 0 0; } }
+@keyframes m-grow { from { scale: var(--mini); } to { scale: 1; } }
+@keyframes m-show { from { opacity: 0; } to { opacity: 1; } }
+@keyframes m-zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
+/* o ecrã do logo sai para cima, como uma cortina */
 @media (prefers-reduced-motion: no-preference) {
-  /* o ecrã do logo encolhe para o cartão e depois desfaz-se, deixando ver o vídeo que está por baixo */
   .js .page-home .preloader.done {
     opacity: 1; transition: none;
-    animation: m-pre-card .8s cubic-bezier(.7, 0, .2, 1) .08s both, m-pre-out .35s ease .76s forwards;
+    animation: m-pre-up .9s cubic-bezier(.76, 0, .24, 1) both;
   }
-  .js .page-home .preloader.done .preloader-anim { opacity: 0; transition: opacity .28s ease; }
 }
-@keyframes m-pre-card {
-  from { clip-path: inset(0% 0px round 0px); }
-  to   { clip-path: inset(25% calc(50% - var(--ob1)) round 12px); }
-}
-@keyframes m-pre-out { to { opacity: 0; } }
-/* na Home o header só entra quando o vídeo já quase ocupa o ecrã (.is-nav) */
+@keyframes m-pre-up { to { transform: translate3d(0, -100%, 0); } }
+/* na Home o header só entra quando o vídeo acaba de encher o ecrã (.is-nav) */
 .js:not(.is-nav) .page-home .nav-logo-link, .js:not(.is-nav) .page-home .nav-links a,
 .js:not(.is-nav) .page-home .nav-cta, .js:not(.is-nav) .page-home .nav-lang,
 .js:not(.is-nav) .page-home .nav-toggle { opacity: 0; animation: none; }
@@ -1779,6 +1792,7 @@ html.i18n-wait body { visibility: hidden; }
 }
 @media (max-width: 700px) {
   :root { --m-text: .875rem; }
+  .js .page-home { --mini: .42; }
   .m-svc-row { grid-template-columns: 2rem minmax(0, 1fr); }
   .m-mani > li { grid-template-columns: 2rem minmax(0, 1fr); }
 }
@@ -1789,7 +1803,7 @@ html.i18n-wait body { visibility: hidden; }
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
   .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-lang, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
-  .js .page-home .m-hero-media, .js .page-home .m-hero-video { clip-path: none !important; opacity: 1 !important; transform: none !important; }
+  .js .page-home .m-hero-media, .js .page-home .m-hero-video { scale: none !important; translate: none !important; opacity: 1 !important; transform: none !important; animation: none !important; }
 }
 
 /* ============================================================

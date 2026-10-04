@@ -56,7 +56,7 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 
 ### Como se comporta
 
-- **Abertura:** um só gesto, sem paragens. O ecrã do logo encolhe para um cartão ao centro e deixa o ecrã em branco à volta; o cartão passa do vermelho-escuro para o vídeo e cresce até ocupar o ecrã inteiro, com a largura a arrancar primeiro e a altura logo a seguir. O header entra já perto do fim. Dura cerca de 2,5 segundos depois do logo. Num recarregamento (sem logo) o cartão aparece sobre o branco e cresce da mesma forma.
+- **Abertura:** o vídeo é o objeto. O ecrã do logo sobe como uma cortina e deixa ver o ecrã em branco, onde o vídeo já está a tocar, pequeno, inteiro e ao centro. Sem chegar a parar, o vídeo cresce num só movimento até ser o fundo da página, e o header entra quando ele acaba de encher o ecrã. Dura cerca de 2 segundos depois do logo. Não há recortes nem máscaras: a miniatura mostra sempre a imagem completa. Num recarregamento (sem logo) a miniatura aparece sobre o branco e cresce da mesma forma.
 - **Vídeo:** sem grão nem filtros por cima. Fica preso ao ecrã: quando a página sobe por cima dele, escurece e aproxima-se ligeiramente. Quando fica tapado, pára de tocar.
 - **Menu e primeiro scroll:** o menu abre a meio do ecrã, sobre o vídeo. O primeiro scroll move só o menu, até ao topo. Só depois a página começa a subir. Isto acontece só na Home; nas outras páginas o menu está logo no topo.
 - **Frase:** acende linha a linha com o scroll.

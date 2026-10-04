@@ -67,8 +67,8 @@ if (projeto && window.PROJETOS) {
   try { sessionStorage.setItem('mean_intro_seen', '1'); } catch (e) {}
   if (new URLSearchParams(location.search).has('introhold')) return; // dev: mantém o loading visível p/ inspeção
   const dur = parseInt(pre.dataset.duration, 10) || 1440;
-  const anim = pre.dataset.anim || 'assets/intro-logo.webp?v=41';
-  const still = pre.dataset.still || 'assets/intro-logo.png?v=41';
+  const anim = pre.dataset.anim || 'assets/intro-logo.webp?v=42';
+  const still = pre.dataset.still || 'assets/intro-logo.png?v=42';
   // Se o logo não chegar a tempo (ligação lenta), a página abre sem ele: 2,5 s contados desde o
   // início do carregamento, com um mínimo de 0,7 s a partir daqui.
   const WAIT = Math.max(700, 2500 - (window.performance ? performance.now() : 0));

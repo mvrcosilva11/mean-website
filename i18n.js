@@ -17,7 +17,6 @@
   'use strict';
   var PT = {
     "MEAN · Creative agency, Porto": "MEAN · Agência criativa, Porto",
-    "Brands we've worked with": "Marcas com quem já trabalhámos",
     "Brand": "Marca",
     "MEAN's opening statement. One long sentence that says who we are, what we do and what sets us apart from other agencies. Placeholder text, to be replaced with the final line.": "Frase de apresentação da MEAN. Uma frase longa, que diz quem somos, o que fazemos e o que nos distingue das outras agências. Texto provisório, a substituir pela frase final.",
     "Featured projects": "Projetos em destaque",

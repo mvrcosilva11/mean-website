@@ -12,7 +12,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 | **About** | `about.html` | **construída** com conteúdo provisório (2026-10-03) |
 | **Projeto** | `projeto.html` | **construída** com conteúdo provisório (2026-10-04); é o modelo para todos os projetos |
 | Contact | `contact.html` | por planear (mantém a versão anterior) |
-| Intro | `arquivo/index-intro.html` | arquivada, fora do menu. Como recuperar: `arquivo/LEIA-ME.md` |
+| Intro | `index-intro.html` | de volta ao menu (2026-10-04): animação do logo com a grelha de bolas e o footer. A tira "Brands we've worked with" saiu a 2026-10-04 |
 | 404 | não existe | por criar |
 | Política de privacidade | não existe | por criar (o formulário recolhe dados) |
 
@@ -25,7 +25,8 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - **Línguas:** o site está em **inglês por defeito**. O botão `PT` / `EN` no header troca a língua e guarda a escolha no browser. O HTML tem o inglês; o português está todo em `i18n.js`, numa lista "texto em inglês → texto em português". Para mudar um texto em português, muda-se só no `i18n.js`. Para mudar um texto em inglês, muda-se no HTML **e** no lado esquerdo da lista do `i18n.js` (têm de ficar iguais). Para conferir, abrir o site em PT com `?i18ncheck` no endereço: a consola lista o que ficou sem tradução. Os textos das fichas deste documento estão em português; o inglês é tradução minha, por validar.
 - **Header** (igual em todas as páginas): tudo em texto, do mesmo tamanho (15 px, logo com 17 px de altura), sem fundo e sem botão vermelho: logo, Home, Work, About à esquerda; "Talk with us" e língua à direita. **O header fica sempre em inglês**, seja qual for a língua do site (atributo `data-i18n-skip`); no resto da página, em PT, "Talk with us" aparece como "Fala connosco". A página continua a ser `contact.html`. Usa "negativo" para se ler sobre qualquer fundo. Sobre o vídeo da Home passa a branco ou preto conforme o brilho do vídeo por baixo. Sai de cena quando o footer chega ao topo.
 - **Barra de progresso** (todas as páginas, criada pelo `motion.js`): uma barra de 6 px presa ao fundo do ecrã, no vermelho escuro do footer. Enche com o scroll e fica completa no momento em que o footer começa a aparecer; como têm a mesma cor, a barra cheia transforma-se no footer que sobe.
-- **Footer** (igual em todas as páginas): ecrã inteiro no vermelho escuro da MEAN (`#681a1a`, o do ecrã do logo), com texto e logo no vermelho do logótipo (`#d33d3d`), nas proporções de esrbespoke.au (texto a 14 px em maiúsculas, grelha de 12 colunas, logo com 32% da largura a meio da altura, contactos em baixo à direita). Em ecrãs largos fica preso ao ecrã e é revelado pela página a subir. A frase "Vamos construir a tua próxima marca, juntos." do footer antigo saiu; a referência não tem newsletter nem a pusemos.
+- **Cores** (2026-10-04): o site tem só dois vermelhos, os da animação da página Intro e do favicon: o bordô `#531316` (`--bordo`) e o vermelho `#E62834` (`--accent`). Usam-nos o ecrã do logo, a cortina entre páginas, o footer, a barra de progresso e os destaques. Os logos em imagem (`intro-logo.webp`, `intro-logo.png`, `logo-mean-red-tight.png`, `logo-mean-red.png`) foram recolorados para o mesmo vermelho. Para mudar uma cor no site todo, basta mudar `--bordo` ou `--accent` no topo do `style.css`; os logos em imagem têm de ser recolorados à parte.
+- **Footer** (igual em todas as páginas): ecrã inteiro no vermelho escuro da MEAN (`#531316`), com texto e logo no vermelho do logótipo (`#E62834`), nas proporções de esrbespoke.au (texto a 14 px em maiúsculas, grelha de 12 colunas, logo com 32% da largura a meio da altura, contactos em baixo à direita). Em ecrãs largos fica preso ao ecrã e é revelado pela página a subir. A frase "Vamos construir a tua próxima marca, juntos." do footer antigo saiu; a referência não tem newsletter nem a pusemos.
 - **Proporções:** margens estreitas; **todas as frases do site têm o mesmo tamanho, o da frase de abertura da Home** (títulos de página, frases de secção, testemunhos e fechos; no CSS é a variável `--m-phrase`); texto corrido pequeno (13 a 15 px) em colunas estreitas com avanço na primeira linha, listas compactas.
 - `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-blur`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
 - Sem JavaScript, ou com "reduzir movimento" ligado no sistema, o conteúdo aparece todo, sem animação.
@@ -92,7 +93,7 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 4. Frase de apresentação fica provisória até haver a final.
 5. Vídeo, Motion e Fotografia passam a quinta disciplina.
 6. "O que fazemos": versão curta na Home, versão completa no About.
-7. A página Intro sai do site e fica guardada em `arquivo/`.
+7. ~~A página Intro sai do site e fica guardada em `arquivo/`.~~ Voltou ao site a 2026-10-04 (`index-intro.html`, ligação "Intro" no menu).
 8. A grelha de tamanhos mistos é a do Work. Os 4 destaques da Home usam o mesmo componente.
 9. Sem barra flutuante.
 

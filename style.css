@@ -45,30 +45,6 @@
 @keyframes fab-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .fab-ring { animation: none; } }
 
-/* Marcas — rollover horizontal contínuo abaixo do hero */
-.hi-marquee { position: relative; z-index: 3; padding: clamp(2.5rem, 7vh, 5rem) 0; overflow: hidden; }
-.hi-marquee-label {
-  text-align: center; font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
-  color: rgba(244, 244, 241, .55); margin-bottom: clamp(2.5rem, 7vh, 4.5rem);
-}
-.hi-marquee-track {
-  display: flex; width: max-content; align-items: center;
-  animation: hi-marq 32s linear infinite;
-}
-.hi-marquee-track img {
-  height: clamp(48px, 7vw, 76px); width: auto;
-  margin: 0 clamp(2.5rem, 6vw, 5.5rem);
-  opacity: .7; transition: opacity .3s var(--ease);
-}
-.hi-marquee-track img:hover { opacity: 1; }
-/* fade nas pontas da faixa (tipo mobagency.pt): as marcas esbatem-se ao entrar e sair */
-.hi-marquee-wrap {
-  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
-          mask-image: linear-gradient(to right, transparent 0, #000 18%, #000 82%, transparent 100%);
-}
-@keyframes hi-marq { to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .hi-marquee-track { animation: none; } }
-
 /* Homepage intro: fundo bordô do favicon */
 body.page-home-intro { background: var(--bordo); }
 .page-home-intro .nav, .page-home-intro .nav.nav-over { background: transparent; }
@@ -84,7 +60,7 @@ body.page-home-intro { background: var(--bordo); }
 .preloader {
   position: fixed;
   inset: 0;
-  background: #681a1a;
+  background: var(--bordo);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -491,7 +467,7 @@ h3 { font-size: 1.1rem; }
 }
 
 /* ===== Work — layout tipo pixelmatters ===== */
-.page-work--grid { --ab-red: #d33d3d; }
+.page-work--grid { --ab-red: var(--accent); }
 .work-lead {
   max-width: none; margin: 0;
   padding: calc(var(--nav-h) + clamp(3rem, 10vh, 6rem)) clamp(1.25rem, 4vw, 3rem) clamp(2rem, 6vh, 4rem);
@@ -609,7 +585,7 @@ h3 { font-size: 1.1rem; }
   transition: background .3s var(--ease);
 }
 .wl-list li:last-child .wl-row { border-bottom: 1px solid var(--border); }
-.wl-row:hover { background: rgba(234,42,53,.05); }
+.wl-row:hover { background: rgba(230, 40, 52, .05); }
 .wl-name {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3.4vw, 2.6rem); font-weight: 600;
@@ -711,7 +687,7 @@ h3 { font-size: 1.1rem; }
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ===== About page (dark, immersive) ===== */
-.ab { --ab-red: #d33d3d; padding: 0 clamp(1.25rem, 6vw, 6rem); }
+.ab { --ab-red: var(--accent); padding: 0 clamp(1.25rem, 6vw, 6rem); }
 
 .ab-hero {
   min-height: 90vh;
@@ -731,7 +707,7 @@ h3 { font-size: 1.1rem; }
 .ab-iconband {
   height: clamp(64px, 11vh, 128px);
   margin-top: clamp(2rem, 5vh, 4rem);
-  background-image: url(assets/logo-mean-red.png?v=27);
+  background-image: url(assets/logo-mean-red.png?v=125);
   background-repeat: repeat-x;
   background-size: auto 52%;
   background-position: left center;
@@ -1069,7 +1045,7 @@ h3 { font-size: 1.1rem; }
 [data-parallax] { will-change: transform; }
 /* cortina de transição entre páginas (mesma cor do loading: a página seguinte abre com o logo animado) */
 .page-trans {
-  position: fixed; inset: 0; z-index: 100001; background: #681a1a;
+  position: fixed; inset: 0; z-index: 100001; background: var(--bordo);
   transform: scaleX(0); transform-origin: left center; pointer-events: none;
 }
 
@@ -1843,15 +1819,16 @@ html.i18n-wait body { visibility: hidden; }
 
 /* ============================================================
    FOOTER — proporções de esrbespoke.au, identidade MEAN
-   Ecrã inteiro no vermelho escuro da MEAN (o do ecrã do logo), com texto e logo no vermelho do
-   logótipo. As duas cores estão em --mean-red-dark e --mean-red. Texto a 14 px com entrelinha de 14 px, em maiúsculas
+   Ecrã inteiro no vermelho escuro da MEAN (o bordô da Intro e do ecrã do logo), com texto e logo no
+   vermelho do logótipo. As duas cores estão em --mean-red-dark e --mean-red. Texto a 14 px com entrelinha de 14 px, em maiúsculas
    espaçadas; grelha de 12 colunas com 16 px de intervalo; margens de 28 px (cima/baixo) e 32 px (lados);
    logo com 32% da largura do ecrã, a meio da altura; contactos em baixo, a partir da 9.ª coluna.
    Em ecrãs largos o footer está preso ao ecrã e é revelado pela página a subir.
    ============================================================ */
 :root {
-  --mean-red-dark: #681a1a;   /* vermelho escuro: ecrã do logo, cortina entre páginas, footer */
-  --mean-red: #d33d3d;        /* vermelho do logótipo MEAN */
+  /* Só há dois vermelhos no site, os da Intro e do favicon: --bordo (#531316) e --accent (#E62834). */
+  --mean-red-dark: var(--bordo);   /* vermelho escuro: ecrã do logo, cortina entre páginas, footer, barra */
+  --mean-red: var(--accent);       /* vermelho do logótipo MEAN */
 }
 .m-foot { position: relative; z-index: 6; background: var(--mean-red-dark); color: var(--mean-red); }
 

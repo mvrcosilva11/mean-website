@@ -1819,7 +1819,17 @@ html.i18n-wait body { visibility: hidden; }
   --mean-red-dark: #681a1a;   /* vermelho escuro: ecrã do logo, cortina entre páginas, footer */
   --mean-red: #d33d3d;        /* vermelho do logótipo MEAN */
 }
-.m-foot { position: relative; background: var(--mean-red-dark); color: var(--mean-red); }
+.m-foot { position: relative; z-index: 6; background: var(--mean-red-dark); color: var(--mean-red); }
+
+/* ── Barra de progresso (todas as páginas, criada pelo motion.js) ──
+   Presa ao fundo do ecrã, na cor do footer. Enche com o scroll e fica completa no momento em que o
+   footer começa a aparecer; como têm a mesma cor e o footer passa por cima dela, a barra cheia
+   transforma-se no footer que sobe. */
+.m-progress {
+  position: fixed; left: 0; right: 0; bottom: 0; height: 6px; z-index: 5; pointer-events: none;
+  background: var(--mean-red-dark); transform: scaleX(0); transform-origin: 0 50%;
+}
+.m-progress.is-off { display: none; }
 .m-foot-in {
   display: flex; flex-direction: column; min-height: 100vh; min-height: 100svh;
   padding: 28px 32px; background: var(--mean-red-dark); color: var(--mean-red);
@@ -1883,11 +1893,6 @@ html.i18n-wait body { visibility: hidden; }
    margem entre capítulos, e o projeto seguinte no fim. As frases usam a escala única (--m-phrase).
    ============================================================ */
 .m-pj { padding-top: var(--nav-h); }
-/* linha de progresso da leitura (o motion.js atualiza --p) */
-.m-pj-progress {
-  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 101; pointer-events: none;
-  background: #fff; mix-blend-mode: difference; transform: scaleX(var(--p, 0)); transform-origin: 0 50%;
-}
 
 /* 1. abertura */
 .m-pj-bar {

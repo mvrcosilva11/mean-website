@@ -24,6 +24,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - **Referências de proporção e movimento** (2026-10-03): madeinevolve.com para proporções e dinâmicas, twks.ch para o header a meio do ecrã, flabbergast.agency para a abertura do vídeo, esrbespoke.au para o footer. Destas referências vêm só a escala, o espaçamento e o movimento. Ficaram de fora as linhas verticais de fundo, as maiúsculas e a fonte monoespaçada do Evolve. Está tudo nas camadas "MEAN v3" e "FOOTER" no fim do `style.css`.
 - **Línguas:** o site está em **inglês por defeito**. O botão `PT` / `EN` no header troca a língua e guarda a escolha no browser. O HTML tem o inglês; o português está todo em `i18n.js`, numa lista "texto em inglês → texto em português". Para mudar um texto em português, muda-se só no `i18n.js`. Para mudar um texto em inglês, muda-se no HTML **e** no lado esquerdo da lista do `i18n.js` (têm de ficar iguais). Para conferir, abrir o site em PT com `?i18ncheck` no endereço: a consola lista o que ficou sem tradução. Os textos das fichas deste documento estão em português; o inglês é tradução minha, por validar.
 - **Header** (igual em todas as páginas): tudo em texto, do mesmo tamanho (15 px, logo com 17 px de altura), sem fundo e sem botão vermelho: logo, Home, Work, About à esquerda; "Talk with us" e língua à direita. **O header fica sempre em inglês**, seja qual for a língua do site (atributo `data-i18n-skip`); no resto da página, em PT, "Talk with us" aparece como "Fala connosco". A página continua a ser `contact.html`. Usa "negativo" para se ler sobre qualquer fundo. Sobre o vídeo da Home passa a branco ou preto conforme o brilho do vídeo por baixo. Sai de cena quando o footer chega ao topo.
+- **Barra de progresso** (todas as páginas, criada pelo `motion.js`): uma barra de 6 px presa ao fundo do ecrã, no vermelho escuro do footer. Enche com o scroll e fica completa no momento em que o footer começa a aparecer; como têm a mesma cor, a barra cheia transforma-se no footer que sobe.
 - **Footer** (igual em todas as páginas): ecrã inteiro no vermelho escuro da MEAN (`#681a1a`, o do ecrã do logo), com texto e logo no vermelho do logótipo (`#d33d3d`), nas proporções de esrbespoke.au (texto a 14 px em maiúsculas, grelha de 12 colunas, logo com 32% da largura a meio da altura, contactos em baixo à direita). Em ecrãs largos fica preso ao ecrã e é revelado pela página a subir. A frase "Vamos construir a tua próxima marca, juntos." do footer antigo saiu; a referência não tem newsletter nem a pusemos.
 - **Proporções:** margens estreitas; **todas as frases do site têm o mesmo tamanho, o da frase de abertura da Home** (títulos de página, frases de secção, testemunhos e fechos; no CSS é a variável `--m-phrase`); texto corrido pequeno (13 a 15 px) em colunas estreitas com avanço na primeira linha, listas compactas.
 - `motion.js`: todas as animações de entrada e de interação. Liga-se por atributos no HTML (`data-reveal`, `data-blur`, `data-split`, `data-media`, `data-stagger`, `data-cursor`, `data-slider`, `data-focus-list`).
@@ -170,7 +171,7 @@ Legenda: ✅ feito · ❌ falta conteúdo
 
 | # | Secção | O que a referência tem | Conteúdo MEAN | Estado |
 |---|---|---|---|---|
-| 1 | **Barra do projeto** | "Back", nome do projeto, "Open Website", com linha de progresso. | "← Work", nome do projeto, "Visit website". A linha de progresso da leitura fica no topo do ecrã. O header do site mantém-se por cima, igual ao resto. | Secção ✅ · Nome e link ❌ |
+| 1 | **Barra do projeto** | "Back", nome do projeto, "Open Website", com linha de progresso. | "← Work", nome do projeto, "Visit website". O progresso da leitura é a barra do fundo do ecrã, comum a todo o site. O header do site mantém-se por cima, igual ao resto. | Secção ✅ · Nome e link ❌ |
 | 2 | **Abertura** | Frase grande à esquerda; ficha técnica à direita (ano, setor, local, entregáveis, prémios). | Frase de abertura do projeto. Ficha: ano, setor, local, entregáveis. | Secção ✅ · Conteúdo ❌ |
 | 3 | **Capa** | Imagem ou vídeo a toda a largura. | Capa do projeto (16:8). | Secção ✅ · Imagem ❌ |
 | 4 | **Resumo** | Segunda frase à esquerda; texto pequeno em duas colunas à direita. | Segunda frase (contexto ou resultado) e 2 parágrafos. | Secção ✅ · Conteúdo ❌ |
@@ -185,7 +186,6 @@ Legenda: ✅ feito · ❌ falta conteúdo
 
 ### Como se comporta
 
-- **Linha de progresso:** uma linha fina no topo do ecrã enche à medida que se lê a página.
 - **Capítulos:** o texto fica preso ao ecrã enquanto as imagens desse capítulo passam ao lado. Os capítulos alternam de lado.
 - **Imagens:** abrem de baixo para cima ao entrar no ecrã. Dentro de cada pilha há três larguras: inteira, estreita e pequena, encostadas ao lado de fora.
 - **Frases:** todas no tamanho único do site. A de abertura entra desfocada; as dos interlúdios acendem linha a linha com o scroll.

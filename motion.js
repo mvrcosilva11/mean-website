@@ -12,8 +12,7 @@
      data-focus-list        lista em que a linha a meio do ecrã ganha foco
      data-slider            carrossel (data-slide, data-prev, data-next, data-count)
      data-cursor="Ver"      texto da pill do cursor
-     data-progress          linha de progresso da leitura (página de projeto)
-   Sem atributo: as etiquetas .m-label entram letra a letra; na Home o header abre a meio do ecrã
+   Sem atributo: a barra de progresso ao fundo do ecrã (todas as páginas); as etiquetas .m-label entram letra a letra; na Home o header abre a meio do ecrã
    e sobe para o topo com o scroll.
    Respeita "reduzir movimento": nesse caso tudo aparece sem animação.
    ============================================================ */
@@ -286,12 +285,19 @@
   }
   if (cursorLayer && foot) window.addEventListener('mousemove', function (e) { cursorY = e.clientY; updateFoot(); }, { passive: true });
 
-  /* ── 4d. Linha de progresso da leitura (página de projeto) ── */
-  var progress = document.querySelector('[data-progress]');
+  /* ── 4d. Barra de progresso (todas as páginas com scroll) ──
+     Presa ao fundo do ecrã, na cor do footer. Chega ao fim exatamente quando o footer começa a
+     aparecer por baixo; a partir daí é o footer, da mesma cor, que continua a subir. */
+  var progress = document.createElement('div');
+  progress.className = 'm-progress';
+  progress.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(progress);
   function updateProgress(y) {
-    if (!progress) return;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    progress.style.setProperty('--p', max > 0 ? clamp(y / max, 0, 1).toFixed(4) : '0');
+    var vh = window.innerHeight;
+    // onde acaba o conteúdo: o ponto em que o topo do footer toca o fundo do ecrã
+    var end = foot ? foot.getBoundingClientRect().top + y - vh : document.documentElement.scrollHeight - vh;
+    progress.classList.toggle('is-off', end <= 4);
+    progress.style.transform = 'scaleX(' + (end > 4 ? clamp(y / end, 0, 1) : 0).toFixed(4) + ')';
   }
 
   var ticking = false;

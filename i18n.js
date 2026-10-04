@@ -185,6 +185,7 @@
     nodes.forEach(function (node) {
       var p = node.parentNode;
       if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName)) return;
+      if (p.closest && p.closest('[data-i18n-skip]')) return;      // o header fica sempre em inglês
       var key = norm(node.nodeValue);
       if (!key) return;
       if (PT[key]) node.nodeValue = node.nodeValue.replace(node.nodeValue.trim(), PT[key]);
@@ -193,6 +194,7 @@
     // atributos
     ['placeholder', 'aria-label', 'alt', 'title', 'data-cursor'].forEach(function (attr) {
       Array.prototype.forEach.call(document.querySelectorAll('[' + attr + ']'), function (el) {
+        if (el.closest('[data-i18n-skip]')) return;
         var v = PT[norm(el.getAttribute(attr))];
         if (v) el.setAttribute(attr, v);
       });

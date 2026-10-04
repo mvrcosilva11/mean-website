@@ -76,7 +76,8 @@ if (projeto && window.PROJETOS) {
   const hide = () => {
     if (done) return; done = true;
     pre.classList.add('done');
-    setTimeout(() => { pre.remove(); if (blobUrl) URL.revokeObjectURL(blobUrl); }, 700);
+    // tempo que a saída demora: 700 ms por defeito; a Home pede mais (o ecrã do logo encolhe para um cartão)
+    setTimeout(() => { pre.remove(); if (blobUrl) URL.revokeObjectURL(blobUrl); }, parseInt(pre.dataset.exit, 10) || 700);
   };
   const img = new Image();
   img.className = 'preloader-anim'; img.id = 'introAnim'; img.alt = 'MEAN';

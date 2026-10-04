@@ -356,12 +356,64 @@
   });
 
   /* ── 6b. Abertura da Home ──
-     Ecrã em branco, depois o vídeo abre de uma janela pequena ao centro, que alarga e cresce até
-     ocupar o ecrã (a coreografia está no CSS: @keyframes m-open). Aqui só se marca o fim, com .is-open
-     no <html>. Se a página chegar já com .is-open (troca de língua), a abertura não se repete. */
+     Um só gesto, sem paragens: o ecrã do logo encolhe para um cartão ao centro (CSS, na .preloader),
+     o cartão passa a mostrar o vídeo e cresce até ocupar o ecrã. O crescimento é calculado aqui,
+     quadro a quadro, para a largura e a altura se sobreporem em vez de se sucederem.
+     No fim fica .is-open no <html>; .is-nav marca o momento em que o header entra.
+     Se a página chegar já com .is-open (troca de língua), a abertura não se repete. */
   var heroMedia = hero ? hero.querySelector('.m-hero-media') : null;
-  var opened = function () { root.classList.add('is-open'); };
-  if (!heroMedia || reduce) opened();
+  var opened = function () {
+    if (heroMedia) { heroMedia.style.clipPath = ''; heroMedia.style.webkitClipPath = ''; heroMedia.style.opacity = ''; }
+    if (heroMedia && heroVideo) heroVideo.style.transform = '';
+    root.classList.add('is-open', 'is-nav');
+  };
+  var skipOpening = !heroMedia || reduce || root.classList.contains('is-open');
+  if (skipOpening) opened();
+
+  // curva de Bézier cúbica, igual às do CSS, para usar em JavaScript
+  function bezier(x1, y1, x2, y2) {
+    var cx = 3 * x1, bx = 3 * (x2 - x1) - cx, ax = 1 - cx - bx;
+    var cy = 3 * y1, by = 3 * (y2 - y1) - cy, ay = 1 - cy - by;
+    return function (x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      var t = x;
+      for (var i = 0; i < 8; i++) {
+        var f = ((ax * t + bx) * t + cx) * t - x, d = (3 * ax * t + 2 * bx) * t + cx;
+        if (Math.abs(f) < 1e-5 || !d) break;
+        t -= f / d;
+      }
+      t = clamp(t, 0, 1);
+      return ((ay * t + by) * t + cy) * t;
+    };
+  }
+  function runOpening(hadLogo) {
+    var GROW = 1700;                       // duração do crescimento (ms)
+    var growAt = hadLogo ? 700 : 340;      // começa ainda com o cartão do logo a desfazer-se (ou a aparecer): sem tempo morto
+    var APPEAR = 480;                      // sem logo: o cartão aparece sozinho sobre o branco
+    var ease = bezier(0.56, 0, 0.1, 1);    // arranque suave, chegada longa
+    var easeOut = bezier(0.19, 1, 0.22, 1);
+    var t0 = performance.now(), navOn = false;
+    (function frame(now) {
+      var t = Math.max(0, now - t0);
+      var W = hero.clientWidth || window.innerWidth;
+      var half = Math.max(W * 0.071, 46);                    // meia largura do cartão (igual a --ob1 no CSS)
+      var a = hadLogo ? 1 : easeOut(clamp(t / APPEAR, 0, 1));
+      var s = hadLogo ? 1 : 0.9 + 0.1 * a;                   // sem logo, o cartão chega a crescer ligeiramente
+      var g = clamp((t - growAt) / GROW, 0, 1);
+      var wx = ease(g);                                      // a largura arranca primeiro…
+      var hy = ease(clamp((g - 0.2) / 0.8, 0, 1));           // …a altura logo a seguir; chegam juntas
+      var hw = half * s + (W / 2 - half * s) * wx;           // meia largura atual (px)
+      var hh = 25 * s + (50 - 25 * s) * hy;                  // meia altura atual (% da altura)
+      var r = 12 * (1 - clamp((hy - 0.8) / 0.2, 0, 1));
+      var clip = 'inset(' + (50 - hh).toFixed(3) + '% ' + Math.max(0, W / 2 - hw).toFixed(2) + 'px round ' + r.toFixed(2) + 'px)';
+      heroMedia.style.clipPath = clip; heroMedia.style.webkitClipPath = clip;
+      heroMedia.style.opacity = a.toFixed(3);
+      if (heroVideo) heroVideo.style.transform = 'scale(' + (1.16 - 0.16 * ease(g)).toFixed(4) + ')';
+      if (!navOn && g > 0.72) { navOn = true; root.classList.add('is-nav'); }
+      if (g < 1) requestAnimationFrame(frame); else opened();
+    })(t0);
+  }
 
   /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
   // O vídeo da abertura só começa a descarregar depois de o logo animado ter chegado, para não
@@ -382,13 +434,14 @@
     if (heroVideo && !reduce && heroVideo.paused) { var pp = heroVideo.play(); if (pp && pp.catch) pp.catch(function () {}); }
     observeAll();
     onScroll();
-    if (heroMedia && !reduce) {
-      heroMedia.addEventListener('animationend', function (e) { if (e.animationName === 'm-open') opened(); });
-      setTimeout(opened, 3500);   // segurança
+    if (!skipOpening) {
+      runOpening(hadLogo);
+      setTimeout(opened, 4200);   // segurança
     }
   }
   var pre = document.getElementById('preloader');
-  if (pre && getComputedStyle(pre).display !== 'none') {
+  var hadLogo = !!(pre && getComputedStyle(pre).display !== 'none');
+  if (hadLogo) {
     var mo = new MutationObserver(function () {
       if (!document.body.contains(pre) || pre.classList.contains('done')) { mo.disconnect(); setTimeout(start, 120); }
     });

@@ -1632,34 +1632,34 @@ html.i18n-wait body { visibility: hidden; }
 .js [data-blur].is-in { opacity: 1; filter: blur(0); transform: none; }
 
 /* ── Home: abertura ──
-   Depois do logo animado fica um ecrã em branco, limpo. A seguir o vídeo abre a partir de uma janela
-   pequena ao centro: a janela desenrola-se, alarga e cresce até ocupar o ecrã inteiro. Só então entra
-   o header. É tudo clip-path e transform (sem mexer no tamanho do vídeo), para correr liso no Safari.
-   O motion.js põe .is-open no <html> quando a abertura acaba. */
+   Um só gesto, sem paragens. O ecrã do logo encolhe para um cartão ao centro e deixa o ecrã em branco
+   à volta; o cartão passa do vermelho-escuro para o vídeo e cresce até ocupar o ecrã inteiro. O header
+   entra já perto do fim. O encolher está aqui (na .preloader); o crescer é calculado no motion.js.
+   Só clip-path, opacity e transform. O motion.js põe .is-open e .is-nav no <html>. */
 .m-hero::before { display: none; }
-.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, a janela abre escura, nunca vazia */
+.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, o cartão é escuro, nunca vazio */
 .js .m-hero-video { opacity: 1; transform: none; transition: none; }
-.js .page-home { --ob1: max(7.1vw, 46px); --ob2: 26vw; }      /* meia largura da janela: em pé, depois deitada */
+.js .page-home { --ob1: max(7.1vw, 46px); }                    /* meia largura do cartão */
 .js:not(.is-open) .page-home .m-hero { background: var(--brand-white, #f4f4f1); }
-.js:not(.is-ready) .page-home .m-hero-media {
-  clip-path: inset(25% calc(50% - var(--ob1)) 75% calc(50% - var(--ob1)) round 12px);
+.js:not(.is-open) .page-home .m-hero-media { clip-path: inset(25% calc(50% - var(--ob1)) round 12px); opacity: 0; }
+.js:not(.is-open) .page-home .m-hero-video { transform: scale(1.16); }
+@media (prefers-reduced-motion: no-preference) {
+  /* o ecrã do logo encolhe para o cartão e depois desfaz-se, deixando ver o vídeo que está por baixo */
+  .js .page-home .preloader.done {
+    opacity: 1; transition: none;
+    animation: m-pre-card .8s cubic-bezier(.7, 0, .2, 1) .08s both, m-pre-out .35s ease .76s forwards;
+  }
+  .js .page-home .preloader.done .preloader-anim { opacity: 0; transition: opacity .28s ease; }
 }
-.js:not(.is-ready) .page-home .m-hero-video { transform: scale(1.2); }
-.js.is-ready:not(.is-open) .page-home .m-hero-media { animation: m-open 2.4s linear .62s both; }
-.js.is-ready:not(.is-open) .page-home .m-hero-video { animation: m-open-zoom 2.4s cubic-bezier(.33, 0, .15, 1) .62s both; }
-@keyframes m-open {
-  0%   { clip-path: inset(25% calc(50% - var(--ob1)) 75% calc(50% - var(--ob1)) round 12px); animation-timing-function: cubic-bezier(.65, 0, .2, 1); }
-  27%  { clip-path: inset(25% calc(50% - var(--ob1)) 25% calc(50% - var(--ob1)) round 12px); animation-timing-function: cubic-bezier(.7, 0, .2, 1); }
-  60%  { clip-path: inset(25% calc(50% - var(--ob2)) 25% calc(50% - var(--ob2)) round 12px); animation-timing-function: cubic-bezier(.75, 0, .15, 1); }
-  100% { clip-path: inset(0% 0% 0% 0% round 0px); }
+@keyframes m-pre-card {
+  from { clip-path: inset(0% 0px round 0px); }
+  to   { clip-path: inset(25% calc(50% - var(--ob1)) round 12px); }
 }
-@keyframes m-open-zoom { from { transform: scale(1.2); } to { transform: scale(1); } }
-/* na Home o header só entra quando o vídeo já ocupa o ecrã */
-.js.is-ready:not(.is-fast) .page-home .nav-logo-link,
-.js.is-ready:not(.is-fast) .page-home .nav-links a,
-.js.is-ready:not(.is-fast) .page-home .nav-cta,
-.js.is-ready:not(.is-fast) .page-home .nav-lang,
-.js.is-ready:not(.is-fast) .page-home .nav-toggle { animation-delay: calc(2650ms + var(--nav-d, 0ms)); }
+@keyframes m-pre-out { to { opacity: 0; } }
+/* na Home o header só entra quando o vídeo já quase ocupa o ecrã (.is-nav) */
+.js:not(.is-nav) .page-home .nav-logo-link, .js:not(.is-nav) .page-home .nav-links a,
+.js:not(.is-nav) .page-home .nav-cta, .js:not(.is-nav) .page-home .nav-lang,
+.js:not(.is-nav) .page-home .nav-toggle { opacity: 0; animation: none; }
 /* primeiro scroll: a página só começa a subir depois de o header chegar ao topo */
 .js .page-home .m-sheet { margin-top: calc(50vh - var(--nav-h) / 2); margin-top: calc(50svh - var(--nav-h) / 2); }
 
@@ -1779,7 +1779,6 @@ html.i18n-wait body { visibility: hidden; }
 }
 @media (max-width: 700px) {
   :root { --m-text: .875rem; }
-  .js .page-home { --ob2: 40vw; }
   .m-svc-row { grid-template-columns: 2rem minmax(0, 1fr); }
   .m-mani > li { grid-template-columns: 2rem minmax(0, 1fr); }
 }
@@ -1790,7 +1789,7 @@ html.i18n-wait body { visibility: hidden; }
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
   .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-lang, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
-  .js .page-home .m-hero-media, .js .page-home .m-hero-video { clip-path: none !important; transform: none !important; animation: none !important; }
+  .js .page-home .m-hero-media, .js .page-home .m-hero-video { clip-path: none !important; opacity: 1 !important; transform: none !important; }
 }
 
 /* ============================================================

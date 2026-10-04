@@ -8,7 +8,8 @@
      data-split="rise"      texto que sobe linha a linha
      data-split="scrub"     texto que acende linha a linha com o scroll
      data-stagger="90"      atrasa os filhos em cadeia (ms); data-stagger-mod="3" recomeça a cada 3
-     data-hero              vídeo de abertura (cresce de uma miniatura ao abrir; com o scroll encolhe ao centro e sai com a página)
+     data-open              abertura da Home: a animação da Intro cresce de uma miniatura até ao ecrã inteiro
+     data-hero              vídeo da Home, depois da frase (fica preso ao ecrã, encolhe ao centro e sai com a página)
      data-focus-list        lista em que a linha a meio do ecrã ganha foco
      data-slider            carrossel (data-slide, data-prev, data-next, data-count)
      data-cursor="Ver"      texto da pill do cursor
@@ -132,6 +133,7 @@
   var hero = document.querySelector('[data-hero]');
   var heroVideo = hero ? hero.querySelector('video') : null;
   var heroMedia = hero ? hero.querySelector('.m-hero-media') : null;   // a moldura do vídeo, presa ao ecrã
+  var openFrame = document.querySelector('[data-open] .m-open-frame');  // Home: a animação de abertura (bordô)
   var nav = document.querySelector('.nav');
   var navLinks = document.querySelector('.nav-links');
   var focusLists = $$('[data-focus-list]').map(function (list) {
@@ -142,42 +144,41 @@
       active: -1
     };
   });
-  var heroPaused = false;
-
-  // Home, em três tempos de scroll:
-  //   1. "pista": só o header anda, do meio do ecrã até ao topo;
-  //   2. o vídeo, preso ao ecrã, encolhe até uma miniatura ao centro (como em ondastudio.co);
-  //   3. o vídeo solta-se e sai com a página.
+  // Home: o vídeo vem depois da frase. Chega em ecrã inteiro, fica preso ao ecrã, encolhe até uma
+  // miniatura ao centro (como em ondastudio.co) e só depois se solta e sai com a página.
   // A .m-hero é a calha (mais alta do que o ecrã); a .m-hero-media é a moldura presa dentro dela.
+  //   --hero-min  = tamanho da miniatura;  --hero-hold = fração do percurso em que o vídeo fica inteiro.
   var isHome = !!hero && !!heroMedia && document.body.classList.contains('page-home');
-  var heroMin = 0.4;
-  function readHeroMin() {
+  var heroMin = 0.4, heroHold = 0.15, heroNear = false;
+  function readHeroVars() {
     if (!hero) return;
-    var v = parseFloat(getComputedStyle(hero).getPropertyValue('--hero-min'));
+    var cs = getComputedStyle(hero);
+    var v = parseFloat(cs.getPropertyValue('--hero-min')), k = parseFloat(cs.getPropertyValue('--hero-hold'));
     if (v > 0 && v < 1) heroMin = v;
+    if (k >= 0 && k < 1) heroHold = k;
   }
-  readHeroMin();
-  function frameH() { return (heroMedia && heroMedia.offsetHeight) || window.innerHeight; }
-  function heroRun() {
-    if (!isHome || !nav) return 0;
-    return Math.max(0, (frameH() - nav.offsetHeight) / 2);
-  }
-  function updateHero(y) {
+  readHeroVars();
+  function updateHero() {
     if (!isHome) return;
-    var run = heroRun(), track = hero.offsetHeight;
-    var span = track - frameH() - run;                         // distância de scroll em que o vídeo encolhe
+    var vh = window.innerHeight;
+    var r = hero.getBoundingClientRect();
+    var travel = r.height - (heroMedia.offsetHeight || vh);     // scroll em que o vídeo está preso ao ecrã
     var s = 1;
-    if (span > 4 && !reduce) {
-      var p = clamp((y - run) / span, 0, 1);
+    if (travel > 4 && !reduce) {
+      var hold = travel * heroHold;
+      var p = clamp((-r.top - hold) / (travel - hold), 0, 1);
       var e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;   // arranca e chega suave
       s = 1 - (1 - heroMin) * e;
     }
     hero.style.setProperty('--hero-s', s.toFixed(4));
-    var gone = y >= hero.offsetTop + track;                    // a calha já saiu toda do ecrã
-    if (!gone) toneGate();                                     // o header larga a cor do vídeo assim que sai de cima dele
-    if (heroVideo && !reduce) {                                // não gastar bateria com o vídeo fora do ecrã
-      if (gone && !heroPaused) { heroVideo.pause(); heroPaused = true; }
-      else if (!gone && heroPaused) { var pr = heroVideo.play(); if (pr && pr.catch) pr.catch(function () {}); heroPaused = false; }
+    toneGate();                                                 // a cor do header acompanha o que tem por baixo
+    if (heroVideo && !reduce && started) {                      // o vídeo só toca perto do ecrã (bateria e dados), e nunca antes de o logo animado sair
+      var near = r.top < vh * 1.5 && r.bottom > -vh * 0.25;
+      if (near !== heroNear) {
+        heroNear = near;
+        if (near) { heroVideo.preload = 'auto'; var pr = heroVideo.play(); if (pr && pr.catch) pr.catch(function () {}); }
+        else heroVideo.pause();
+      }
     }
   }
 
@@ -219,33 +220,21 @@
     });
   }
 
-  // Home: o header abre a meio do ecrã; o scroll leva-o até ao topo, onde fica preso.
-  // Com o menu do telemóvel aberto fica no topo, para o painel não o tapar.
-  function updateNav(y) {
-    if (!nav || !isHome) return;
-    var menuOpen = navLinks && navLinks.classList.contains('open');
-    var top = menuOpen ? 0 : Math.max(0, heroRun() - y);
-    nav.style.setProperty('--nav-y', top.toFixed(1) + 'px');
-  }
   // Menu do telemóvel: enquanto está aberto, a nav deixa o "negativo" (o painel tem de ser opaco)
   var navToggle = document.querySelector('.nav-toggle');
   if (nav && navToggle) {
-    var dockTimer = 0;
     var syncMenu = function () {
       nav.classList.toggle('nav--menu', !!(navLinks && navLinks.classList.contains('open')));
-      if (!isHome) return;
-      nav.classList.add('nav--docking');
-      updateNav(window.scrollY);
-      clearTimeout(dockTimer);
-      dockTimer = setTimeout(function () { nav.classList.remove('nav--docking'); }, 650);
+      if (isHome) toneGate();
     };
     navToggle.addEventListener('click', syncMenu);
     if (navLinks) navLinks.addEventListener('click', function (e) { if (e.target.closest && e.target.closest('a')) syncMenu(); });
   }
 
-  /* ── 4b. Home: sobre o vídeo, o header fica branco ou preto conforme o brilho do vídeo por baixo ──
-     (sem sombras e sem "negativo", que tinge o texto de cores sobre imagem). Lê uma miniatura do
-     vídeo algumas vezes por segundo. Fora do vídeo, a nav volta ao "negativo" normal do CSS. */
+  /* ── 4b. Home: a cor do header ──
+     Sobre a abertura (bordô) fica branco. Sobre o vídeo fica branco ou preto conforme o brilho do vídeo
+     por baixo (sem sombras e sem "negativo", que tinge o texto de cores sobre imagem): lê uma miniatura
+     do vídeo algumas vezes por segundo. No resto da página, a nav volta ao "negativo" normal do CSS. */
   var navGroups = nav ? [nav.querySelector('.nav-left-group'), nav.querySelector('.nav-right-group')] : [];
   var toneCanvas = null, toneCtx = null, toneOK = true;
   var posterImg = null;                                   // enquanto o vídeo não arranca, lê-se o poster
@@ -258,12 +247,19 @@
     return r.left >= fr.left - 2 && r.right <= fr.right + 2 && r.top >= fr.top - 2 && r.bottom <= fr.bottom + 2;
   }
   function toneGate() {
-    if (!toneOK || !nav || !heroMedia) return null;
-    var fr = heroMedia.getBoundingClientRect();              // onde o vídeo está agora (já com a escala)
+    if (!nav || !isHome) return null;
     var live = root.classList.contains('is-nav') && !nav.classList.contains('nav--menu');
-    var on = live && (overFrame(navGroups[0], fr) || overFrame(navGroups[1], fr));
+    var plain = function () { navGroups.forEach(function (g) { if (g) g.classList.remove('is-dark'); }); };
+    if (live && openFrame) {                                 // sobre a abertura: branco simples
+      var or = openFrame.getBoundingClientRect();
+      if (or.bottom > 0 && (overFrame(navGroups[0], or) || overFrame(navGroups[1], or))) {
+        nav.classList.add('nav--onvideo'); plain(); return null;
+      }
+    }
+    var fr = toneOK ? heroMedia.getBoundingClientRect() : null;   // onde o vídeo está agora (já com a escala)
+    var on = !!fr && live && (overFrame(navGroups[0], fr) || overFrame(navGroups[1], fr));
     nav.classList.toggle('nav--onvideo', on);
-    if (!on) { navGroups.forEach(function (g) { if (g) g.classList.remove('is-dark'); }); return null; }
+    if (!on) { plain(); return null; }
     return fr;
   }
   function sampleTone() {
@@ -295,7 +291,7 @@
         if (!dark && lum > 0.56) g.classList.add('is-dark');         // fundo claro → texto preto
         else if (dark && lum < 0.44) g.classList.remove('is-dark');  // fundo escuro → texto branco
       });
-    } catch (e) { toneOK = false; nav.classList.remove('nav--onvideo'); }
+    } catch (e) { toneOK = false; toneGate(); }
   }
   if (isHome && nav && heroVideo) setInterval(sampleTone, 160);
 
@@ -332,7 +328,7 @@
     ticking = true;
     requestAnimationFrame(function () {
       var y = window.scrollY;
-      updateHero(y); updateScrub(); updateFocus(); updateNav(y); updateFoot(); updateProgress(y);
+      updateHero(); updateScrub(); updateFocus(); updateFoot(); updateProgress(y);
       ticking = false;
     });
   }
@@ -341,10 +337,9 @@
   window.addEventListener('resize', function () {
     onScroll();
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function () { measureLines(); readHeroMin(); onScroll(); }, 160);
+    resizeTimer = setTimeout(function () { measureLines(); readHeroVars(); onScroll(); }, 160);
   });
   window.addEventListener('load', function () { measureLines(); onScroll(); });
-  updateNav(window.scrollY);   // posição do header antes da primeira pintura
 
   /* ── 5. Cursor: cresce sobre ligações, estica para uma pill com texto sobre os projetos ── */
   if (finePointer) {
@@ -402,41 +397,32 @@
   });
 
   /* ── 6b. Abertura da Home ──
-     O ecrã do logo sobe como uma cortina; no ecrã em branco o vídeo já está a tocar, pequeno e inteiro,
-     e cresce num só movimento até encher o ecrã. A coreografia está toda no CSS (m-rise, m-grow, m-zoom,
-     m-pre-up), em transformações que o browser anima fora da thread principal. Aqui só se marcam dois
-     momentos no <html>: .is-nav (o header pode entrar) e .is-open (acabou).
+     O ecrã do logo sobe como uma cortina; no ecrã em branco a animação da Intro (logo e grelha de bolas,
+     em fundo bordô) aparece em miniatura e cresce num só movimento até encher o ecrã. A coreografia está
+     toda no CSS (m-rise, m-grow, m-pre-up), em transformações que o browser anima fora da thread
+     principal. Aqui só se marcam dois momentos no <html>: .is-nav (o header pode entrar) e .is-open (acabou).
      Se a página chegar já com .is-open (troca de língua), a abertura não se repete. */
-  var OPEN_DELAY = 500, OPEN_GROW = 1500, OPEN_ZOOM = 2300;   // iguais aos tempos de m-grow e m-zoom no CSS (ms)
-  var opened = function () { root.classList.add('is-open', 'is-nav'); };
-  var skipOpening = !heroMedia || reduce || root.classList.contains('is-open');
+  var OPEN_DELAY = 500, OPEN_GROW = 1500;   // iguais aos tempos de m-grow no CSS (ms)
+  var opened = function () { root.classList.add('is-open', 'is-nav'); toneGate(); };
+  var skipOpening = !openFrame || reduce || root.classList.contains('is-open');
   if (skipOpening) opened();
 
   /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
-  // O vídeo da abertura só começa a descarregar depois de o logo animado ter chegado, para não
-  // competirem pela ligação; sem logo (recarregamento) começa logo. Com "reduzir movimento" fica o poster.
-  if (heroVideo && !reduce) {
-    var kick = function () {
-      heroVideo.preload = 'auto';
-      var pk = heroVideo.play(); if (pk && pk.catch) pk.catch(function () {});
-    };
-    if (window.__meanIntro && document.getElementById('preloader')) window.__meanIntro.then(kick, kick);
-    else kick();
-  }
+  // O vídeo da Home já não está no topo: só começa a tocar quando a secção dele se aproxima do ecrã
+  // (updateHero). Com "reduzir movimento" fica o poster.
   var started = false;
   function start() {
     if (started) return;
     started = true;
     root.classList.add('is-ready');
-    if (heroVideo && !reduce && heroVideo.paused) { var pp = heroVideo.play(); if (pp && pp.catch) pp.catch(function () {}); }
     observeAll();
     onScroll();
     if (!skipOpening) {
-      // acaba quando a imagem termina de assentar (m-zoom é a animação mais longa)
-      hero.addEventListener('animationend', function (e) { if (e.animationName === 'm-zoom') opened(); });
-      // o header começa a entrar quando o vídeo já cobre a zona onde ele fica (98% do tamanho final)
-      setTimeout(function () { root.classList.add('is-nav'); }, OPEN_DELAY + OPEN_GROW * 0.86);
-      setTimeout(opened, OPEN_DELAY + OPEN_ZOOM + 700);   // segurança
+      // acaba quando a moldura termina de crescer
+      openFrame.addEventListener('animationend', function (e) { if (e.animationName === 'm-grow') opened(); });
+      // o header começa a entrar quando a moldura já cobre a zona onde ele fica (98% do tamanho final)
+      setTimeout(function () { root.classList.add('is-nav'); toneGate(); }, OPEN_DELAY + OPEN_GROW * 0.86);
+      setTimeout(opened, OPEN_DELAY + OPEN_GROW + 700);   // segurança
     }
   }
   var pre = document.getElementById('preloader');

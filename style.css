@@ -254,13 +254,13 @@ h3 { font-size: 1.1rem; }
 
 .hi-inner { position: relative; z-index: 2; max-width: 20ch; }
 /* Logo central — posição absoluta no centro exato da hero (igual ao centro da grelha) */
-.page-home-intro .hi-inner {
+.page-home-intro .hi-inner, .page-home .hi-inner {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: min(760px, 78vw); max-width: none;
 }
 /* véu bordô atrás do logo → as bolas nessa zona ficam com menos opacidade */
-.page-home-intro .hi-inner::before {
+.page-home-intro .hi-inner::before, .page-home .hi-inner::before {
   content: "";
   position: absolute; inset: -100px -150px;
   z-index: -1;
@@ -1251,17 +1251,14 @@ h3 { font-size: 1.1rem; }
 }
 
 /* ============ HOME ============ */
-/* 1. abertura: vídeo dos projetos, preso ao ecrã; a página sobe por cima dele */
-.m-hero { position: sticky; top: 0; z-index: 0; height: 100vh; height: 100svh; min-height: 480px; overflow: hidden; background: #000; }
-.m-hero-media { position: absolute; inset: 0; transform: scale(var(--hero-s, 1)); will-change: transform; }
+/* Home — abertura (.m-open): a animação da Intro, em ecrã inteiro. As regras .hi-* estão mais acima. */
+.m-open { position: relative; height: 100vh; height: 100svh; min-height: 480px; overflow: hidden; background: var(--bordo); }
+.m-open-frame.hi-hero { position: absolute; inset: 0; width: auto; min-height: 0; }
+/* Home — vídeo dos projetos (.m-hero). Sem JavaScript é um bloco de ecrã inteiro; com JavaScript passa a
+   calha com o vídeo preso lá dentro (ver "Home: vídeo depois da frase", mais abaixo). */
+.m-hero { position: relative; height: 100vh; height: 100svh; min-height: 480px; overflow: hidden; background: #000; }
+.m-hero-media { position: absolute; inset: 0; transform: scale(var(--hero-s, 1)); will-change: transform; background: var(--surface); }
 .m-hero-video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.js .m-hero-video { opacity: 0; transform: scale(1.07); transition: opacity 1.4s var(--ease), transform 2.2s var(--m-ease); }
-.js.is-ready .m-hero-video { opacity: 1; transform: none; }
-.m-hero::before {   /* só para o menu se ler sobre frames claros */
-  content: ""; position: absolute; inset: 0 0 auto 0; height: 24vh; z-index: 1; pointer-events: none;
-  background: linear-gradient(180deg, rgba(0, 0, 0, .4), rgba(0, 0, 0, 0));
-}
-.m-hero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: #000; opacity: var(--hero-dim, 0); }
 .m-sheet { position: relative; z-index: 1; background: var(--bg); }
 
 /* 2. frase de apresentação */
@@ -1536,8 +1533,9 @@ h3 { font-size: 1.1rem; }
   mix-blend-mode: difference;
 }
 .nav.nav--menu, .nav.scrolled.nav--menu { mix-blend-mode: normal; background: var(--bg); }   /* menu aberto no telemóvel: painel opaco */
-/* sobre o vídeo da Home: sem "negativo"; branco ou preto conforme o brilho do vídeo (motion.js) */
-.nav.nav--onvideo { mix-blend-mode: normal; }
+/* sobre o vídeo da Home: sem "negativo"; branco ou preto conforme o brilho do vídeo (motion.js).
+   Sobre o bordô (abertura da Home e página Intro) também sem "negativo": branco simples, sem tingir. */
+.nav.nav--onvideo, .page-home-intro .nav.nav-over { mix-blend-mode: normal; }
 .nav--onvideo .nav-links a, .nav--onvideo .nav-cta, .nav--onvideo .nav-lang { transition: color .3s linear; }
 .nav--onvideo .nav-logo { transition: filter .3s linear; }
 .nav--onvideo .nav-toggle span { transition: background-color .3s linear, transform .3s var(--ease), opacity .3s; }
@@ -1582,11 +1580,6 @@ h3 { font-size: 1.1rem; }
 .nav-toggle { --nav-d: 360ms; }
 @keyframes m-nav-in { from { opacity: 0; transform: translate3d(0, 12px, 0); } }
 
-/* Home: o header abre a meio do ecrã, sobre o vídeo. O primeiro scroll move só o header até ao topo;
-   só depois a página começa a andar (ver .m-sheet mais abaixo). A posição (--nav-y) vem do motion.js. */
-.js .page-home .nav { top: calc(50vh - var(--nav-h) / 2); top: var(--nav-y, calc(50svh - var(--nav-h) / 2)); }
-.js .page-home .nav.nav--docking { transition: top .6s var(--m-ease), opacity .3s linear; }
-
 /* língua: enquanto o português não é aplicado, a página não aparece (evita ver o inglês a piscar) */
 html.i18n-wait body { visibility: hidden; }
 
@@ -1620,35 +1613,31 @@ html.i18n-wait body { visibility: hidden; }
 .js [data-blur].is-in { opacity: 1; filter: blur(0); transform: none; }
 
 /* ── Home: abertura ──
-   O vídeo é o objeto. O ecrã do logo sobe como uma cortina e deixa ver o ecrã em branco, onde o vídeo
-   já está a tocar: pequeno, inteiro (sem recortes) e ao centro. Depois cresce, num só movimento, até
-   ser o fundo da página. O header entra quando o vídeo acaba de encher o ecrã.
+   A animação da Intro (logo e grelha de bolas, em fundo bordô) é o objeto. O ecrã do logo sobe como uma
+   cortina e deixa ver o ecrã em branco, onde ela já está: pequena, inteira (sem recortes) e ao centro.
+   Depois cresce, num só movimento, até encher o ecrã. O header entra quando ela acaba de crescer.
    São só transformações (translate / scale), sem máscaras: correm lisas em qualquer browser.
-   O motion.js põe .is-nav e .is-open no <html>; .is-bare = página aberta sem o ecrã do logo. */
-.m-hero::before { display: none; }
-.m-hero-media { background: #0a0a0a; }     /* se a imagem ainda não chegou, a miniatura é escura, nunca vazia */
-.js .m-hero-video { opacity: 1; transform: none; transition: none; }
+   O motion.js põe .is-ready, .is-nav e .is-open no <html>; .is-bare = página aberta sem o ecrã do logo. */
 .js .page-home { --mini: .3; }                                /* tamanho da miniatura, em fração do ecrã */
-.js:not(.is-open) .page-home .m-hero { background: var(--brand-white, #f4f4f1); }
-.js:not(.is-open) .page-home .m-hero-media { scale: var(--mini); translate: 0 9vh; }
-.js:not(.is-open) .page-home .m-hero-video { transform: scale(1.12); }
-.js.is-bare:not(.is-open) .page-home .m-hero-media { opacity: 0; }
-/* a miniatura assenta enquanto a cortina sobe e, sem chegar a parar, começa a crescer.
-   A moldura chega ao ecrã inteiro com decisão; quem assenta devagar é a imagem lá dentro (m-zoom). */
-.js.is-ready:not(.is-open) .page-home .m-hero-media {
+.js:not(.is-open) .page-home .m-open { background: var(--brand-white, #f4f4f1); }
+.js:not(.is-open) .page-home .m-open-frame { scale: var(--mini); translate: 0 9vh; }
+.js.is-bare:not(.is-open) .page-home .m-open-frame { opacity: 0; }
+/* o logo e as bolas só entram quando a cortina começa a subir */
+.js:not(.is-ready) .page-home .hi-hero .hi-dots { opacity: 0; transition: none; }
+.js:not(.is-ready) .page-home .hi-hero .hi-line-in { transform: translateY(110%); transition: none; }
+/* a miniatura assenta enquanto a cortina sobe e, sem chegar a parar, começa a crescer */
+.js.is-ready:not(.is-open) .page-home .m-open-frame {
   animation: m-rise 1.3s cubic-bezier(.33, 1, .68, 1) both,
              m-grow 1.5s cubic-bezier(.7, 0, .3, 1) .5s both;
 }
-.js.is-ready.is-bare:not(.is-open) .page-home .m-hero-media {
+.js.is-ready.is-bare:not(.is-open) .page-home .m-open-frame {
   animation: m-rise 1.3s cubic-bezier(.33, 1, .68, 1) both,
              m-show .6s ease both,
              m-grow 1.5s cubic-bezier(.7, 0, .3, 1) .5s both;
 }
-.js.is-ready:not(.is-open) .page-home .m-hero-video { animation: m-zoom 2.3s cubic-bezier(.5, 0, .1, 1) .5s both; }
 @keyframes m-rise { from { translate: 0 9vh; } to { translate: 0 0; } }
 @keyframes m-grow { from { scale: var(--mini); } to { scale: 1; } }
 @keyframes m-show { from { opacity: 0; } to { opacity: 1; } }
-@keyframes m-zoom { from { transform: scale(1.12); } to { transform: scale(1); } }
 /* o ecrã do logo sai para cima, como uma cortina */
 @media (prefers-reduced-motion: no-preference) {
   .js .page-home .preloader.done {
@@ -1657,33 +1646,29 @@ html.i18n-wait body { visibility: hidden; }
   }
 }
 @keyframes m-pre-up { to { transform: translate3d(0, -100%, 0); } }
-/* na Home o header só entra quando o vídeo acaba de encher o ecrã (.is-nav) */
+/* na Home o header só entra quando a abertura acaba de encher o ecrã (.is-nav) */
 .js:not(.is-nav) .page-home .nav-logo-link, .js:not(.is-nav) .page-home .nav-links a,
 .js:not(.is-nav) .page-home .nav-cta, .js:not(.is-nav) .page-home .nav-lang,
 .js:not(.is-nav) .page-home .nav-toggle { opacity: 0; animation: none; }
-/* Scroll da Home em três tempos (como em ondastudio.co):
-   1. só o header anda, do meio do ecrã até ao topo;
-   2. o vídeo, preso ao ecrã, encolhe até uma miniatura ao centro;
-   3. o vídeo solta-se e sai com a página, e o resto do conteúdo vem a seguir.
-   A .m-hero passa a ser uma calha mais alta do que o ecrã; a .m-hero-media é a moldura presa lá dentro.
-   --hero-min = tamanho da miniatura; --hero-shrink = scroll que o encolher demora. A escala (--hero-s)
-   vem do motion.js. */
+/* ── Home: vídeo depois da frase (movimento de ondastudio.co) ──
+   O vídeo chega com a página, em ecrã inteiro; fica preso ao ecrã, encolhe até uma miniatura ao centro
+   sobre o fundo escuro e só depois se solta e sai com a página.
+   A .m-hero é uma calha mais alta do que o ecrã; a .m-hero-media é a moldura presa lá dentro.
+   --hero-travel = scroll em que o vídeo fica preso; --hero-hold = fração desse scroll em que ainda está
+   inteiro; --hero-min = tamanho da miniatura. A escala (--hero-s) vem do motion.js. */
 .js .page-home .m-hero {
-  --hero-min: .4; --hero-shrink: 70vh;
-  position: relative; top: auto; overflow: visible; overflow: clip;   /* clip corta sem prender o sticky */
-  height: calc(150vh - var(--nav-h) / 2 + var(--hero-shrink));
-  height: calc(150svh - var(--nav-h) / 2 + var(--hero-shrink));
+  --hero-min: .4; --hero-travel: 82vh; --hero-hold: .15;
+  overflow: visible; overflow: clip;   /* clip corta sem prender o sticky */
+  height: calc(100vh + var(--hero-travel));
+  height: calc(100svh + var(--hero-travel));
+  min-height: 0; background: var(--bg);
 }
-.js.is-open .page-home .m-hero { background: var(--bg); }
-.js .page-home .m-hero::after { display: none; }                 /* o vídeo já não é tapado nem escurecido */
 .js .page-home .m-hero-media { position: sticky; inset: auto; top: 0; width: 100%; height: 100vh; height: 100svh; }
-/* a miniatura deixa um terço do ecrã vazio por baixo: a frase não precisa de tanto espaço em cima */
-.js .page-home .m-statement { padding-top: clamp(1rem, 3vw, 3rem); }
 @media (max-width: 700px) {
-  .js .page-home .m-hero { --hero-min: .5; --hero-shrink: 55vh; }
+  .js .page-home .m-hero { --hero-min: .5; --hero-travel: 65vh; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .js .page-home .m-hero { --hero-shrink: 0vh; }                 /* sem encolher: também não há troço morto */
+  .js .page-home .m-hero { --hero-travel: 0vh; }                 /* sem encolher: um bloco de ecrã inteiro */
 }
 
 /* ── Home: frase de apresentação — bloco alto e estreito à esquerda ── */
@@ -1814,7 +1799,7 @@ html.i18n-wait body { visibility: hidden; }
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
   .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-lang, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
-  .js .page-home .m-hero-media, .js .page-home .m-hero-video { scale: none !important; translate: none !important; opacity: 1 !important; transform: none !important; animation: none !important; }
+  .js .page-home .m-open-frame { scale: none !important; translate: none !important; opacity: 1 !important; animation: none !important; }
 }
 
 /* ============================================================

@@ -10,8 +10,7 @@
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="preload" as="image" href="assets/work-bg-poster.jpg?v=29" fetchpriority="high" />
-  <link rel="stylesheet" href="style.css?v=125" />
+  <link rel="stylesheet" href="style.css?v=126" />
 </head>
 <body class="page-home">
 
@@ -41,16 +40,19 @@
 
   <main>
 
-    <!-- 1. ABERTURA — vídeo dos projetos em ecrã inteiro, sem nada por cima, sem som -->
-    <section class="m-hero" data-hero aria-label="MEAN project reel">
-      <div class="m-hero-media">
-        <video class="m-hero-video" muted loop playsinline preload="none" poster="assets/work-bg-poster.jpg?v=29">
-          <source src="assets/work-bg.mp4?v=29" type="video/mp4" />
-        </video>
+    <!-- 1. ABERTURA — a animação da Intro: logo sobre a grelha de bolas que reage ao cursor.
+         Ao abrir o site aparece em miniatura no ecrã em branco e cresce até encher o ecrã. -->
+    <section class="m-open" data-open>
+      <div class="m-open-frame hi-hero">
+        <div class="hi-dots" aria-hidden="true"></div>
+        <div class="hi-inner">
+          <span class="hi-line hi-logo-mask">
+            <img class="hi-logo hi-line-in" src="assets/logo2-red.png?v=49" alt="MEAN — Creative Agency" />
+          </span>
+        </div>
       </div>
     </section>
 
-    <!-- o resto da página: vem a seguir ao vídeo, depois de ele encolher e sair -->
     <div class="m-sheet">
 
       <!-- 2. FRASE DE APRESENTAÇÃO (texto provisório) -->
@@ -59,7 +61,17 @@
         <h1 class="m-statement-text" data-split="scrub">MEAN's opening statement. One long sentence that says who we are, what we do and what sets us apart from other agencies. Placeholder text, to be replaced with the final line.</h1>
       </section>
 
-      <!-- 3. PROJETOS EM DESTAQUE — 4 projetos (provisórios) -->
+      <!-- 3. VÍDEO DOS PROJETOS — chega em ecrã inteiro, fica preso, encolhe até uma miniatura ao centro
+           e só depois sai com a página (sem som, sem nada por cima) -->
+      <section class="m-hero" data-hero aria-label="MEAN project reel">
+        <div class="m-hero-media">
+          <video class="m-hero-video" muted loop playsinline preload="none" poster="assets/work-bg-poster.jpg?v=29">
+            <source src="assets/work-bg.mp4?v=29" type="video/mp4" />
+          </video>
+        </div>
+      </section>
+
+      <!-- 4. PROJETOS EM DESTAQUE — 4 projetos (provisórios) -->
       <section class="m-featured" aria-labelledby="destaques">
         <div class="m-head">
           <h2 class="m-label" id="destaques" data-reveal>Featured projects</h2>
@@ -102,7 +114,7 @@
         </div>
       </section>
 
-      <!-- 4. O QUE FAZEMOS — versão curta (a completa está no About) -->
+      <!-- 5. O QUE FAZEMOS — versão curta (a completa está no About) -->
       <section class="m-svc" aria-labelledby="fazemos">
         <div class="m-head">
           <h2 class="m-label" id="fazemos" data-reveal>What we do</h2>
@@ -198,8 +210,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=125"></script>
-  <script src="main.js?v=125"></script>
-  <script src="motion.js?v=125"></script>
+  <script src="i18n.js?v=126"></script>
+  <script src="main.js?v=126"></script>
+  <script src="motion.js?v=126"></script>
 </body>
 </html>

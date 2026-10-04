@@ -1561,12 +1561,12 @@ h3 { font-size: 1.1rem; }
 /* o header sai de cena quando o footer chega ao topo */
 .nav { transition: opacity .3s linear; }
 .nav.nav--away { opacity: 0; pointer-events: none; }
-.nav-left-group { gap: 2rem; }
-.nav-right-group { gap: 1.35rem; }
-.nav-logo { height: 15px; }
-.nav-links { gap: 1.35rem; }
+.nav-left-group { gap: 2.25rem; }
+.nav-right-group { gap: 1.55rem; }
+.nav-logo { height: 17px; }
+.nav-links { gap: 1.55rem; }
 .nav-links a, .nav-cta, .nav-lang {
-  font: inherit; font-size: .8125rem; font-weight: 500; line-height: 1; letter-spacing: -.02em;
+  font: inherit; font-size: .9375rem; font-weight: 500; line-height: 1; letter-spacing: -.02em;
   color: #fff; text-decoration: none;
 }
 .nav-cta, .nav-lang { display: inline-block; padding: 0; margin: 0; background: none; border: 0; border-radius: 0; }

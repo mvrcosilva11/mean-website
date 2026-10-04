@@ -1539,8 +1539,7 @@ h3 { font-size: 1.1rem; }
   --m-micro: .75rem;                              /* 12 px: números, legendas pequenas */
   --m-text: clamp(.8125rem, .92vw, .9375rem);     /* 13 a 15 px: texto corrido, em colunas estreitas */
   --m-mid: clamp(1.45rem, 2.7vw, 3.3rem);         /* nomes em listas */
-  --m-statement: clamp(1.45rem, 2.35vw, 3rem);    /* frases de secção */
-  --m-display: clamp(2.9rem, 9.4vw, 13.5rem);     /* títulos de página: ocupam a largura do ecrã */
+  --m-phrase: clamp(1.75rem, 3.55vw, 4.7rem);     /* TODAS as frases do site: o tamanho da frase de abertura da Home */
 }
 
 /* ── Nav: tudo em texto, do mesmo tamanho, sem fundo e sem pill.
@@ -1655,23 +1654,6 @@ html.i18n-wait body { visibility: hidden; }
   100% { clip-path: inset(0% 0% 0% 0% round 0px); }
 }
 @keyframes m-open-zoom { from { transform: scale(1.2); } to { transform: scale(1); } }
-/* grão de película, suave, por cima do vídeo */
-.m-hero-media::after {
-  content: ""; position: absolute; inset: -64px; z-index: 2; pointer-events: none;
-  background: url("assets/grain.webp") 0 0 / 180px 180px;
-  opacity: .2;
-  animation: m-grain .64s steps(1, end) infinite;
-}
-@keyframes m-grain {
-  0%    { transform: translate3d(0, 0, 0); }
-  12.5% { transform: translate3d(-37px, 23px, 0); }
-  25%   { transform: translate3d(41px, -19px, 0); }
-  37.5% { transform: translate3d(-13px, -47px, 0); }
-  50%   { transform: translate3d(29px, 52px, 0); }
-  62.5% { transform: translate3d(-55px, -8px, 0); }
-  75%   { transform: translate3d(17px, 36px, 0); }
-  87.5% { transform: translate3d(48px, -41px, 0); }
-}
 /* na Home o header só entra quando o vídeo já ocupa o ecrã */
 .js.is-ready:not(.is-fast) .page-home .nav-logo-link,
 .js.is-ready:not(.is-fast) .page-home .nav-links a,
@@ -1684,9 +1666,13 @@ html.i18n-wait body { visibility: hidden; }
 /* ── Home: frase de apresentação — bloco alto e estreito à esquerda ── */
 .m-statement { padding: var(--m-sec) var(--m-gut); row-gap: clamp(1.25rem, 2vw, 2rem); }
 .m-statement .m-label { grid-column: 1 / -1; margin-top: 0; }
-.m-statement-text {
-  grid-column: 1 / span 7;
-  font-size: clamp(1.75rem, 3.55vw, 4.7rem); line-height: .98; letter-spacing: -.045em; text-wrap: wrap;
+.m-statement-text { grid-column: 1 / span 7; text-wrap: wrap; }
+
+/* ── Frases: uma só escala em todas as páginas, a da frase de abertura da Home.
+      Títulos de página, frases de secção, testemunhos e fechos têm todos o mesmo tamanho. ── */
+.m-statement-text, .page-work .work-lead-title, .m-ahero-title, .m-cta-title,
+.m-lead, .m-svc-lead, .m-quote blockquote, .page-contact .ab-statement {
+  font-size: var(--m-phrase); font-weight: 500; line-height: .98; letter-spacing: -.045em;
 }
 
 /* ── Grelha de projetos: intervalos estreitos, legendas pequenas ── */
@@ -1696,7 +1682,8 @@ html.i18n-wait body { visibility: hidden; }
 .m-featured { padding-bottom: 0; }
 
 /* ── Frases de secção ── */
-.m-svc-lead, .m-lead { font-size: var(--m-statement); line-height: 1.04; letter-spacing: -.04em; max-width: 26ch; }
+.m-lead { max-width: none; }
+.m-svc-lead { max-width: 58%; }
 
 /* ── Home: o que fazemos — linhas compactas; ao passar o cursor a linha inverte ── */
 .m-svc { padding: var(--m-sec) 0; }
@@ -1722,28 +1709,28 @@ html.i18n-wait body { visibility: hidden; }
 
 /* ── Fecho ── */
 .m-cta { padding: var(--m-sec) var(--m-gut); }
-.m-cta-title { font-size: clamp(2.6rem, 8.2vw, 12rem); line-height: .88; letter-spacing: -.05em; max-width: none; }
+.m-cta-title { max-width: 58%; }
 
-/* ── Work: título à largura do ecrã, texto pequeno em coluna estreita à direita ── */
+/* ── Work: frase à esquerda, texto pequeno em coluna estreita à direita ── */
 .page-work .work-lead {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--m-gap);
   padding: calc(var(--nav-h) + clamp(3rem, 9vh, 6.5rem)) var(--m-gut) clamp(2rem, 5vh, 3.5rem);
 }
 .page-work .work-lead > * { grid-column: 1 / -1; }
-.page-work .work-lead-title { font-size: var(--m-display); line-height: .86; letter-spacing: -.05em; max-width: none; }
-.page-work .work-lead-sub {
-  grid-column: 9 / -1; margin-top: clamp(1.5rem, 3vw, 3rem); max-width: 34ch;
+.page-work .work-lead > .work-lead-title { grid-column: 1 / span 7; max-width: none; }
+.page-work .work-lead > .work-lead-sub {
+  grid-column: 9 / -1; margin-top: .3em; max-width: 34ch;
   font-size: var(--m-text); line-height: 1.22; letter-spacing: -.02em; text-indent: 2.4em; color: var(--m-soft);
 }
 
 /* ── About ── */
 .m-ahero { padding: calc(var(--nav-h) + clamp(3rem, 9vh, 6.5rem)) var(--m-gut) 0; }
-.m-ahero-title { margin-top: clamp(1.25rem, 2.5vw, 2rem); font-size: var(--m-display); line-height: .86; letter-spacing: -.05em; max-width: none; }
+.m-ahero-title { margin-top: clamp(1.25rem, 2vw, 2rem); max-width: 58%; }
 .m-sec { padding: var(--m-sec) var(--m-gut) 0; }
 /* a frase fica à esquerda e o texto pequeno numa coluna estreita à direita */
 .m-sec-main { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); column-gap: var(--m-gap); align-items: start; }
 .m-sec-main > * { grid-column: 1 / -1; }
-.m-sec-main > .m-lead { grid-column: 1 / span 5; }
+.m-sec-main > .m-lead { grid-column: 1 / span 6; }
 .m-sec-main > .m-body { grid-column: 7 / -1; margin-top: .3em; }
 .m-sec-main > .m-body + .m-body { margin-top: .9em; }
 .m-body { font-size: var(--m-text); line-height: 1.22; letter-spacing: -.02em; text-indent: 2.4em; max-width: 36ch; }
@@ -1772,18 +1759,21 @@ html.i18n-wait body { visibility: hidden; }
 }
 
 /* testemunhos */
-.m-quote blockquote { font-size: var(--m-statement); line-height: 1.04; letter-spacing: -.04em; max-width: 30ch; }
+.m-quote blockquote { max-width: 24ch; }
 .m-quote figcaption { margin-top: 1.1rem; font-size: var(--m-text); letter-spacing: -.02em; line-height: 1.25; }
 .m-quotes-count { font-size: var(--m-micro); letter-spacing: 0; }
 .m-btn-round { width: 44px; height: 44px; font-size: 1rem; transition: background-color .12s linear, color .12s linear, border-color .12s linear, transform .4s var(--m-ease); }
 .m-about .m-cta { margin-top: var(--m-sec); }
+.page-contact .ab-statement { max-width: 22ch; }
 
 /* ── Ecrãs médios e pequenos ── */
 @media (max-width: 1000px) {
   .m-statement-text { grid-column: 1 / -1; }
   .m-sec-main { display: block; }
   .m-sec-main > .m-body { margin-top: 1.1rem; }
-  .page-work .work-lead-sub { grid-column: 1 / -1; }
+  .page-work .work-lead > .work-lead-title { grid-column: 1 / -1; }
+  .page-work .work-lead > .work-lead-sub { grid-column: 1 / -1; margin-top: 1.25rem; }
+  .m-ahero-title, .m-cta-title, .m-svc-lead { max-width: none; }
   .m-mani > li > div { grid-template-columns: minmax(0, 1fr); row-gap: .6rem; }
   .m-disc > li { grid-template-columns: 2.25rem minmax(0, 1fr); }
 }
@@ -1801,7 +1791,6 @@ html.i18n-wait body { visibility: hidden; }
   }
   .js .nav-logo-link, .js .nav-links a, .js .nav-cta, .js .nav-lang, .js .nav-toggle { opacity: 1 !important; animation: none !important; }
   .js .page-home .m-hero-media, .js .page-home .m-hero-video { clip-path: none !important; transform: none !important; animation: none !important; }
-  .m-hero-media::after { animation: none; }
 }
 
 /* ============================================================

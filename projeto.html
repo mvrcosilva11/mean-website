@@ -6,10 +6,11 @@
   <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
   <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
   <title>Project — MEAN AGENCY</title>
+  <meta name="description" content="A MEAN project: what it was, what we did and what came out of it." />
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=41',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="stylesheet" href="style.css?v=120" />
+  <link rel="stylesheet" href="style.css?v=121" />
 </head>
 <body class="page-projeto">
 
@@ -23,7 +24,7 @@
       <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-mean-white.png?v=113" alt="MEAN" /></a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
-        <a href="work.html">Work</a>
+        <a href="work.html" aria-current="page">Work</a>
         <a href="about.html">About</a>
       </nav>
     </div>
@@ -36,22 +37,107 @@
     </div>
   </header>
 
-  <!-- PROJECT -->
-  <main class="projeto" id="projeto">
-    <header class="projeto-head">
-      <div class="projeto-head-name">
-        <h1 class="projeto-name"></h1>
-        <p class="projeto-cat"></p>
+  <!-- linha de progresso da leitura -->
+  <div class="m-pj-progress" data-progress aria-hidden="true"></div>
+
+  <!-- PROJETO — conteúdos e ordem em PLANEAMENTO.md. Tudo provisório: textos e imagens por preencher. -->
+  <main class="m-pj">
+
+    <!-- 1. ABERTURA: barra do projeto, frase, ficha técnica e capa -->
+    <section class="m-pj-intro">
+      <div class="m-pj-bar" data-reveal>
+        <a class="m-pj-back" href="work.html"><span class="m-arrow m-arrow--back" aria-hidden="true">←</span> Work</a>
+        <p class="m-pj-name">Project name</p>
+        <a class="m-pj-site" href="#" target="_blank" rel="noopener">Visit website <span class="m-arrow" aria-hidden="true">↗</span></a>
       </div>
-      <p class="projeto-text"></p>
-    </header>
-    <div class="projeto-scroll" id="projeto-scroll">
-      <div class="projeto-imgs"></div>
+      <span class="m-rule" data-line></span>
+      <div class="m-pj-top">
+        <h1 class="m-pj-statement" data-blur>Opening sentence of the project: what it is and what changed, in one or two lines. Placeholder text, to be replaced.</h1>
+        <dl class="m-pj-meta" data-stagger="70">
+          <div data-reveal><dt>Year</dt><dd>2026</dd></div>
+          <div data-reveal><dt>Sector</dt><dd>Client sector</dd></div>
+          <div data-reveal><dt>Location</dt><dd>City, Country</dd></div>
+          <div data-reveal><dt>Deliverables</dt><dd><span>Branding</span><span>Web</span><span>Social Media</span></dd></div>
+        </dl>
+      </div>
+      <div class="m-pj-cover-wrap">
+        <div class="m-media m-media--ph m-pj-cover" data-media><span>Project cover</span></div>
+      </div>
+    </section>
+
+    <!-- 2. RESUMO: segunda frase + texto em duas colunas -->
+    <section class="m-pj-summary">
+      <p class="m-pj-lead" data-split="rise">Second sentence: the context, or the result in numbers. Placeholder text.</p>
+      <div class="m-pj-cols" data-reveal>
+        <p>First paragraph of the summary. Who the client is, what they asked for and why it mattered. Placeholder text.</p>
+        <p>Second paragraph of the summary. What MEAN did and what came out of it. Placeholder text.</p>
+      </div>
+    </section>
+
+    <!-- 3. IMAGEM DE MARGEM A MARGEM -->
+    <div class="m-pj-full">
+      <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
     </div>
-    <div class="projeto-progress">
-      <div class="projeto-progress-track"><div class="projeto-progress-bar" id="projeto-bar"></div></div>
-      <span class="projeto-progress-pct" id="projeto-pct">0%</span>
+
+    <!-- 4. CAPÍTULO 1: texto preso à esquerda, imagens à direita -->
+    <section class="m-pj-chapter">
+      <div class="m-pj-text">
+        <h2 class="m-label" data-reveal>Branding</h2>
+        <p class="m-body" data-reveal>Text for this chapter. What was done in this discipline and the decisions behind it. Placeholder text.</p>
+        <p class="m-body" data-reveal>Continue here: the process, the difficulties, what was tried and dropped. Placeholder text.</p>
+        <p class="m-body" data-reveal>End with what was delivered. Placeholder text.</p>
+      </div>
+      <div class="m-pj-stack">
+        <div><div class="m-media m-media--ph r-169" data-media><span>Project image</span></div></div>
+        <div><div class="m-media m-media--ph r-169" data-media><span>Project image</span></div></div>
+        <div class="is-narrow"><div class="m-media m-media--ph r-45" data-media><span>Project image</span></div></div>
+        <div class="is-narrow"><div class="m-media m-media--ph r-32" data-media><span>Project image</span></div></div>
+      </div>
+    </section>
+
+    <!-- 5. FRASE A TODA A LARGURA -->
+    <section class="m-pj-quote">
+      <p class="m-pj-phrase" data-split="scrub">A sentence that sums up the idea behind the project. Placeholder text.</p>
+    </section>
+
+    <!-- 6. IMAGEM DE MARGEM A MARGEM -->
+    <div class="m-pj-full">
+      <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
     </div>
+
+    <!-- 7. CAPÍTULO 2: espelhado, imagens à esquerda e texto preso à direita -->
+    <section class="m-pj-chapter m-pj-chapter--flip">
+      <div class="m-pj-text">
+        <h2 class="m-label" data-reveal>Web</h2>
+        <p class="m-body" data-reveal>Text for this chapter. What was done in this discipline and the decisions behind it. Placeholder text.</p>
+        <p class="m-body" data-reveal>Continue here: the process, the difficulties, what was tried and dropped. Placeholder text.</p>
+        <p class="m-body" data-reveal>End with what was delivered. Placeholder text.</p>
+      </div>
+      <div class="m-pj-stack">
+        <div><div class="m-media m-media--ph r-32" data-media><span>Project image</span></div></div>
+        <div class="is-narrow"><div class="m-media m-media--ph r-11" data-media><span>Project image</span></div></div>
+        <div class="is-narrow"><div class="m-media m-media--ph r-45" data-media><span>Project image</span></div></div>
+        <div class="is-small"><div class="m-media m-media--ph r-11" data-media><span>Project image</span></div></div>
+      </div>
+    </section>
+
+    <!-- 8. FRASE DE FECHO + IMAGEM DE MARGEM A MARGEM -->
+    <section class="m-pj-quote">
+      <p class="m-pj-phrase" data-split="scrub">A closing sentence: what the project left behind. Placeholder text.</p>
+    </section>
+    <div class="m-pj-full">
+      <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
+    </div>
+
+    <!-- 9. PROJETO SEGUINTE -->
+    <a class="m-pj-next" href="projeto.html" data-cursor="View">
+      <span class="m-pj-next-head">
+        <span class="m-label" data-reveal>Next project</span>
+        <span class="m-pj-next-name" data-reveal>Project 02 <span class="m-arrow" aria-hidden="true">→</span></span>
+      </span>
+      <span class="m-pj-next-media"><span class="m-media m-media--ph" data-media><span>Project cover</span></span></span>
+    </a>
+
   </main>
 
   <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
@@ -62,7 +148,7 @@
         <p class="m-foot-desc"><span>Creative agency.</span><span>Porto, Portugal.</span><span>2026 © MEAN Agency.</span><span>All rights reserved.</span></p>
         <nav class="m-foot-nav" aria-label="Footer">
           <a href="index.html">Home</a>
-          <a href="work.html">Work</a>
+          <a href="work.html" aria-current="page">Work</a>
           <a href="about.html">About</a>
           <a href="contact.html">Talk with us</a>
         </nav>
@@ -89,10 +175,8 @@
     </div>
   </footer>
 
-  <script src="imagens.js"></script>
-  <script src="EDITAR-PROJETOS.js"></script>
-  <script src="i18n.js?v=120"></script>
-  <script src="main.js?v=120"></script>
-  <script src="motion.js?v=120"></script>
+  <script src="i18n.js?v=121"></script>
+  <script src="main.js?v=121"></script>
+  <script src="motion.js?v=121"></script>
 </body>
 </html>

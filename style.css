@@ -1684,7 +1684,8 @@ html.i18n-wait body { visibility: hidden; }
 /* ── Frases: uma só escala em todas as páginas, a da frase de abertura da Home.
       Títulos de página, frases de secção, testemunhos e fechos têm todos o mesmo tamanho. ── */
 .m-statement-text, .page-work .work-lead-title, .m-ahero-title, .m-cta-title,
-.m-lead, .m-svc-lead, .m-quote blockquote, .page-contact .ab-statement {
+.m-lead, .m-svc-lead, .m-quote blockquote, .page-contact .ab-statement,
+.m-pj-statement, .m-pj-lead, .m-pj-phrase, .m-pj-next-name {
   font-size: var(--m-phrase); font-weight: 500; line-height: .98; letter-spacing: -.045em;
 }
 
@@ -1873,4 +1874,112 @@ html.i18n-wait body { visibility: hidden; }
   .m-foot-social { grid-column: 1 / span 3; grid-row: 2; }
   .m-foot-link { grid-column: 4 / -1; grid-row: 2; justify-self: end; }
   .m-foot-logo { order: 3; width: 100%; margin-top: 12px; }
+}
+
+/* ============================================================
+   PROJETO — estrutura de burocratik.com/work (página de projeto), linguagem MEAN
+   Barra do projeto, frase + ficha técnica, capa, resumo em duas colunas, capítulos com o texto
+   preso de um lado e uma pilha de imagens do outro (a alternar), frases e imagens de margem a
+   margem entre capítulos, e o projeto seguinte no fim. As frases usam a escala única (--m-phrase).
+   ============================================================ */
+.m-pj { padding-top: var(--nav-h); }
+/* linha de progresso da leitura (o motion.js atualiza --p) */
+.m-pj-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 101; pointer-events: none;
+  background: #fff; mix-blend-mode: difference; transform: scaleX(var(--p, 0)); transform-origin: 0 50%;
+}
+
+/* 1. abertura */
+.m-pj-bar {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--m-gap); align-items: baseline;
+  padding: clamp(1.5rem, 4vh, 3rem) var(--m-gut) .85rem;
+  font-size: var(--m-text); letter-spacing: -.02em; line-height: 1.2;
+}
+.m-pj-back { grid-column: 1 / span 3; justify-self: start; }
+.m-pj-name { grid-column: 4 / span 6; color: var(--m-soft); }
+.m-pj-site { grid-column: 10 / -1; justify-self: start; }
+.m-pj-bar a { color: var(--text); transition: color .12s linear; }
+.m-pj-bar a:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.m-pj-bar a:hover .m-arrow { transform: translate(.2em, -.2em); }
+.m-pj-bar a:hover .m-arrow--back { transform: translateX(-.3em); }
+.m-pj-top {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--m-gap); align-items: start;
+  padding: clamp(1.5rem, 3vw, 3rem) var(--m-gut) clamp(2.5rem, 5vw, 5rem);
+}
+.m-pj-statement { grid-column: 1 / span 8; text-wrap: balance; }
+.m-pj-meta { grid-column: 10 / -1; display: grid; row-gap: 1.05rem; margin: .35em 0 0; font-size: var(--m-text); line-height: 1.25; letter-spacing: -.02em; }
+.m-pj-meta dt { color: var(--muted); }
+.m-pj-meta dd { margin: 0; }
+.m-pj-meta dd span { display: block; }
+.m-pj-cover-wrap { padding: 0 var(--m-gut); }
+.m-pj-cover { aspect-ratio: 16 / 8; }
+
+/* 2. resumo */
+.m-pj-summary {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--m-gap); align-items: start;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem) var(--m-gut) var(--m-sec);
+}
+.m-pj-lead { grid-column: 1 / span 6; }
+.m-pj-cols { grid-column: 9 / -1; columns: 2; column-gap: var(--m-gap); margin-top: .3em; font-size: var(--m-text); line-height: 1.22; letter-spacing: -.02em; color: var(--m-soft); }
+.m-pj-cols p { break-inside: avoid; text-indent: 2.4em; margin: 0 0 .9em; }
+
+/* 3. imagem de margem a margem */
+.m-pj-full .m-media { aspect-ratio: 16 / 9; }
+
+/* 4. capítulos: texto preso de um lado, pilha de imagens do outro */
+.m-pj-chapter {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--m-gap); align-items: start;
+  padding: var(--m-sec) var(--m-gut);
+}
+.m-pj-text { grid-column: 1 / span 4; grid-row: 1; position: sticky; top: calc(var(--nav-h) + 1.25rem); }
+.m-pj-text .m-label { margin-bottom: 1.1rem; }
+.m-pj-text .m-body { margin-top: 0; max-width: 40ch; }
+.m-pj-text .m-body + .m-body { margin-top: .9em; }
+.m-pj-stack {
+  grid-column: 6 / -1; grid-row: 1;
+  display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--m-gap);
+}
+.m-pj-stack > * { grid-column: 1 / -1; min-width: 0; }
+.m-pj-stack > .is-narrow { grid-column: 3 / -1; }       /* mais estreita, encostada ao lado de fora */
+.m-pj-stack > .is-small { grid-column: 4 / -1; }
+.m-pj-chapter--flip .m-pj-text { grid-column: 9 / -1; }
+.m-pj-chapter--flip .m-pj-stack { grid-column: 1 / span 7; }
+.m-pj-chapter--flip .m-pj-stack > .is-narrow { grid-column: 1 / span 5; }
+.m-pj-chapter--flip .m-pj-stack > .is-small { grid-column: 1 / span 4; }
+.m-media.r-169 { aspect-ratio: 16 / 9; }
+.m-media.r-32 { aspect-ratio: 3 / 2; }
+.m-media.r-45 { aspect-ratio: 4 / 5; }
+.m-media.r-11 { aspect-ratio: 1 / 1; }
+
+/* 5. frase a toda a largura */
+.m-pj-quote { padding: var(--m-sec) var(--m-gut); }
+.m-pj-phrase { max-width: 78%; }
+
+/* 9. projeto seguinte */
+.m-pj-next { display: block; padding: var(--m-sec) var(--m-gut) var(--m-gut); color: inherit; }
+.m-pj-next-head { display: grid; justify-items: start; row-gap: clamp(.9rem, 1.4vw, 1.25rem); margin-bottom: clamp(1.25rem, 2.2vw, 2rem); }
+.m-pj-next-name { display: inline-flex; align-items: baseline; gap: .35em; }
+.m-pj-next-media, .m-pj-next .m-media { display: block; }
+.m-pj-next .m-media { aspect-ratio: 16 / 7; }
+.m-pj-next:hover .m-arrow, .m-pj-next:focus-visible .m-arrow { transform: translateX(.3em); }
+.m-pj-next:hover .m-media--ph, .m-pj-next:focus-visible .m-media--ph { background: #303030; }
+.m-pj-next:focus-visible, .m-pj-bar a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+@media (max-width: 1000px) {
+  .m-pj-back { grid-column: 1 / span 6; }
+  .m-pj-site { grid-column: 7 / -1; justify-self: end; }
+  .m-pj-name { grid-column: 1 / -1; grid-row: 2; margin-top: .6rem; }
+  .m-pj-statement, .m-pj-lead { grid-column: 1 / -1; }
+  .m-pj-meta { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--m-gap); margin-top: clamp(2rem, 6vw, 3rem); }
+  .m-pj-cols { grid-column: 1 / -1; columns: 1; margin-top: 1.25rem; max-width: 46ch; }
+  .m-pj-text, .m-pj-chapter--flip .m-pj-text { grid-column: 1 / -1; grid-row: 1; position: static; margin-bottom: clamp(1.75rem, 5vw, 2.5rem); }
+  .m-pj-stack, .m-pj-chapter--flip .m-pj-stack { grid-column: 1 / -1; grid-row: 2; }
+  .m-pj-phrase { max-width: none; }
+}
+@media (max-width: 700px) {
+  .m-pj-cover { aspect-ratio: 4 / 3; }
+  .m-pj-full .m-media { aspect-ratio: 4 / 3; }
+  .m-pj-next .m-media { aspect-ratio: 16 / 10; }
+  .m-pj-stack > .is-narrow, .m-pj-stack > .is-small { grid-column: 2 / -1; }
+  .m-pj-chapter--flip .m-pj-stack > .is-narrow, .m-pj-chapter--flip .m-pj-stack > .is-small { grid-column: 1 / span 6; }
 }

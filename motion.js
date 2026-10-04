@@ -12,6 +12,7 @@
      data-focus-list        lista em que a linha a meio do ecrã ganha foco
      data-slider            carrossel (data-slide, data-prev, data-next, data-count)
      data-cursor="Ver"      texto da pill do cursor
+     data-progress          linha de progresso da leitura (página de projeto)
    Sem atributo: as etiquetas .m-label entram letra a letra; na Home o header abre a meio do ecrã
    e sobe para o topo com o scroll.
    Respeita "reduzir movimento": nesse caso tudo aparece sem animação.
@@ -285,13 +286,21 @@
   }
   if (cursorLayer && foot) window.addEventListener('mousemove', function (e) { cursorY = e.clientY; updateFoot(); }, { passive: true });
 
+  /* ── 4d. Linha de progresso da leitura (página de projeto) ── */
+  var progress = document.querySelector('[data-progress]');
+  function updateProgress(y) {
+    if (!progress) return;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.setProperty('--p', max > 0 ? clamp(y / max, 0, 1).toFixed(4) : '0');
+  }
+
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () {
       var y = window.scrollY;
-      updateHero(y); updateScrub(); updateFocus(); updateNav(y); updateFoot();
+      updateHero(y); updateScrub(); updateFocus(); updateNav(y); updateFoot(); updateProgress(y);
       ticking = false;
     });
   }

@@ -10,7 +10,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 | **Home** | `index.html` | **construída** com conteúdo provisório (2026-10-03) |
 | **Work** | `work.html` | **construída** com conteúdo provisório (2026-10-03) |
 | **About** | `about.html` | **construída** com conteúdo provisório (2026-10-03) |
-| Projeto | `projeto.html` | por planear (mantém a versão anterior) |
+| **Projeto** | `projeto.html` | **construída** com conteúdo provisório (2026-10-04); é o modelo para todos os projetos |
 | Contact | `contact.html` | por planear (mantém a versão anterior) |
 | Intro | `arquivo/index-intro.html` | arquivada, fora do menu. Como recuperar: `arquivo/LEIA-ME.md` |
 | 404 | não existe | por criar |
@@ -154,6 +154,66 @@ Proporções das capas: blocos grande e pequeno 16:10 (ex.: 1920×1200), bloco d
 
 1. **Filtros por disciplina:** a galeria leva filtros (Branding, Web…) ou fica uma lista única?
 2. **Ligação a cada projeto:** hoje todos os blocos apontam para `projeto.html`. Liga-se a sério quando a página Projeto estiver planeada.
+
+---
+
+## Projeto
+
+- **Ficheiro:** `projeto.html` (modelo; hoje todos os blocos do Work e da Home apontam para aqui)
+- **Referência:** https://www.burocratik.com/work/clear-street
+- **Objetivo:** contar um projeto do princípio ao fim: o que era, o que a MEAN fez em cada disciplina e o que ficou, com as imagens a mandar.
+- **De onde se chega:** Work, destaques da Home, projeto anterior. **Para onde leva:** projeto seguinte, Work, website do cliente, footer.
+
+### Secções, pela ordem da referência
+
+Legenda: ✅ feito · ❌ falta conteúdo
+
+| # | Secção | O que a referência tem | Conteúdo MEAN | Estado |
+|---|---|---|---|---|
+| 1 | **Barra do projeto** | "Back", nome do projeto, "Open Website", com linha de progresso. | "← Work", nome do projeto, "Visit website". A linha de progresso da leitura fica no topo do ecrã. O header do site mantém-se por cima, igual ao resto. | Secção ✅ · Nome e link ❌ |
+| 2 | **Abertura** | Frase grande à esquerda; ficha técnica à direita (ano, setor, local, entregáveis, prémios). | Frase de abertura do projeto. Ficha: ano, setor, local, entregáveis. | Secção ✅ · Conteúdo ❌ |
+| 3 | **Capa** | Imagem ou vídeo a toda a largura. | Capa do projeto (16:8). | Secção ✅ · Imagem ❌ |
+| 4 | **Resumo** | Segunda frase à esquerda; texto pequeno em duas colunas à direita. | Segunda frase (contexto ou resultado) e 2 parágrafos. | Secção ✅ · Conteúdo ❌ |
+| 5 | **Imagem de margem a margem** | Imagem grande sem margens. | Imagem 16:9. | Secção ✅ · Imagem ❌ |
+| 6 | **Capítulo 1** | Título pequeno e texto presos à esquerda; pilha de imagens de larguras variadas à direita. | Um capítulo por disciplina (ex.: Branding): 2 a 4 parágrafos e 3 a 6 imagens. | Secção ✅ · Conteúdo ❌ |
+| 7 | **Frase** | Frase a toda a largura. | Uma frase que resume a ideia. | Secção ✅ · Frase ❌ |
+| 8 | **Imagem de margem a margem** | Idem. | Idem. | Secção ✅ · Imagem ❌ |
+| 9 | **Capítulo 2** | Igual ao 1, espelhado: imagens à esquerda, texto preso à direita. | Segunda disciplina (ex.: Web). | Secção ✅ · Conteúdo ❌ |
+| 10 | **Frase de fecho + imagem** | Frase e imagem de margem a margem. | Frase de fecho e imagem final. | Secção ✅ · Conteúdo ❌ |
+| 11 | **Projeto seguinte** | (não captado na referência) | Etiqueta, nome do projeto seguinte e a capa dele. | Secção ✅ · Ligação ❌ |
+| 12 | **Footer** | Igual ao resto do site. | Igual ao resto do site. | ✅ |
+
+### Como se comporta
+
+- **Linha de progresso:** uma linha fina no topo do ecrã enche à medida que se lê a página.
+- **Capítulos:** o texto fica preso ao ecrã enquanto as imagens desse capítulo passam ao lado. Os capítulos alternam de lado.
+- **Imagens:** abrem de baixo para cima ao entrar no ecrã. Dentro de cada pilha há três larguras: inteira, estreita e pequena, encostadas ao lado de fora.
+- **Frases:** todas no tamanho único do site. A de abertura entra desfocada; as dos interlúdios acendem linha a linha com o scroll.
+- **Projeto seguinte:** ao passar o cursor, a pill do cursor mostra "VIEW" e a seta avança.
+- **Telemóvel:** tudo numa coluna; o texto de cada capítulo vem antes das imagens e deixa de ficar preso.
+
+### Como se monta um projeto real
+
+- Um capítulo é um bloco `m-pj-chapter` (texto à esquerda) ou `m-pj-chapter m-pj-chapter--flip` (texto à direita). Podem ser 1, 2, 3 ou mais; convém alternar.
+- Cada imagem da pilha é um `<div>` com um bloco `m-media` lá dentro. Largura: sem classe = inteira, `is-narrow` = estreita, `is-small` = pequena. Proporção: `r-169` (16:9), `r-32` (3:2), `r-45` (4:5), `r-11` (1:1).
+- Para pôr a imagem real, troca-se o bloco cinzento por `<div class="m-media r-169" data-media><img src="…" alt="…"></div>` (ou `<video muted loop playsinline autoplay>`).
+- Os textos entram em inglês no HTML e em português no `i18n.js`.
+
+### Por projeto precisamos de
+
+- [ ] Nome, ano, setor, local, entregáveis, link do website (se houver)
+- [ ] Frase de abertura e segunda frase
+- [ ] 2 parágrafos de resumo
+- [ ] Por capítulo (disciplina): 2 a 4 parágrafos e 3 a 6 imagens ou vídeos
+- [ ] 1 ou 2 frases de interlúdio
+- [ ] Capa (16:8) e 2 ou 3 imagens de margem a margem (16:9)
+
+### Decisões em aberto
+
+1. **Um ficheiro por projeto, ou um modelo com dados?** Hoje há só o modelo. Proposta: uma página por projeto, copiada deste modelo (`projeto-nome-do-cliente.html`), porque cada projeto tem capítulos e imagens diferentes. A alternativa é manter o sistema antigo de pastas e ficheiro de dados (`EDITAR-PROJETOS.js`, `imagens.js`, `Projetos/`), que continua no repositório mas já não é usado por esta página.
+2. **Ficha técnica:** entra uma linha de prémios ou reconhecimento, como na referência?
+3. **Créditos:** a referência não mostra equipa nem parceiros. Queremos uma linha de créditos no fim?
+4. **Ordem do "projeto seguinte":** a ordem do Work, ou escolhida à mão?
 
 ---
 

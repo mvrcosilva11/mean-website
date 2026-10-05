@@ -52,7 +52,6 @@
   --text:     #f4f4f1;
   --muted:    #8f8f8d;
   --accent:   #E62834;   /* vermelho do favicon */
-  --accent-2: #ff4651;
   --bordo:    #531316;   /* fundo bordô do favicon */
   --radius:   12px;
   --nav-h:    64px;
@@ -62,6 +61,15 @@
 }
 
 html { scroll-behavior: auto; font-size: 16px; scrollbar-gutter: stable; }   /* auto: o Lenis trata da suavidade (evita conflito) */
+
+/* ── Barra de scroll da página com a cor da marca (tipo alltrue.co): vermelho sobre o fundo escuro ── */
+html::-webkit-scrollbar { width: 12px; }
+html::-webkit-scrollbar-track { background: var(--bg); }
+html::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 100px; }
+/* Firefox (não suporta ::-webkit-scrollbar) */
+@supports not selector(::-webkit-scrollbar) {
+  html { scrollbar-color: var(--accent) var(--bg); scrollbar-width: thin; }
+}
 
 body {
   font-family: var(--font);
@@ -156,7 +164,7 @@ h3 { font-size: 1.1rem; }
 .btn-primary {
   background: var(--accent); color: var(--bg);
 }
-.btn-primary:hover { background: var(--accent-2); transform: translateY(-2px); }
+.btn-primary:hover { transform: translateY(-2px); }
 .btn-ghost {
   background: transparent; color: var(--text);
   border: 1.5px solid var(--border);
@@ -173,7 +181,6 @@ h3 { font-size: 1.1rem; }
   font-size: .875rem; text-align: center; min-height: 1.2rem;
 }
 .form-feedback.success { color: var(--accent); }
-.form-feedback.error   { color: #f87171; }
 
 /* ── Footer ── */
 .footer {
@@ -1741,6 +1748,7 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-name { grid-column: 1 / span 3; justify-self: start; }
 .m-foot-desc { grid-column: 4 / span 4; }
 .m-foot-desc span, .m-foot-block p > * { display: block; }
+.m-foot-block p > a { width: fit-content; }   /* o link só é clicável no texto, não na linha toda */
 .m-foot-nav { grid-column: 9 / span 3; display: grid; row-gap: 3.5px; justify-items: start; }
 .m-foot-nav a { position: relative; }
 .m-foot-nav a[aria-current="page"]::before {                 /* bola que marca a página atual */
@@ -1885,8 +1893,6 @@ html.i18n-wait body { visibility: hidden; }
   .m-pj-chapter--flip .m-pj-stack > .is-narrow, .m-pj-chapter--flip .m-pj-stack > .is-small { grid-column: 1 / span 6; }
 }
 
-}
-
 /* ============================================================
    TALK WITH US — painel de contacto (criado pelo main.js, igual em todas as páginas)
    Entra da direita para a esquerda, por cima da página. Fundo no vermelho escuro da MEAN e tudo o resto
@@ -1894,9 +1900,12 @@ html.i18n-wait body { visibility: hidden; }
    das frases do site e os campos são linhas, sem caixas.
    ============================================================ */
 html.talk-open { overflow: hidden; }
+/* Fechar é o abrir ao contrário: o conteúdo sai em cadeia (do último para o primeiro, a descer),
+   depois o painel desliza para a direita com a mesma curva e a mesma duração (.75s) com que entrou
+   e o véu apaga-se ao mesmo ritmo com que apareceu (.6s). */
 .m-talk-veil {
   position: fixed; inset: 0; z-index: 900; background: rgba(10, 10, 10, .55);
-  opacity: 0; visibility: hidden; transition: opacity .45s linear, visibility 0s linear .45s;
+  opacity: 0; visibility: hidden; transition: opacity .6s linear .35s, visibility 0s linear .95s;
 }
 .talk-open .m-talk-veil { opacity: 1; visibility: visible; transition: opacity .6s linear; }
 .m-talk {
@@ -1906,7 +1915,7 @@ html.talk-open { overflow: hidden; }
   font-size: 14px; line-height: 14px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; outline: none;
   transform: translate3d(100%, 0, 0); visibility: hidden;
-  transition: transform .55s cubic-bezier(.76, 0, .24, 1), visibility 0s linear .55s;
+  transition: transform .75s cubic-bezier(.76, 0, .24, 1) .2s, visibility 0s linear .95s;
 }
 .talk-open .m-talk { transform: none; visibility: visible; transition: transform .75s cubic-bezier(.76, 0, .24, 1); }
 .m-talk-in { display: flex; flex-direction: column; min-height: 100%; box-sizing: border-box; padding: 28px 32px; }
@@ -1977,8 +1986,13 @@ html.talk-open { overflow: hidden; }
 .m-talk-block p { margin: 0; }
 .m-talk-block p > * { display: block; }
 .m-talk-ext { justify-self: start; }
-/* o conteúdo entra em cadeia, depois de o painel abrir */
-.m-talk-rise { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .2s linear, transform 0s linear .3s; }
+/* o conteúdo entra em cadeia, depois de o painel abrir; ao fechar sai pela ordem inversa (8 blocos, --i 0 a 7),
+   com a curva da entrada ao contrário */
+.m-talk-rise {
+  opacity: 0; transform: translate3d(0, 16px, 0);
+  transition: opacity .35s ease-in calc((7 - var(--i, 0)) * .035s),
+              transform .45s cubic-bezier(.78, 0, .81, 0) calc((7 - var(--i, 0)) * .035s);
+}
 .talk-open .m-talk-rise {
   opacity: 1; transform: none;
   transition: opacity .7s ease calc(.32s + var(--i, 0) * .055s), transform .9s var(--m-ease) calc(.32s + var(--i, 0) * .055s);
@@ -1992,4 +2006,51 @@ html.talk-open { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .m-talk, .talk-open .m-talk, .m-talk-veil, .talk-open .m-talk-veil { transition: none; }
   .m-talk-rise, .talk-open .m-talk-rise { opacity: 1; transform: none; transition: none; }
+}
+
+/* ── Aparecimento com blur ao dar scroll, no site todo (tipo cardenasdesigngroup.com) ──
+   Tudo o que aparece com o scroll entra desfocado (20px) e ganha foco em 1.2s.
+   · .reveal (main.js): aparece, sobe 1.5rem e ganha foco.
+   · motion.js: só se junta o desfoque, o movimento de cada bloco fica como estava
+     ([data-reveal] sobe e aparece, [data-split="rise"] palavras sobem da máscara,
+     [data-media] imagem destapa de baixo para cima). Os atrasos em cascata (--d) mantêm-se. */
+.reveal {
+  opacity: 0; transform: translateY(1.5rem); filter: blur(20px);
+  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease),
+              background-color .35s var(--ease);
+}
+.reveal.visible { opacity: 1; transform: none; filter: none; }
+
+.js [data-reveal] {
+  filter: blur(20px);
+  transition: opacity .9s var(--m-ease), transform .9s var(--m-ease), filter 1.2s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-split="rise"] { filter: blur(20px); transition: filter 1.2s var(--ease) var(--d, 0ms); }
+.js .m-media[data-media] {
+  filter: blur(20px);
+  transition: clip-path 1.25s var(--m-ease-io), filter 1.2s var(--ease);
+  transition-delay: var(--d, 0ms);
+}
+.js [data-reveal].is-in, .js [data-split="rise"].is-in, .js .m-media[data-media].is-in { filter: none; }
+
+/* blocos que já tinham transições próprias (hover): juntar-lhes o desfoque */
+.js .m-label[data-reveal] { transition: filter 1.2s var(--ease); }   /* letras continuam a entrar uma a uma */
+.js .m-branches li[data-reveal] {
+  transition: opacity .9s var(--m-ease) var(--d, 0ms), transform .9s var(--m-ease) var(--d, 0ms),
+              filter 1.2s var(--ease) var(--d, 0ms), color .12s linear, padding-left .4s var(--m-ease);
+}
+.js .m-svc-desc[data-reveal] {
+  transition: opacity .9s var(--m-ease) var(--d, 0ms), transform .9s var(--m-ease) var(--d, 0ms),
+              filter 1.2s var(--ease) var(--d, 0ms), color .12s linear;
+}
+.js .m-media.m-media--ph[data-media] {
+  transition: clip-path 1.25s var(--m-ease-io) var(--d, 0ms), filter 1.2s var(--ease) var(--d, 0ms),
+              background-color .5s var(--ease) 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .js [data-reveal], .js [data-split="rise"], .js .m-media[data-media] {
+    opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
+  }
 }

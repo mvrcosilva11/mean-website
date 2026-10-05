@@ -11,7 +11,7 @@
    lista os textos que ficaram sem tradução.
 
    A escolha fica guardada no browser (localStorage "mean_lang"). O botão do header troca a
-   língua e recarrega a página.
+   língua na hora, sem recarregar a página.
    ============================================================ */
 (function () {
   'use strict';
@@ -177,55 +177,137 @@
   var lang = 'en';
   try { if (localStorage.getItem('mean_lang') === 'pt') lang = 'pt'; } catch (e) {}
   var norm = function (s) { return String(s).replace(/\s+/g, ' ').trim(); };
+  var check = /[?&]i18ncheck/.test(location.search);
 
   window.MEAN_LANG = lang;
   // para textos escritos por JavaScript: t('Sending…')
   window.t = function (en) { return (lang === 'pt' && PT[en]) || en; };
 
-  if (lang === 'pt') {
-    document.documentElement.lang = 'pt';
-    var check = /[?&]i18ncheck/.test(location.search), missing = [];
-    // textos
-    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
-    var nodes = [], n;
-    while ((n = walker.nextNode())) nodes.push(n);
-    nodes.forEach(function (node) {
-      var p = node.parentNode;
-      if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName)) return;
-      if (p.closest && p.closest('[data-i18n-skip]')) return;      // o header fica sempre em inglês
-      var key = norm(node.nodeValue);
-      if (!key) return;
-      if (PT[key]) node.nodeValue = node.nodeValue.replace(node.nodeValue.trim(), PT[key]);
-      else if (check && /[a-z]{3}/i.test(key)) missing.push(key);
+  /* A língua troca-se na hora, sem recarregar. Para isso guarda-se o inglês de cada texto da página:
+       texts  — textos soltos (o nó de texto e o que lá estava em inglês);
+       attrs  — atributos com texto (alt, aria-label, placeholder, title, data-cursor);
+       blocks — blocos que o motion.js parte em palavras ou letras ([data-split], .m-label): guarda-se o
+                HTML inteiro do bloco em inglês; ao trocar de língua o bloco é reposto e o motion.js volta a parti-lo;
+       live   — textos postos por JavaScript que mudam com o uso (mensagens do formulário). */
+  var ATTRS = ['placeholder', 'aria-label', 'alt', 'title', 'data-cursor'];
+  var BLOCKS = '[data-split], .m-label';
+  var texts = [], attrs = [], blocks = [], live = [];
+  var skipped = function (el) { return !!(el && el.closest && el.closest('[data-i18n-skip]')); };   // o header fica sempre em inglês
+  // um texto na língua atual, mantendo os espaços à volta
+  function say(en) {
+    var pt = lang === 'pt' && PT[norm(en)];
+    return pt ? en.replace(en.trim(), function () { return pt; }) : en;
+  }
+  function sayAttr(en) { return (lang === 'pt' && PT[norm(en)]) || en; }
+  // o HTML de um bloco na língua atual
+  function blockHTML(en) {
+    if (lang !== 'pt') return en;
+    var box = document.createElement('div');
+    box.innerHTML = en;
+    var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) n.nodeValue = say(n.nodeValue);
+    ATTRS.forEach(function (attr) {
+      Array.prototype.forEach.call(box.querySelectorAll('[' + attr + ']'), function (el) { el.setAttribute(attr, sayAttr(el.getAttribute(attr))); });
     });
-    // atributos
-    ['placeholder', 'aria-label', 'alt', 'title', 'data-cursor'].forEach(function (attr) {
-      Array.prototype.forEach.call(document.querySelectorAll('[' + attr + ']'), function (el) {
-        if (el.closest('[data-i18n-skip]')) return;
-        var v = PT[norm(el.getAttribute(attr))];
-        if (v) el.setAttribute(attr, v);
+    return box.innerHTML;
+  }
+  // regista os textos de uma parte da página (tem de estar em inglês e ainda por partir)
+  function scan(rootEl) {
+    var list = Array.prototype.slice.call(rootEl.querySelectorAll(BLOCKS));
+    if (rootEl.matches && rootEl.matches(BLOCKS)) list.unshift(rootEl);
+    list.forEach(function (el) {
+      if (el.__i18n || skipped(el) || (el.parentNode && el.parentNode.closest && el.parentNode.closest(BLOCKS))) return;
+      el.__i18n = true;
+      blocks.push({ el: el, en: el.innerHTML });
+    });
+    var w = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT, null), n;
+    while ((n = w.nextNode())) {
+      var p = n.parentNode;
+      if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName) || skipped(p)) continue;
+      if (p.closest && p.closest(BLOCKS)) continue;
+      if (norm(n.nodeValue)) texts.push({ node: n, en: n.nodeValue });
+    }
+    ATTRS.forEach(function (attr) {
+      var els = Array.prototype.slice.call(rootEl.querySelectorAll('[' + attr + ']'));
+      if (rootEl.hasAttribute && rootEl.hasAttribute(attr)) els.unshift(rootEl);
+      els.forEach(function (el) {
+        if (skipped(el) || (el.closest && el.closest(BLOCKS))) return;
+        attrs.push({ el: el, attr: attr, en: el.getAttribute(attr) });
       });
     });
-    var meta = document.querySelector('meta[name="description"]');
-    if (meta && PT[norm(meta.content)]) meta.content = PT[norm(meta.content)];
-    if (PT[norm(document.title)]) document.title = PT[norm(document.title)];
-    if (check) console.log('[i18n] sem tradução para PT:', missing);
+  }
+  // põe na língua atual o que foi registado a partir das posições dadas (tudo, se não se disser nada)
+  function apply(t0, a0, b0, resetBlocks) {
+    var i, r, v;
+    for (i = t0 || 0; i < texts.length; i++) { r = texts[i]; v = say(r.en); if (r.node.nodeValue !== v) r.node.nodeValue = v; }
+    for (i = a0 || 0; i < attrs.length; i++) { r = attrs[i]; v = sayAttr(r.en); if (r.el.getAttribute(r.attr) !== v) r.el.setAttribute(r.attr, v); }
+    if (resetBlocks) for (i = b0 || 0; i < blocks.length; i++) blocks[i].el.innerHTML = blockHTML(blocks[i].en);
+  }
+  var head = {
+    title: document.title,
+    meta: document.querySelector('meta[name="description"]'),
+    desc: (document.querySelector('meta[name="description"]') || {}).content || ''
+  };
+  function applyHead() {
+    document.documentElement.lang = lang;
+    document.title = sayAttr(head.title);
+    if (head.meta) head.meta.content = sayAttr(head.desc);
+  }
+  function buttons() {   // o botão do header mostra a outra língua
+    var next = lang === 'pt' ? 'en' : 'pt';
+    Array.prototype.forEach.call(document.querySelectorAll('[data-lang-switch]'), function (btn) {
+      btn.textContent = next.toUpperCase();
+      btn.setAttribute('aria-label', next === 'pt' ? 'Mudar para português' : 'Switch to English');
+      btn.setAttribute('lang', next);
+    });
+  }
+  function missing() {   // ?i18ncheck: o que ficou sem tradução
+    var out = [], seen = {};
+    var note = function (s) { var k = norm(s); if (k && /[a-z]{3}/i.test(k) && !PT[k] && !seen[k]) { seen[k] = 1; out.push(k); } };
+    texts.forEach(function (r) { note(r.en); });
+    blocks.forEach(function (b) {
+      var box = document.createElement('div'); box.innerHTML = b.en;
+      var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null), n;
+      while ((n = w.nextNode())) note(n.nodeValue);
+    });
+    console.log('[i18n] sem tradução para PT:', out);
+  }
+  function setLang(next) {
+    if (next !== 'pt' && next !== 'en') return;
+    if (next === lang) return;
+    lang = next; window.MEAN_LANG = lang;
+    try { localStorage.setItem('mean_lang', lang); } catch (e) {}
+    applyHead();
+    apply(0, 0, 0, true);
+    live.forEach(function (el) { if (el.__en) el.textContent = window.t(el.__en); });
+    buttons();
+    // quem partiu textos em palavras ou letras (motion.js) volta a fazê-lo agora, antes de o ecrã ser pintado
+    var ev;
+    try { ev = new CustomEvent('mean:lang', { detail: { lang: lang } }); }
+    catch (e) { ev = document.createEvent('CustomEvent'); ev.initCustomEvent('mean:lang', false, false, { lang: lang }); }
+    window.dispatchEvent(ev);
   }
 
-  // botão do header: mostra a outra língua
+  scan(document.body);
+  applyHead();
+  if (lang === 'pt') apply(0, 0, 0, true);   // ao carregar, os blocos ainda estão por partir
+  if (check && lang === 'pt') missing();
+  buttons();
   Array.prototype.forEach.call(document.querySelectorAll('[data-lang-switch]'), function (btn) {
-    var next = lang === 'pt' ? 'en' : 'pt';
-    btn.textContent = next.toUpperCase();
-    btn.setAttribute('aria-label', next === 'pt' ? 'Mudar para português' : 'Switch to English');
-    btn.setAttribute('lang', next);
-    btn.addEventListener('click', function () {
-      try {
-        localStorage.setItem('mean_lang', next);
-        sessionStorage.setItem('mean_fast', '1');   // ao recarregar, a Home não repete a abertura
-      } catch (e) {}
-      location.reload();
-    });
+    btn.addEventListener('click', function () { setLang(lang === 'pt' ? 'en' : 'pt'); });
   });
+
+  // para o que é criado depois por JavaScript (ex.: o painel "Talk with us", feito em inglês pelo main.js)
+  window.meanI18n = {
+    scan: function (el) { var t0 = texts.length, a0 = attrs.length, b0 = blocks.length; scan(el); apply(t0, a0, b0, lang === 'pt'); },
+    set: function (el, en) {                 // um texto que muda com o uso: fica sempre na língua atual
+      el.__en = en || '';
+      if (live.indexOf(el) < 0) live.push(el);
+      el.textContent = en ? window.t(en) : '';
+    },
+    setLang: setLang,
+    lang: function () { return lang; }
+  };
 
   document.documentElement.classList.remove('i18n-wait');
 })();

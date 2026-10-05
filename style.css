@@ -1478,6 +1478,8 @@ h3 { font-size: 1.1rem; }
 
 /* língua: enquanto o português não é aplicado, a página não aparece (evita ver o inglês a piscar) */
 html.i18n-wait body { visibility: hidden; }
+/* troca de língua na hora: as palavras e letras são refeitas sem repetir a animação de entrada */
+.i18n-swap [data-split] .wi, .i18n-swap .m-label .m-ch, .i18n-swap .m-label::before { transition: none !important; }
 
 /* ── Hovers imediatos ── */
 .m-link { font-size: var(--m-text); letter-spacing: -.02em; transition: color .12s linear; }
@@ -1741,8 +1743,8 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-desc span, .m-foot-block p > * { display: block; }
 .m-foot-nav { grid-column: 9 / span 3; display: grid; row-gap: 3.5px; justify-items: start; }
 .m-foot-nav a { position: relative; }
-.m-foot-nav a[aria-current="page"]::before {                 /* quadrado que marca a página atual */
-  content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3px; background: currentColor;
+.m-foot-nav a[aria-current="page"]::before {                 /* bola que marca a página atual */
+  content: ""; position: absolute; left: -16px; top: 50%; width: 6px; height: 6px; margin-top: -3px; border-radius: 50%; background: currentColor;
 }
 .m-foot-logo { display: block; flex: none; width: 32vw; }
 .m-foot-logo img { display: block; width: 100%; height: auto; }
@@ -1943,7 +1945,7 @@ html.talk-open { overflow: hidden; }
 .m-talk-field input:-webkit-autofill:focus, .m-talk-field textarea:-webkit-autofill:focus {
   box-shadow: 0 0 0 100px var(--mean-red-dark) inset, 0 1px 0 0 var(--mean-red);
 }
-/* orçamento: opções em texto, com o quadrado que marca a página atual no footer */
+/* orçamento: opções em texto, com a bola que marca a página atual no footer */
 .m-talk-budget { min-width: 0; margin: 0; padding: 0; border: 0; }
 .m-talk-budget legend { float: left; width: 100%; margin: 0 0 14px; padding: 0; }   /* float: comporta-se como um bloco normal */
 .m-talk-opts { clear: both; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }   /* as mesmas duas colunas dos contactos ao fundo */
@@ -1952,7 +1954,7 @@ html.talk-open { overflow: hidden; }
 .m-talk-opt span { position: relative; padding-left: 16px; opacity: .68; transition: opacity .12s linear; }
 .m-talk-opt span::before {
   content: ""; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; margin-top: -4px;
-  box-sizing: border-box; border: 1px solid currentColor;
+  box-sizing: border-box; border: 1px solid currentColor; border-radius: 50%;
 }
 .m-talk-opt:hover span, .m-talk-opt input:checked + span { opacity: 1; }
 .m-talk-opt input:checked + span::before { background: currentColor; }

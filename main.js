@@ -314,7 +314,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
 (function () {
   const root = document.documentElement;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const tx = s => esc(meanT(s));
+  const tx = esc;   // os textos entram em inglês; quem os põe (e troca) na língua certa é o i18n.js
   const budgets = ['Under €3,000', '€3,000 – €8,000', '€8,000 – €20,000', 'Over €20,000'];
 
   const veil = document.createElement('div');
@@ -356,6 +356,10 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     '</div>';
   document.body.appendChild(veil);
   document.body.appendChild(panel);
+  const i18n = window.meanI18n;
+  if (i18n) i18n.scan(panel);
+  // textos que mudam com o uso (mensagens, botão): ficam registados para acompanharem a troca de língua
+  const put = (el, en) => { if (i18n) i18n.set(el, en); else el.textContent = en; };
   document.querySelectorAll('[data-talk]').forEach(a => { a.setAttribute('aria-haspopup', 'dialog'); a.setAttribute('aria-controls', 'talk'); });
 
   let isOpen = false, opener = null, frozen = [];
@@ -421,7 +425,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   const form = panel.querySelector('form'), feedback = panel.querySelector('.form-feedback');
   const btn = panel.querySelector('.m-talk-submit'), btnText = panel.querySelector('.m-talk-submit-t');
   let clearTimer = 0;
-  const say = (kind, text) => { feedback.className = 'form-feedback' + (kind ? ' ' + kind : ''); feedback.textContent = text; };
+  const say = (kind, en) => { feedback.className = 'form-feedback' + (kind ? ' ' + kind : ''); put(feedback, en); };
   // orçamento: clicar outra vez na opção escolhida volta a deixá-la em branco (o campo é opcional)
   form.addEventListener('click', e => {
     const r = e.target;
@@ -435,23 +439,23 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     clearTimeout(clearTimer); say('', '');
     const f = form.elements, name = f.name.value.trim(), email = f.email.value.trim(), message = f.message.value.trim();
     if (!name || !email || !message) {
-      say('error', meanT('Please fill in all fields.'));
+      say('error', 'Please fill in all fields.');
       (!name ? f.name : !email ? f.email : f.message).focus();
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      say('error', meanT('Invalid email.'));
+      say('error', 'Invalid email.');
       f.email.focus();
       return;
     }
     // ATENÇÃO: ainda não envia nada. Simula o envio, como a página antiga; falta ligar a um serviço de
     // formulários ou a um endpoint próprio.
-    btn.disabled = true; btnText.textContent = meanT('Sending…');
+    btn.disabled = true; put(btnText, 'Sending…');
     setTimeout(() => {
       form.reset();
       form.querySelectorAll('input[type="radio"]').forEach(o => o.removeAttribute('data-on'));
-      btn.disabled = false; btnText.textContent = meanT('Send message');
-      say('success', meanT("Message sent! We'll reply soon."));
+      btn.disabled = false; put(btnText, 'Send message');
+      say('success', "Message sent! We'll reply soon.");
       clearTimer = setTimeout(() => say('', ''), 5000);
     }, 1200);
   });
@@ -461,7 +465,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
 // As bolas e o logo são desenhados juntos num <canvas> (WebGL), como se fossem a mesma matéria: uma bola
 // que toca no logo funde-se com ele, e a parte do logo que fica dentro de uma bola aparece em negativo
 // (bordô sobre vermelho). A entrada é progressiva: primeiro só o fundo, depois as bolas formam-se do
-// centro para fora, e por fim o logo constrói-se da esquerda para a direita. Ao fazer scroll, as bolas
+// centro para fora, e por fim o logo entra por baixo, a subir de trás de uma máscara. Ao fazer scroll, as bolas
 // têm inércia: ficam um pouco para trás e voltam ao sítio com um pequeno balanço.
 // Sem WebGL, ou com "reduzir movimento", fica a versão simples: bolas em HTML por trás do logo.
 (function () {
@@ -549,7 +553,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     'uniform vec3 uRadRange;',   // raio mínimo, amplitude do raio, desvio máximo
     'uniform sampler2D uLogo;',  // distância ao contorno do logo: R = fina, G = larga
     'uniform vec4 uLogoRect;',   // onde está a textura do logo, px de CSS
-    'uniform vec3 uBuild;',      // construção do logo: posição da frente (x), largura da frente, quanto os traços ainda têm de engrossar
+    'uniform vec4 uClip;',       // máscara do logo (x0, y0, x1, y1): o logo entra por baixo, de trás dela
     'uniform vec3 uSdf;',        // alcance fino, alcance largo (em texels), px de CSS por texel
     'uniform float uK;',         // raio da fusão entre formas
     'uniform float uEdge;',      // largura da orla em que o logo se funde com a bola
@@ -576,11 +580,9 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     '    vec4 s = texture2D(uLogo, uv);',
     '    float wide = (s.g * 2.0 - 1.0) * uSdf.y;',
     '    float fine = (s.r * 2.0 - 1.0) * uSdf.x;',
-    '    float q = clamp((uBuild.x - p.x) / uBuild.y, 0.0, 1.0);',   // 0 = por construir, 1 = feito
-    '    q = q * q * (3.0 - 2.0 * q);',
-    '    dL = ((abs(wide) < uSdf.x * 0.75 ? fine : wide) + (1.0 - q) * uBuild.z) * uSdf.z;',   // os traços nascem finos e engrossam
-    '    if (uBuild.z > 0.0) dL += (1.0 - smoothstep(0.0, 0.35, q)) * 48.0;',   // o que ainda não foi construído não puxa as bolas
+    '    dL = (abs(wide) < uSdf.x * 0.75 ? fine : wide) * uSdf.z;',
     '  }',
+    '  dL = max(dL, max(max(uClip.x - p.x, p.x - uClip.z), max(uClip.y - p.y, p.y - uClip.w)));',   // fora da máscara não há logo
     '  float aU = clamp(0.5 - smin(dB, dL, uK) * uDpr, 0.0, 1.0);',   // bolas e logo fundidos
     '  float aL = clamp(0.5 - dL * uDpr, 0.0, 1.0);',
     // na orla de uma bola o logo funde-se com ela (vermelho sobre vermelho); mais para dentro reaparece em negativo
@@ -660,7 +662,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     const loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const U = {};
-    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uBuild', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
+    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uClip', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
     const texture = unit => {
       const t = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
@@ -690,8 +692,8 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     const root = document.documentElement, onHome = !!hero.closest('.m-open');
     const BALLS_AT = onHome ? 1600 : 150;   // as bolas começam a formar-se (a moldura já enche quase o ecrã)
     const WAVE = 500, BALL_DUR = 700;       // do centro até aos cantos; tempo que cada bola leva a formar-se
-    const LOGO_AT = onHome ? 2150 : 700;    // o logo começa a construir-se
-    const LOGO_DUR = 1200, GROW = 11;       // duração; quanto os traços engrossam (em texels: mais do que meio traço)
+    const LOGO_AT = onHome ? 2150 : 700;    // o logo começa a subir
+    const LOGO_DUR = 900;                   // duração da subida (a curva é a do CSS: cubic-bezier(.16, 1, .3, 1))
     let t0 = null, introDone = root.classList.contains('is-open');   // página já aberta (troca de língua): sem entrada
     let dead = false, shown = false, field = null;
     let G = null, px = [], py = [], rest = new Float32Array(0), shy = rest, target = rest, rad = rest, bytes = new Uint8Array(0);
@@ -699,7 +701,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     // Inércia ao scroll: cada bola tem o seu peso; fica para trás quando a página anda e volta com uma mola
     const SHIFT = 46, STIFF = 60, DAMP = 8.5;     // desvio máximo (px); rigidez e amortecimento da mola
     let off = rest, vel = rest, mass = rest, lastY = window.scrollY;
-    let logoRest = null, front = 1e6, band = 1, k = K;
+    let logoRest = null, maskH = 0, rise = introDone ? 0 : 1.1, k = K;   // rise: quanto o logo ainda está abaixo do sítio (em alturas do logo)
     let mx = -1e4, my = -1e4, raf = 0, last = 0, settleUntil = 0;
     hero.classList.add('hi-wait');   // o logo em imagem não chega a aparecer: quem o mostra é o canvas
 
@@ -726,7 +728,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       const b = frameBox(), m = toLocal(mask.getBoundingClientRect(), b);
       if (!m.w || !img.offsetHeight) return false;
       logoRest = { x: m.x, y: m.y, w: m.w, h: img.offsetHeight };
-      band = logoRest.w * 0.26;
+      maskH = m.h;
       G = grid();
       G.x = (hero.clientWidth - G.w) / 2; G.y = (hero.clientHeight - G.h) / 2;
       const n = G.cols * G.rows, keep = rad.length === n ? rad : null;
@@ -758,10 +760,21 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       if (!logoRest || Math.abs(m.x - logoRest.x) > 0.5 || Math.abs(m.y - logoRest.y) > 0.5 || Math.abs(m.w - logoRest.w) > 0.5 ||
           Math.abs(img.offsetHeight - logoRest.h) > 0.5) layout();
     }
-    // Entrada: a cada quadro, quanto de cada bola já se formou e até onde o logo já foi construído
+    // curva de animação igual à do CSS (cubic-bezier), para o logo subir como subia a imagem
+    function bezier(x1, y1, x2, y2, x) {
+      let t = x;
+      for (let i = 0; i < 6; i++) {
+        const cx = 3 * (1 - t) * (1 - t) * t * x1 + 3 * (1 - t) * t * t * x2 + t * t * t - x;
+        const dx = 3 * (1 - t) * (1 - t) * x1 + 6 * (1 - t) * t * (x2 - x1) + 3 * t * t * (1 - x2);
+        if (Math.abs(dx) < 1e-5) break;
+        t -= cx / dx; t = t < 0 ? 0 : t > 1 ? 1 : t;
+      }
+      return 3 * (1 - t) * (1 - t) * t * y1 + 3 * (1 - t) * t * t * y2 + t * t * t;
+    }
+    // Entrada: a cada quadro, quanto de cada bola já se formou e quanto o logo já subiu
     function intro(now) {
       if (introDone || !logoRest) return;
-      if (t0 === null) { front = logoRest.x - band; return; }   // ainda só há fundo
+      if (t0 === null) return;   // ainda só há fundo
       const t = now - t0;
       for (let i = 0; i < appear.length; i++) {
         let a = (t - BALLS_AT - wave[i] * WAVE) / BALL_DUR;
@@ -770,14 +783,12 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       }
       let u = (t - LOGO_AT) / LOGO_DUR;
       u = u < 0 ? 0 : u > 1 ? 1 : u;
-      const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
-      front = logoRest.x - band + e * (logoRest.w + band * 2);
-      for (let i = 0; i < stay.length; i++) {
-        let g = (front - px[i]) / band;
-        g = g < 0 ? 0 : g > 1 ? 1 : g;
-        stay[i] = g * g * (3 - 2 * g);
-      }
-      if (t >= LOGO_AT + LOGO_DUR && t >= BALLS_AT + WAVE + BALL_DUR) { introDone = true; front = 1e6; appear.fill(1); stay.fill(1); }
+      rise = 1.1 * (1 - bezier(0.16, 1, 0.3, 1, u));
+      // as bolas que estão no sítio do logo recolhem-se um instante antes de ele chegar
+      let g = (t - (LOGO_AT - 220)) / 420;
+      g = g < 0 ? 0 : g > 1 ? 1 : g; g = g * g * (3 - 2 * g);
+      stay.fill(g);
+      if (t >= LOGO_AT + LOGO_DUR && t >= BALLS_AT + WAVE + BALL_DUR) { introDone = true; rise = 0; appear.fill(1); stay.fill(1); }
       aim();
     }
     function draw() {
@@ -802,8 +813,8 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       gl.uniform2f(U.uRes, pw, ph); gl.uniform1f(U.uDpr, pw / cw);
       gl.uniform4f(U.uGrid, G.x, G.y, G.cellW, G.cellH); gl.uniform2f(U.uCells, G.cols, G.rows);
       gl.uniform3f(U.uRadRange, R_MIN, R_SPAN, SHIFT);
-      gl.uniform4f(U.uLogoRect, logoRest.x - field.PAD * s, logoRest.y - field.PAD * s, field.W * s, field.H * s);
-      gl.uniform3f(U.uBuild, front, band, introDone ? 0 : GROW);
+      gl.uniform4f(U.uLogoRect, logoRest.x - field.PAD * s, logoRest.y + rise * logoRest.h - field.PAD * s, field.W * s, field.H * s);
+      gl.uniform4f(U.uClip, logoRest.x, logoRest.y, logoRest.x + logoRest.w, logoRest.y + maskH);
       gl.uniform3f(U.uSdf, field.FINE, field.WIDE, s); gl.uniform1f(U.uK, k); gl.uniform1f(U.uEdge, EDGE);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLES, 0, 3);

@@ -54,10 +54,14 @@
   }
   var scrubs = [];
   var splits = $$('[data-split]');
-  splits.forEach(function (el) {
-    var words = splitWords(el);
-    if (el.getAttribute('data-split') === 'scrub') scrubs.push({ el: el, words: words, n: -1 });
-  });
+  function splitAll() {
+    scrubs.length = 0;
+    splits.forEach(function (el) {
+      var words = splitWords(el);
+      if (el.getAttribute('data-split') === 'scrub') scrubs.push({ el: el, words: words, n: -1 });
+    });
+  }
+  splitAll();
   // Em que linha ficou cada palavra: as palavras da mesma linha entram juntas (e acendem juntas).
   // Refaz-se quando a janela muda de largura.
   function measureLines() {
@@ -77,7 +81,8 @@
   measureLines();
 
   /* ── 1b. Etiquetas: as letras aparecem uma a uma, por ordem aleatória ── */
-  if (!reduce) $$('.m-label').forEach(function (el) {
+  var labels = reduce ? [] : $$('.m-label');
+  function splitLabel(el) {
     var text = el.textContent;
     var sr = document.createElement('span'); sr.className = 'm-sr'; sr.textContent = text;   // para leitores de ecrã
     var vis = document.createElement('span'); vis.setAttribute('aria-hidden', 'true');
@@ -90,7 +95,8 @@
     });
     el.textContent = '';
     el.appendChild(sr); el.appendChild(vis);
-  });
+  }
+  labels.forEach(splitLabel);
 
   /* ── 2. Atrasos em cadeia ── */
   $$('[data-stagger]').forEach(function (group) {
@@ -333,6 +339,19 @@
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+  // Troca de língua sem recarregar: o i18n.js acabou de repor, na língua nova, o texto inteiro de cada bloco
+  // partido em palavras ou letras; aqui volta-se a parti-lo, no mesmo instante e sem repetir animações
+  // (o que já estava à vista continua à vista; o que ainda não entrou entra quando chegar a vez).
+  window.addEventListener('mean:lang', function () {
+    root.classList.add('i18n-swap');   // sem transições enquanto o texto é trocado
+    splitAll();
+    labels.forEach(splitLabel);
+    measureLines();
+    updateScrub(); updateFocus();
+    if (window.__lenis && window.__lenis.resize) window.__lenis.resize();   // a página pode ter mudado de altura
+    onScroll();
+    requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('i18n-swap'); onScroll(); }); });
+  });
   var resizeTimer = 0;
   window.addEventListener('resize', function () {
     onScroll();

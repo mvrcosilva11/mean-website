@@ -12,7 +12,6 @@ _Mean_Website/
 ├── projects.html         # "All projects" — grelha compacta
 ├── projeto.html          # Página de um projeto (?p=<pasta>)
 ├── about.html            # Sobre a agência
-├── contact.html          # Formulário + redes sociais
 │
 ├── EDITAR-PROJETOS.js    # ← FONTE DE DADOS: nome/categoria/cor/texto de cada projeto
 ├── imagens.js            # AUTO-gerado: lista de imagens por pasta (não editar à mão)

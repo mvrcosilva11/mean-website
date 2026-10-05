@@ -21,41 +21,6 @@
 }
 .cursor-dot.hidden { opacity: 0; }
 
-/* Badge flutuante "contact" com o M da MEAN ao centro */
-.fab-contact {
-  position: fixed; z-index: 90;
-  right: clamp(1rem, 3vw, 2.2rem); bottom: clamp(1rem, 3vw, 2.2rem);
-  width: 118px; height: 118px;
-  display: grid; place-items: center;
-}
-.fab-ring {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  animation: fab-spin 14s linear infinite;
-}
-.fab-ring text {
-  fill: var(--text); font-family: var(--font);
-  font-size: 14px; font-weight: 500; letter-spacing: 1.7px;
-}
-.fab-center {
-  width: 66px; height: 66px; border-radius: 50%;
-  object-fit: cover;
-  transition: transform .35s var(--ease);
-}
-.fab-contact:hover .fab-center { transform: scale(1.08); }
-@keyframes fab-spin { to { transform: rotate(360deg); } }
-@media (prefers-reduced-motion: reduce) { .fab-ring { animation: none; } }
-
-/* Homepage intro: fundo bordô do favicon */
-body.page-home-intro { background: var(--bordo); }
-.page-home-intro .nav, .page-home-intro .nav.nav-over { background: transparent; }
-
-/* Homepage intro: header sempre sem fundo, mesmo ao dar scroll */
-.page-home-intro .nav.scrolled {
-  background: transparent;
-  backdrop-filter: none; -webkit-backdrop-filter: none;
-  border-color: transparent;
-}
-
 /* ── Separador / preloader de entrada ── */
 .preloader {
   position: fixed;
@@ -254,13 +219,13 @@ h3 { font-size: 1.1rem; }
 
 .hi-inner { position: relative; z-index: 2; max-width: 20ch; }
 /* Logo central — posição absoluta no centro exato da hero (igual ao centro da grelha) */
-.page-home-intro .hi-inner, .page-home .hi-inner {
+.page-home .hi-inner {
   position: absolute; top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   width: min(760px, 78vw); max-width: none;
 }
 /* véu bordô atrás do logo → as bolas nessa zona ficam com menos opacidade */
-.page-home-intro .hi-inner::before, .page-home .hi-inner::before {
+.page-home .hi-inner::before {
   content: "";
   position: absolute; inset: -100px -150px;
   z-index: -1;
@@ -281,7 +246,7 @@ h3 { font-size: 1.1rem; }
    O logo em imagem continua na página (dá a posição, a animação de entrada e o texto alternativo), mas não se vê. */
 .hi-canvas { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; display: block; pointer-events: none; }
 .hi-hero.hi-gl .hi-dots { visibility: hidden; }
-.hi-hero.hi-gl .hi-logo { opacity: 0; }
+.hi-hero.hi-gl .hi-logo, .hi-hero.hi-wait .hi-logo { opacity: 0; }
 .hi-hero.hi-gl .hi-inner::before { display: none; }   /* sem véu: junto ao logo as bolas recolhem-se */
 
 .hi-kicker {
@@ -942,80 +907,6 @@ h3 { font-size: 1.1rem; }
 @media (max-width: 640px) {
   .ab-item { grid-template-columns: 2.4rem 1fr; gap: 1rem; }
   .ab-loc { grid-template-columns: 1fr; }
-  .ct-body { grid-template-columns: 1fr; gap: 3rem; }
-}
-
-/* ===== Contact page (reutiliza o sistema .ab-*) ===== */
-.ct-hero { min-height: 52vh; }
-
-.ct-body {
-  max-width: 1100px; margin: 0 auto;
-  padding: clamp(1rem, 4vh, 2rem) 0 clamp(4rem, 10vh, 7rem);
-  display: grid; grid-template-columns: .85fr 1.15fr;
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
-}
-
-.ct-info-title {
-  font-size: .8rem; letter-spacing: .28em; text-transform: uppercase;
-  color: #8f8f8d; margin-bottom: 2rem;
-}
-.ct-email {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3.2vw, 2.2rem); font-weight: 600; letter-spacing: -.02em;
-  border-bottom: 2px solid var(--ab-red); padding-bottom: .15em;
-  transition: color .2s var(--ease);
-}
-.ct-email:hover { color: var(--ab-red); }
-.ct-availability { color: #a7a7a4; margin-top: 1.1rem; font-size: .95rem; max-width: 32ch; }
-
-.ct-social { list-style: none; margin-top: 2.5rem; display: flex; flex-direction: column; gap: .6rem; }
-.ct-social a {
-  display: inline-flex; align-items: center; gap: .4rem;
-  font-size: 1rem; color: inherit; transition: color .2s var(--ease);
-}
-.ct-social a:hover { color: var(--ab-red); }
-
-.ct-loc { margin-top: 2.5rem; display: flex; flex-direction: column; gap: .35rem; }
-.ct-loc-label { font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: #8f8f8d; }
-
-.ct-form { display: flex; flex-direction: column; gap: 1.6rem; }
-.ct-field { display: flex; flex-direction: column; gap: .5rem; }
-.ct-field label { font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: #8f8f8d; }
-.ct-field input,
-.ct-field select,
-.ct-field textarea {
-  background: transparent; border: none; border-bottom: 1.5px solid #333; border-radius: 0;
-  padding: .6rem 0; font-family: var(--font); font-weight: 500; font-size: 1.05rem; color: inherit;
-  outline: none; resize: vertical; width: 100%;
-  transition: border-color .2s var(--ease);
-}
-.ct-field input:focus,
-.ct-field select:focus,
-.ct-field textarea:focus { border-color: var(--ab-red); }
-.ct-field input::placeholder,
-.ct-field textarea::placeholder { color: #6b6b68; }
-.ct-field select { cursor: pointer; }
-.ct-field select option { background: var(--bg); color: var(--text); }
-
-.ct-submit {
-  align-self: flex-start; margin-top: .25rem;
-  display: inline-flex; align-items: center; gap: .6rem;
-  background: none; border: none; cursor: pointer;
-  font-family: var(--font); font-weight: 600; font-size: 1.05rem; color: inherit;
-  padding-bottom: .3rem; border-bottom: 2px solid var(--ab-red);
-  transition: gap .2s var(--ease), color .2s var(--ease), opacity .2s var(--ease);
-}
-.ct-submit:hover { gap: 1rem; color: var(--ab-red); }
-.ct-submit:disabled { opacity: .5; cursor: default; }
-
-.ct-form .form-feedback { text-align: left; }
-.ct-form .form-feedback.success,
-.ct-form .form-feedback.error { color: var(--ab-red); }
-
-@media (max-width: 768px) {
-  .ct-body { grid-template-columns: 1fr; gap: 3rem; }
 }
 
 /* ===== Work page (fullscreen video hero) ===== */
@@ -1540,8 +1431,8 @@ h3 { font-size: 1.1rem; }
 }
 .nav.nav--menu, .nav.scrolled.nav--menu { mix-blend-mode: normal; background: var(--bg); }   /* menu aberto no telemóvel: painel opaco */
 /* sobre o vídeo da Home: sem "negativo"; branco ou preto conforme o brilho do vídeo (motion.js).
-   Sobre o bordô (abertura da Home e página Intro) também sem "negativo": branco simples, sem tingir. */
-.nav.nav--onvideo, .page-home-intro .nav.nav-over { mix-blend-mode: normal; }
+   Sobre o bordô da abertura da Home também sem "negativo": branco simples, sem tingir. */
+.nav.nav--onvideo { mix-blend-mode: normal; }
 .nav--onvideo .nav-links a, .nav--onvideo .nav-cta, .nav--onvideo .nav-lang { transition: color .3s linear; }
 .nav--onvideo .nav-logo { transition: filter .3s linear; }
 .nav--onvideo .nav-toggle span { transition: background-color .3s linear, transform .3s var(--ease), opacity .3s; }
@@ -1580,7 +1471,6 @@ h3 { font-size: 1.1rem; }
 .nav-links a:nth-child(1) { --nav-d: 60ms; }
 .nav-links a:nth-child(2) { --nav-d: 120ms; }
 .nav-links a:nth-child(3) { --nav-d: 180ms; }
-.nav-links a:nth-child(4) { --nav-d: 210ms; }
 .nav-cta { --nav-d: 240ms; }
 .nav-lang { --nav-d: 300ms; }
 .nav-toggle { --nav-d: 360ms; }
@@ -1631,6 +1521,9 @@ html.i18n-wait body { visibility: hidden; }
 /* o logo e as bolas só entram quando a cortina começa a subir */
 .js:not(.is-ready) .page-home .hi-hero .hi-dots { opacity: 0; transition: none; }
 .js:not(.is-ready) .page-home .hi-hero .hi-line-in { transform: translateY(110%); transition: none; }
+/* versão simples (sem WebGL): a mesma ordem — fundo, depois as bolas, depois o logo */
+.js.is-ready .page-home .hi-hero .hi-dots { transition-delay: 1.6s; }
+.js.is-ready .page-home .hi-hero.is-in .hi-line .hi-line-in { transition-delay: 2.15s; }
 /* a miniatura assenta enquanto a cortina sobe e, sem chegar a parar, começa a crescer */
 .js.is-ready:not(.is-open) .page-home .m-open-frame {
   animation: m-rise 1.3s cubic-bezier(.33, 1, .68, 1) both,
@@ -1685,7 +1578,7 @@ html.i18n-wait body { visibility: hidden; }
 /* ── Frases: uma só escala em todas as páginas, a da frase de abertura da Home.
       Títulos de página, frases de secção, testemunhos e fechos têm todos o mesmo tamanho. ── */
 .m-statement-text, .page-work .work-lead-title, .m-ahero-title, .m-cta-title,
-.m-lead, .m-svc-lead, .m-quote blockquote, .page-contact .ab-statement,
+.m-lead, .m-svc-lead, .m-quote blockquote,
 .m-pj-statement, .m-pj-lead, .m-pj-phrase, .m-pj-next-name {
   font-size: var(--m-phrase); font-weight: 500; line-height: .98; letter-spacing: -.045em;
 }
@@ -1779,7 +1672,6 @@ html.i18n-wait body { visibility: hidden; }
 .m-quotes-count { font-size: var(--m-micro); letter-spacing: 0; }
 .m-btn-round { width: 44px; height: 44px; font-size: 1rem; transition: background-color .12s linear, color .12s linear, border-color .12s linear, transform .4s var(--m-ease); }
 .m-about .m-cta { margin-top: var(--m-sec); }
-.page-contact .ab-statement { max-width: 22ch; }
 
 /* ── Ecrãs médios e pequenos ── */
 @media (max-width: 1000px) {
@@ -1861,10 +1753,10 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-block h3 { margin: 0 0 14px; font: inherit; letter-spacing: inherit; color: inherit; opacity: .68; }
 .m-foot-block p { margin: 0; }
 .m-foot a:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
-/* sobre o footer o cursor fica no vermelho dos textos (em "negativo" ficaria azulado sobre o vermelho escuro) */
-.cursor-layer.is-foot { mix-blend-mode: normal; }
-.cursor-layer.is-foot .cursor-dot { border-color: var(--mean-red); }
-.cursor-layer.is-foot .cursor-dot::before { background: var(--mean-red); }
+/* sobre o footer e sobre o painel de contacto o cursor fica no vermelho dos textos (em "negativo" ficaria azulado) */
+.cursor-layer.is-foot, .cursor-layer.is-talk { mix-blend-mode: normal; }
+.cursor-layer.is-foot .cursor-dot, .cursor-layer.is-talk .cursor-dot { border-color: var(--mean-red); }
+.cursor-layer.is-foot .cursor-dot::before, .cursor-layer.is-talk .cursor-dot::before { background: var(--mean-red); }
 
 /* revelação: o conteúdo fica preso ao ecrã e o footer funciona como janela */
 @media (min-width: 769px) and (min-height: 620px) {
@@ -1991,13 +1883,111 @@ html.i18n-wait body { visibility: hidden; }
   .m-pj-chapter--flip .m-pj-stack > .is-narrow, .m-pj-chapter--flip .m-pj-stack > .is-small { grid-column: 1 / span 6; }
 }
 
-/* ── Intro: aparecimento com blur ao dar scroll (tipo cardenasdesigngroup.com) ──
-   opacidade 0→1, sobe 1.5rem e desfoca de 20px→0 em 1.2s. Só na Intro; as outras páginas usam o motion.js */
-.page-home-intro .reveal {
-  opacity: 0; transform: translateY(1.5rem); filter: blur(20px);
-  transition: opacity 1.2s var(--ease), transform 1.2s var(--ease), filter 1.2s var(--ease);
 }
-.page-home-intro .reveal.visible { opacity: 1; transform: none; filter: none; }
+
+/* ============================================================
+   TALK WITH US — painel de contacto (criado pelo main.js, igual em todas as páginas)
+   Entra da direita para a esquerda, por cima da página. Fundo no vermelho escuro da MEAN e tudo o resto
+   no vermelho claro, com a tipografia do footer (14 px em maiúsculas espaçadas); a frase tem o tamanho
+   das frases do site e os campos são linhas, sem caixas.
+   ============================================================ */
+html.talk-open { overflow: hidden; }
+.m-talk-veil {
+  position: fixed; inset: 0; z-index: 900; background: rgba(10, 10, 10, .55);
+  opacity: 0; visibility: hidden; transition: opacity .45s linear, visibility 0s linear .45s;
+}
+.talk-open .m-talk-veil { opacity: 1; visibility: visible; transition: opacity .6s linear; }
+.m-talk {
+  position: fixed; top: 0; right: 0; z-index: 901;
+  width: max(520px, 44vw); max-width: 100vw; height: 100vh; height: 100dvh;
+  background: var(--mean-red-dark); color: var(--mean-red);
+  font-size: 14px; line-height: 14px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; outline: none;
+  transform: translate3d(100%, 0, 0); visibility: hidden;
+  transition: transform .55s cubic-bezier(.76, 0, .24, 1), visibility 0s linear .55s;
+}
+.talk-open .m-talk { transform: none; visibility: visible; transition: transform .75s cubic-bezier(.76, 0, .24, 1); }
+.m-talk-in { display: flex; flex-direction: column; min-height: 100%; box-sizing: border-box; padding: 28px 32px; }
+.m-talk a { color: inherit; text-decoration: none; }
+.m-talk a:hover, .m-talk-close:hover { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.m-talk a:focus-visible, .m-talk button:focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+.m-talk-top { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.m-talk-close, .m-talk-submit { font: inherit; color: inherit; background: none; border: 0; border-radius: 0; margin: 0; padding: 0; cursor: pointer; }
+.m-talk-close { letter-spacing: inherit; text-transform: inherit; }
+.m-talk-title {
+  margin: clamp(2.5rem, 9vh, 5.5rem) 0 clamp(2rem, 6vh, 3.5rem); max-width: 11em; color: inherit;
+  font-size: var(--m-phrase); font-weight: 500; line-height: .98; letter-spacing: -.045em; text-transform: none;
+}
+
+/* campos: etiqueta pequena, texto grande, uma linha por baixo */
+.m-talk-form { display: grid; row-gap: clamp(22px, 3.4vh, 34px); }
+.m-talk-field { display: grid; row-gap: 12px; cursor: text; }
+.m-talk-field > span, .m-talk-budget legend, .m-talk-block h3 { opacity: .68; transition: opacity .12s linear; }
+.m-talk-field:focus-within > span { opacity: 1; }
+.m-talk-field input, .m-talk-field textarea, .m-talk-submit {
+  font-size: clamp(1.15rem, 1.45vw, 1.4rem); line-height: 1.25; letter-spacing: -.02em; text-transform: none;
+}
+.m-talk-field input, .m-talk-field textarea {
+  display: block; width: 100%; box-sizing: border-box; margin: 0; padding: 0 0 10px;
+  font-family: inherit; font-weight: inherit; color: inherit; caret-color: currentColor; background: transparent;
+  border: 0; border-bottom: 1px solid currentColor; border-radius: 0; outline: none;
+  -webkit-appearance: none; appearance: none;
+}
+.m-talk-field textarea { resize: none; min-height: calc(1.25em * 3 + 10px); }
+.m-talk-field input:focus, .m-talk-field textarea:focus { box-shadow: 0 1px 0 0 currentColor; }   /* a linha engrossa */
+/* preenchimento automático do browser: sem o fundo claro que ele põe */
+.m-talk-field input:-webkit-autofill, .m-talk-field textarea:-webkit-autofill {
+  -webkit-text-fill-color: var(--mean-red); caret-color: var(--mean-red);
+  box-shadow: 0 0 0 100px var(--mean-red-dark) inset;
+}
+.m-talk-field input:-webkit-autofill:focus, .m-talk-field textarea:-webkit-autofill:focus {
+  box-shadow: 0 0 0 100px var(--mean-red-dark) inset, 0 1px 0 0 var(--mean-red);
+}
+/* orçamento: opções em texto, com o quadrado que marca a página atual no footer */
+.m-talk-budget { min-width: 0; margin: 0; padding: 0; border: 0; }
+.m-talk-budget legend { float: left; width: 100%; margin: 0 0 14px; padding: 0; }   /* float: comporta-se como um bloco normal */
+.m-talk-opts { clear: both; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }   /* as mesmas duas colunas dos contactos ao fundo */
+.m-talk-opt { position: relative; display: inline-flex; justify-self: start; cursor: pointer; }
+.m-talk-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.m-talk-opt span { position: relative; padding-left: 16px; opacity: .68; transition: opacity .12s linear; }
+.m-talk-opt span::before {
+  content: ""; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; margin-top: -4px;
+  box-sizing: border-box; border: 1px solid currentColor;
+}
+.m-talk-opt:hover span, .m-talk-opt input:checked + span { opacity: 1; }
+.m-talk-opt input:checked + span::before { background: currentColor; }
+.m-talk-opt input:focus-visible + span { outline: 1px solid currentColor; outline-offset: 4px; }
+/* enviar */
+.m-talk-send { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 14px 24px; margin-top: 4px; }
+.m-talk-submit { padding-bottom: .25em; background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 100% 1px; }
+.m-talk-submit .m-arrow { display: inline-block; transition: transform .5s var(--m-ease); }
+.m-talk-submit:hover .m-arrow { transform: translateX(.35em); }
+.m-talk-submit:disabled { opacity: .5; cursor: default; }
+.m-talk .form-feedback, .m-talk .form-feedback.success, .m-talk .form-feedback.error {
+  margin: 0; min-height: 14px; font-size: inherit; text-align: left; color: inherit;
+}
+/* contactos diretos, ao fundo */
+.m-talk-bottom {
+  margin-top: auto; padding-top: clamp(2.5rem, 8vh, 5rem);
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 16px; align-items: start;
+}
+.m-talk-block h3 { margin: 0 0 14px; font: inherit; letter-spacing: inherit; color: inherit; }
+.m-talk-block p { margin: 0; }
+.m-talk-block p > * { display: block; }
+.m-talk-ext { justify-self: start; }
+/* o conteúdo entra em cadeia, depois de o painel abrir */
+.m-talk-rise { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .2s linear, transform 0s linear .3s; }
+.talk-open .m-talk-rise {
+  opacity: 1; transform: none;
+  transition: opacity .7s ease calc(.32s + var(--i, 0) * .055s), transform .9s var(--m-ease) calc(.32s + var(--i, 0) * .055s);
+}
+@media (max-width: 700px) {
+  .m-talk-in { padding: 20px var(--m-gut) 24px; }
+  .m-talk-title { margin: 2.25rem 0 1.75rem; }
+  .m-talk-bottom { padding-top: 2.5rem; row-gap: 24px; }
+  .m-talk-block { grid-column: 1 / -1; }   /* o email não cabe em meia largura */
+}
 @media (prefers-reduced-motion: reduce) {
-  .page-home-intro .reveal { transition: none; opacity: 1; transform: none; filter: none; }
+  .m-talk, .talk-open .m-talk, .m-talk-veil, .talk-open .m-talk-veil { transition: none; }
+  .m-talk-rise, .talk-open .m-talk-rise { opacity: 1; transform: none; transition: none; }
 }

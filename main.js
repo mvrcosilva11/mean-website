@@ -193,7 +193,7 @@ document.querySelectorAll('.card, .contact-info, .contact-form, .section-title, 
   const group = document.querySelector(sel);
   if (group) group.querySelectorAll('.reveal').forEach((el, i) => { el.style.transitionDelay = (i * 65) + 'ms'; });
 });
-document.querySelectorAll('.ab .reveal, .page-work .reveal, .page-home-intro .reveal').forEach(el => observer.observe(el));
+document.querySelectorAll('.ab .reveal, .page-work .reveal').forEach(el => observer.observe(el));
 
 // Parallax — elementos com data-parallax movem-se ao scroll
 (function () {
@@ -308,49 +308,161 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   observer.observe(el);
 });
 
-// Contact form
-const form = document.getElementById('contactForm');
-const feedback = document.getElementById('formFeedback');
+// ── "Talk with us": painel de contacto que entra da direita para a esquerda ──
+// Substitui a página de contacto. É criado aqui para ser igual em todas as páginas. Abre em qualquer
+// ligação com data-talk (header, footer, fechos de página) e quando o endereço acaba em #talk.
+(function () {
+  const root = document.documentElement;
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const tx = s => esc(meanT(s));
+  const budgets = ['Under €3,000', '€3,000 – €8,000', '€8,000 – €20,000', 'Over €20,000'];
 
-if (form) form.addEventListener('submit', e => {
-  e.preventDefault();
-  feedback.className = 'form-feedback';
-  feedback.textContent = '';
+  const veil = document.createElement('div');
+  veil.className = 'm-talk-veil'; veil.setAttribute('data-talk-close', '');
+  const panel = document.createElement('aside');
+  panel.className = 'm-talk'; panel.id = 'talk'; panel.tabIndex = -1; panel.inert = true;
+  panel.setAttribute('role', 'dialog'); panel.setAttribute('aria-modal', 'true');
+  panel.setAttribute('aria-labelledby', 'talkTitle'); panel.setAttribute('aria-hidden', 'true');
+  panel.setAttribute('data-lenis-prevent', '');   // dentro do painel o scroll é o do browser
+  panel.innerHTML =
+    '<div class="m-talk-in">' +
+      '<div class="m-talk-top m-talk-rise" style="--i:0">' +
+        '<span>' + tx('Talk with us') + '</span>' +
+        '<button type="button" class="m-talk-close" data-talk-close>' + tx('Close') + '</button>' +
+      '</div>' +
+      '<h2 class="m-talk-title m-talk-rise" id="talkTitle" style="--i:1">' + tx("Let's talk about your project.") + '</h2>' +
+      '<form class="m-talk-form" novalidate>' +
+        '<label class="m-talk-field m-talk-rise" style="--i:2"><span>' + tx('Name') + '</span>' +
+          '<input type="text" name="name" autocomplete="name" required /></label>' +
+        '<label class="m-talk-field m-talk-rise" style="--i:3"><span>' + tx('Email') + '</span>' +
+          '<input type="email" name="email" autocomplete="email" inputmode="email" required /></label>' +
+        '<fieldset class="m-talk-budget m-talk-rise" style="--i:4"><legend>' + tx('Estimated budget') + '</legend>' +
+          '<div class="m-talk-opts">' + budgets.map(b =>
+            '<label class="m-talk-opt"><input type="radio" name="budget" value="' + esc(b) + '" /><span>' + tx(b) + '</span></label>').join('') +
+          '</div></fieldset>' +
+        '<label class="m-talk-field m-talk-rise" style="--i:5"><span>' + tx('Message') + '</span>' +
+          '<textarea name="message" rows="3" required></textarea></label>' +
+        '<div class="m-talk-send m-talk-rise" style="--i:6">' +
+          '<button type="submit" class="m-talk-submit"><span class="m-talk-submit-t">' + tx('Send message') + '</span> <span class="m-arrow" aria-hidden="true">→</span></button>' +
+          '<p class="form-feedback" role="status"></p>' +
+        '</div>' +
+      '</form>' +
+      '<div class="m-talk-bottom m-talk-rise" style="--i:7">' +
+        '<div class="m-talk-block"><h3>' + tx('Contact') + '</h3><p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a><span>' + tx('We reply within 24h') + '</span></p></div>' +
+        '<div class="m-talk-block"><h3>' + tx('Studio') + '</h3><p><span>Porto, Portugal</span></p></div>' +
+        '<a class="m-talk-ext" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>' +
+        '<a class="m-talk-ext" href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(veil);
+  document.body.appendChild(panel);
+  document.querySelectorAll('[data-talk]').forEach(a => { a.setAttribute('aria-haspopup', 'dialog'); a.setAttribute('aria-controls', 'talk'); });
 
-  const name = form.name.value.trim();
-  const email = form.email.value.trim();
-  const message = form.message.value.trim();
-
-  if (!name || !email || !message) {
-    feedback.classList.add('error');
-    feedback.textContent = meanT('Please fill in all fields.');
-    return;
+  let isOpen = false, opener = null, frozen = [];
+  const cursor = () => document.querySelector('.cursor-layer');
+  function open(from) {
+    if (isOpen) return;
+    isOpen = true; opener = from || null;
+    const menu = document.querySelector('.nav-links.open'), toggle = document.querySelector('.nav-toggle');
+    if (menu && toggle) toggle.click();            // no telemóvel, fecha primeiro o menu
+    // o resto da página fica parado e fora do alcance do teclado enquanto o painel está aberto
+    frozen = [];
+    Array.prototype.forEach.call(document.body.children, el => {
+      if (el === panel || el === veil || el.tagName === 'SCRIPT' || el.id === 'preloader' ||
+          el.classList.contains('cursor-layer') || el.classList.contains('page-trans')) return;
+      if (!el.inert) { el.inert = true; frozen.push(el); }
+    });
+    panel.inert = false; panel.setAttribute('aria-hidden', 'false');
+    panel.scrollTop = 0;
+    root.classList.add('talk-open');
+    if (window.__lenis) window.__lenis.stop();
+    try { panel.focus({ preventScroll: true }); } catch (e) { panel.focus(); }
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    feedback.classList.add('error');
-    feedback.textContent = meanT('Invalid email.');
-    return;
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    root.classList.remove('talk-open');
+    panel.inert = true; panel.setAttribute('aria-hidden', 'true');
+    frozen.forEach(el => { el.inert = false; }); frozen = [];
+    if (window.__lenis) window.__lenis.start();
+    const c = cursor(); if (c) c.classList.remove('is-talk');
+    if (location.hash === '#talk' && history.replaceState) history.replaceState(null, '', location.pathname + location.search);
+    if (opener && opener.focus) { try { opener.focus({ preventScroll: true }); } catch (e) {} }
+    opener = null;
+  }
+  document.addEventListener('click', e => {
+    const el = e.target && e.target.closest ? e.target : null;
+    if (!el) return;
+    const t = el.closest('[data-talk]');
+    if (t) {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault(); open(t);
+      return;
+    }
+    if (el.closest('[data-talk-close]')) { e.preventDefault(); close(); }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen) { e.preventDefault(); close(); } });
+  // sobre o painel o cursor fica no vermelho dos textos, como no footer
+  panel.addEventListener('pointerenter', () => { const c = cursor(); if (c) c.classList.add('is-talk'); });
+  panel.addEventListener('pointerleave', () => { const c = cursor(); if (c) c.classList.remove('is-talk'); });
+  // …#talk no endereço abre o painel (depois de o ecrã do logo sair)
+  window.addEventListener('hashchange', () => { if (location.hash === '#talk') open(null); });
+  if (location.hash === '#talk') {
+    const pre = document.getElementById('preloader');
+    if (!pre) setTimeout(() => open(null), 400);
+    else {
+      const mo = new MutationObserver(() => { if (!document.body.contains(pre)) { mo.disconnect(); setTimeout(() => open(null), 400); } });
+      mo.observe(document.body, { childList: true });
+      setTimeout(() => { mo.disconnect(); open(null); }, 6000);
+    }
   }
 
-  // Simulate send (replace with real endpoint if needed)
-  const btn = form.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = meanT('Sending…');
+  // Formulário
+  const form = panel.querySelector('form'), feedback = panel.querySelector('.form-feedback');
+  const btn = panel.querySelector('.m-talk-submit'), btnText = panel.querySelector('.m-talk-submit-t');
+  let clearTimer = 0;
+  const say = (kind, text) => { feedback.className = 'form-feedback' + (kind ? ' ' + kind : ''); feedback.textContent = text; };
+  // orçamento: clicar outra vez na opção escolhida volta a deixá-la em branco (o campo é opcional)
+  form.addEventListener('click', e => {
+    const r = e.target;
+    if (!r || r.type !== 'radio') return;
+    const was = r.getAttribute('data-on') === '1';
+    form.querySelectorAll('input[type="radio"]').forEach(o => o.removeAttribute('data-on'));
+    if (was) r.checked = false; else r.setAttribute('data-on', '1');
+  });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    clearTimeout(clearTimer); say('', '');
+    const f = form.elements, name = f.name.value.trim(), email = f.email.value.trim(), message = f.message.value.trim();
+    if (!name || !email || !message) {
+      say('error', meanT('Please fill in all fields.'));
+      (!name ? f.name : !email ? f.email : f.message).focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      say('error', meanT('Invalid email.'));
+      f.email.focus();
+      return;
+    }
+    // ATENÇÃO: ainda não envia nada. Simula o envio, como a página antiga; falta ligar a um serviço de
+    // formulários ou a um endpoint próprio.
+    btn.disabled = true; btnText.textContent = meanT('Sending…');
+    setTimeout(() => {
+      form.reset();
+      form.querySelectorAll('input[type="radio"]').forEach(o => o.removeAttribute('data-on'));
+      btn.disabled = false; btnText.textContent = meanT('Send message');
+      say('success', meanT("Message sent! We'll reply soon."));
+      clearTimer = setTimeout(() => say('', ''), 5000);
+    }, 1200);
+  });
+})();
 
-  setTimeout(() => {
-    form.reset();
-    btn.disabled = false;
-    btn.textContent = meanT('Send message');
-    feedback.classList.add('success');
-    feedback.textContent = meanT("Message sent! We'll reply soon.");
-    setTimeout(() => { feedback.textContent = ''; feedback.className = 'form-feedback'; }, 5000);
-  }, 1200);
-});
-
-// ── Animação da Intro (página Intro e abertura da Home) ──
-// O logo sobre uma grelha de bolas que crescem junto ao cursor. As bolas e o logo são desenhados juntos
-// num <canvas> (WebGL), como se fossem a mesma matéria: uma bola que toca no logo funde-se com ele, e a
-// parte do logo que fica dentro de uma bola aparece em negativo (bordô sobre vermelho).
+// ── Abertura da Home: o logo sobre uma grelha de bolas que crescem junto ao cursor ──
+// As bolas e o logo são desenhados juntos num <canvas> (WebGL), como se fossem a mesma matéria: uma bola
+// que toca no logo funde-se com ele, e a parte do logo que fica dentro de uma bola aparece em negativo
+// (bordô sobre vermelho). A entrada é progressiva: primeiro só o fundo, depois as bolas formam-se do
+// centro para fora, e por fim o logo constrói-se da esquerda para a direita. Ao fazer scroll, as bolas
+// têm inércia: ficam um pouco para trás e voltam ao sítio com um pequeno balanço.
 // Sem WebGL, ou com "reduzir movimento", fica a versão simples: bolas em HTML por trás do logo.
 (function () {
   const hero = document.querySelector('.hi-hero');
@@ -433,11 +545,11 @@ if (form) form.addEventListener('submit', e => {
     'uniform float uDpr;',       // px de ecrã por px de CSS
     'uniform vec4 uGrid;',       // grelha: origem (x, y) e célula (largura, altura), px de CSS
     'uniform vec2 uCells;',      // colunas, linhas
-    'uniform sampler2D uRad;',   // raio de cada bola (16 bits)
-    'uniform vec2 uRadRange;',   // raio mínimo e amplitude
+    'uniform sampler2D uRad;',   // por bola: raio (R, G) e desvio vertical (B, A), 16 bits cada
+    'uniform vec3 uRadRange;',   // raio mínimo, amplitude do raio, desvio máximo
     'uniform sampler2D uLogo;',  // distância ao contorno do logo: R = fina, G = larga
     'uniform vec4 uLogoRect;',   // onde está a textura do logo, px de CSS
-    'uniform vec4 uClip;',       // máscara do logo (x0, y0, x1, y1): é por ela que o logo entra
+    'uniform vec3 uBuild;',      // construção do logo: posição da frente (x), largura da frente, quanto os traços ainda têm de engrossar
     'uniform vec3 uSdf;',        // alcance fino, alcance largo (em texels), px de CSS por texel
     'uniform float uK;',         // raio da fusão entre formas
     'uniform float uEdge;',      // largura da orla em que o logo se funde com a bola
@@ -447,14 +559,15 @@ if (form) form.addEventListener('submit', e => {
     'void main() {',
     '  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;',
     '  vec2 c = floor((p - uGrid.xy) / uGrid.zw);',
-    '  float dB = 1.0e4;',       // distância à bola mais próxima (só as 9 células à volta contam)
-    '  for (int j = -1; j <= 1; j++) {',
+    '  float dB = 1.0e4;',       // distância à bola mais próxima (só as células à volta contam)
+    '  for (int j = -2; j <= 2; j++) {',
     '    for (int i = -1; i <= 1; i++) {',
     '      vec2 cc = c + vec2(float(i), float(j));',
     '      if (cc.x < 0.0 || cc.y < 0.0 || cc.x >= uCells.x || cc.y >= uCells.y) continue;',
     '      vec4 t = texture2D(uRad, (cc + 0.5) / uCells);',
-    '      float r = uRadRange.x + (t.r * 65280.0 + t.a * 255.0) / 65535.0 * uRadRange.y;',
-    '      dB = smin(dB, length(p - (uGrid.xy + (cc + 0.5) * uGrid.zw)) - r, uK);',
+    '      float r = uRadRange.x + (t.r * 65280.0 + t.g * 255.0) / 65535.0 * uRadRange.y;',
+    '      float oy = ((t.b * 65280.0 + t.a * 255.0) / 65535.0 * 2.0 - 1.0) * uRadRange.z;',
+    '      dB = smin(dB, length(p - (uGrid.xy + (cc + 0.5) * uGrid.zw + vec2(0.0, oy))) - r, uK);',
     '    }',
     '  }',
     '  float dL = 1.0e4;',       // distância ao logo
@@ -463,9 +576,11 @@ if (form) form.addEventListener('submit', e => {
     '    vec4 s = texture2D(uLogo, uv);',
     '    float wide = (s.g * 2.0 - 1.0) * uSdf.y;',
     '    float fine = (s.r * 2.0 - 1.0) * uSdf.x;',
-    '    dL = (abs(wide) < uSdf.x * 0.75 ? fine : wide) * uSdf.z;',
+    '    float q = clamp((uBuild.x - p.x) / uBuild.y, 0.0, 1.0);',   // 0 = por construir, 1 = feito
+    '    q = q * q * (3.0 - 2.0 * q);',
+    '    dL = ((abs(wide) < uSdf.x * 0.75 ? fine : wide) + (1.0 - q) * uBuild.z) * uSdf.z;',   // os traços nascem finos e engrossam
+    '    if (uBuild.z > 0.0) dL += (1.0 - smoothstep(0.0, 0.35, q)) * 48.0;',   // o que ainda não foi construído não puxa as bolas
     '  }',
-    '  dL = max(dL, max(max(uClip.x - p.x, p.x - uClip.z), max(uClip.y - p.y, p.y - uClip.w)));',
     '  float aU = clamp(0.5 - smin(dB, dL, uK) * uDpr, 0.0, 1.0);',   // bolas e logo fundidos
     '  float aL = clamp(0.5 - dL * uDpr, 0.0, 1.0);',
     // na orla de uma bola o logo funde-se com ela (vermelho sobre vermelho); mais para dentro reaparece em negativo
@@ -545,7 +660,7 @@ if (form) form.addEventListener('submit', e => {
     const loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const U = {};
-    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uClip', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
+    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uBuild', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
     const texture = unit => {
       const t = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
@@ -570,10 +685,23 @@ if (form) form.addEventListener('submit', e => {
     const K = 14;                    // raio da fusão, px de CSS
     const EDGE = 6;                  // orla das bolas onde o logo ainda não está em negativo, px de CSS
     const R_MIN = -K, R_SPAN = MAX_R + K + 2;
+    // Entrada progressiva (ms depois de a abertura começar): as bolas formam-se, depois o logo constrói-se.
+    // Na Home a abertura começa quando o ecrã do logo sai (.is-ready no <html>) e a moldura ainda está a crescer.
+    const root = document.documentElement, onHome = !!hero.closest('.m-open');
+    const BALLS_AT = onHome ? 1600 : 150;   // as bolas começam a formar-se (a moldura já enche quase o ecrã)
+    const WAVE = 500, BALL_DUR = 700;       // do centro até aos cantos; tempo que cada bola leva a formar-se
+    const LOGO_AT = onHome ? 2150 : 700;    // o logo começa a construir-se
+    const LOGO_DUR = 1200, GROW = 11;       // duração; quanto os traços engrossam (em texels: mais do que meio traço)
+    let t0 = null, introDone = root.classList.contains('is-open');   // página já aberta (troca de língua): sem entrada
     let dead = false, shown = false, field = null;
     let G = null, px = [], py = [], rest = new Float32Array(0), shy = rest, target = rest, rad = rest, bytes = new Uint8Array(0);
-    let logoRest = null, logoLive = null, clipLive = null, dotsIn = 0, k = K;
+    let wave = rest, appear = rest, stay = rest;   // por bola: atraso na onda, quanto já se formou, quanto ainda fica junto ao logo
+    // Inércia ao scroll: cada bola tem o seu peso; fica para trás quando a página anda e volta com uma mola
+    const SHIFT = 46, STIFF = 60, DAMP = 8.5;     // desvio máximo (px); rigidez e amortecimento da mola
+    let off = rest, vel = rest, mass = rest, lastY = window.scrollY;
+    let logoRest = null, front = 1e6, band = 1, k = K;
     let mx = -1e4, my = -1e4, raf = 0, last = 0, settleUntil = 0;
+    hero.classList.add('hi-wait');   // o logo em imagem não chega a aparecer: quem o mostra é o canvas
 
     // do ecrã para as coordenadas do canvas (que pode estar reduzido, na abertura da Home)
     const frameBox = () => { const cr = canvas.getBoundingClientRect(); return { cr: cr, sc: cr.width ? canvas.clientWidth / cr.width : 1 }; };
@@ -587,64 +715,95 @@ if (form) form.addEventListener('submit', e => {
     }
     function aim() {
       for (let i = 0; i < rest.length; i++) {
+        // enquanto o logo não chega a uma bola, ela fica no seu tamanho normal; depois recolhe-se
+        const r0 = BASE_R + (rest[i] - BASE_R) * stay[i];
         let p = pull(px[i] - mx, py[i] - my);
-        if (shy[i] > 0 && p > 0) p = Math.pow(p, 1 + shy[i] * 0.45);   // as bolas recolhidas junto ao logo só saem com o cursor mais perto
-        target[i] = rest[i] + (MAX_R - rest[i]) * p;
+        if (shy[i] > 0 && p > 0) p = Math.pow(p, 1 + shy[i] * stay[i] * 0.45);   // as bolas recolhidas junto ao logo só saem com o cursor mais perto
+        target[i] = r0 + (MAX_R - r0) * p;
       }
     }
     function layout() {
       const b = frameBox(), m = toLocal(mask.getBoundingClientRect(), b);
       if (!m.w || !img.offsetHeight) return false;
       logoRest = { x: m.x, y: m.y, w: m.w, h: img.offsetHeight };
+      band = logoRest.w * 0.26;
       G = grid();
       G.x = (hero.clientWidth - G.w) / 2; G.y = (hero.clientHeight - G.h) / 2;
       const n = G.cols * G.rows, keep = rad.length === n ? rad : null;
       px = new Float32Array(n); py = new Float32Array(n);
-      rest = new Float32Array(n); shy = new Float32Array(n); target = new Float32Array(n); bytes = new Uint8Array(n * 2);
+      rest = new Float32Array(n); shy = new Float32Array(n); target = new Float32Array(n); bytes = new Uint8Array(n * 4);
+      off = new Float32Array(n); vel = new Float32Array(n); mass = new Float32Array(n);
+      wave = new Float32Array(n); appear = new Float32Array(n).fill(introDone ? 1 : 0); stay = new Float32Array(n).fill(introDone ? 1 : 0);
       // junto ao logo as bolas recolhem-se: a tinta fica limpa e só voltam quando o cursor as puxa
       const far = Math.max(14, Math.min(34, logoRest.w * 0.05));
+      const cx = hero.clientWidth / 2, cy = hero.clientHeight / 2, reach = Math.sqrt(cx * cx + cy * cy) || 1;
       for (let r = 0, i = 0; r < G.rows; r++) for (let c = 0; c < G.cols; c++, i++) {
         px[i] = G.x + (c + 0.5) * G.cellW; py[i] = G.y + (r + 0.5) * G.cellH;
         let t = (inkDist(px[i], py[i]) - 6) / (far - 6);
         t = t < 0 ? 0 : t > 1 ? 1 : t; t = t * t * (3 - 2 * t);
         rest[i] = R_MIN + (BASE_R - R_MIN) * t; shy[i] = 1 - t;
+        wave[i] = Math.sqrt((px[i] - cx) * (px[i] - cx) + (py[i] - cy) * (py[i] - cy)) / reach;
+        const h = Math.sin((c + 1) * 127.1 + (r + 1) * 311.7) * 43758.5453;   // peso diferente de bola para bola, sempre o mesmo
+        mass[i] = 0.25 + 0.5 * (h - Math.floor(h));
       }
       aim();
       rad = keep || Float32Array.from(target);
       k = Math.min(K, field.WIDE * (logoRest.w / field.iw) * 0.9);
       return true;
     }
-    function readGeom() {
+    function readGeom() {   // o logo mudou de sítio ou de tamanho? (janela redimensionada, imagem acabada de chegar)
       const b = frameBox();
       if (!b.cr.width) return;
       const m = toLocal(mask.getBoundingClientRect(), b);
       if (!logoRest || Math.abs(m.x - logoRest.x) > 0.5 || Math.abs(m.y - logoRest.y) > 0.5 || Math.abs(m.w - logoRest.w) > 0.5 ||
-          Math.abs(img.offsetHeight - logoRest.h) > 0.5) { if (!layout()) return; }
-      logoLive = toLocal(img.getBoundingClientRect(), b);
-      clipLive = m;
-      dotsIn = parseFloat(getComputedStyle(wrap).opacity) || 0;   // as bolas entram ao ritmo do CSS
+          Math.abs(img.offsetHeight - logoRest.h) > 0.5) layout();
+    }
+    // Entrada: a cada quadro, quanto de cada bola já se formou e até onde o logo já foi construído
+    function intro(now) {
+      if (introDone || !logoRest) return;
+      if (t0 === null) { front = logoRest.x - band; return; }   // ainda só há fundo
+      const t = now - t0;
+      for (let i = 0; i < appear.length; i++) {
+        let a = (t - BALLS_AT - wave[i] * WAVE) / BALL_DUR;
+        a = a < 0 ? 0 : a > 1 ? 1 : a; a = 1 - a;
+        appear[i] = 1 - a * a * a;
+      }
+      let u = (t - LOGO_AT) / LOGO_DUR;
+      u = u < 0 ? 0 : u > 1 ? 1 : u;
+      const e = u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2;
+      front = logoRest.x - band + e * (logoRest.w + band * 2);
+      for (let i = 0; i < stay.length; i++) {
+        let g = (front - px[i]) / band;
+        g = g < 0 ? 0 : g > 1 ? 1 : g;
+        stay[i] = g * g * (3 - 2 * g);
+      }
+      if (t >= LOGO_AT + LOGO_DUR && t >= BALLS_AT + WAVE + BALL_DUR) { introDone = true; front = 1e6; appear.fill(1); stay.fill(1); }
+      aim();
     }
     function draw() {
       const cw = canvas.clientWidth, ch = canvas.clientHeight;
-      if (!cw || !ch || !G || !logoLive) return false;
+      if (!cw || !ch || !G || !logoRest) return false;
       const dpr = Math.min(window.devicePixelRatio || 1, 2, Math.sqrt(8e6 / (cw * ch)));   // teto de ~8 milhões de píxeis
       const pw = Math.max(1, Math.round(cw * dpr)), ph = Math.max(1, Math.round(ch * dpr));
       if (canvas.width !== pw || canvas.height !== ph) { canvas.width = pw; canvas.height = ph; }
       gl.viewport(0, 0, pw, ph);
       for (let i = 0; i < rad.length; i++) {
-        const r = rad[i] > 0 ? rad[i] * dotsIn : rad[i];
+        const r = rad[i] > 0 ? rad[i] * appear[i] : rad[i];
         let q = Math.round((r - R_MIN) / R_SPAN * 65535);
         q = q < 0 ? 0 : q > 65535 ? 65535 : q;
-        bytes[i * 2] = q >> 8; bytes[i * 2 + 1] = q & 255;
+        bytes[i * 4] = q >> 8; bytes[i * 4 + 1] = q & 255;
+        let o = Math.round((Math.tanh(off[i] / SHIFT) * 0.5 + 0.5) * 65535);   // o desvio satura com suavidade
+        o = o < 0 ? 0 : o > 65535 ? 65535 : o;
+        bytes[i * 4 + 2] = o >> 8; bytes[i * 4 + 3] = o & 255;
       }
       gl.activeTexture(gl.TEXTURE0);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.LUMINANCE_ALPHA, G.cols, G.rows, 0, gl.LUMINANCE_ALPHA, gl.UNSIGNED_BYTE, bytes);
-      const s = logoLive.w / field.iw;   // px de CSS por texel do logo
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, G.cols, G.rows, 0, gl.RGBA, gl.UNSIGNED_BYTE, bytes);
+      const s = logoRest.w / field.iw;   // px de CSS por texel do logo
       gl.uniform2f(U.uRes, pw, ph); gl.uniform1f(U.uDpr, pw / cw);
       gl.uniform4f(U.uGrid, G.x, G.y, G.cellW, G.cellH); gl.uniform2f(U.uCells, G.cols, G.rows);
-      gl.uniform2f(U.uRadRange, R_MIN, R_SPAN);
-      gl.uniform4f(U.uLogoRect, logoLive.x - field.PAD * s, logoLive.y - field.PAD * s, field.W * s, field.H * s);
-      gl.uniform4f(U.uClip, clipLive.x, clipLive.y, clipLive.x + clipLive.w, clipLive.y + clipLive.h);
+      gl.uniform3f(U.uRadRange, R_MIN, R_SPAN, SHIFT);
+      gl.uniform4f(U.uLogoRect, logoRest.x - field.PAD * s, logoRest.y - field.PAD * s, field.W * s, field.H * s);
+      gl.uniform3f(U.uBuild, front, band, introDone ? 0 : GROW);
       gl.uniform3f(U.uSdf, field.FINE, field.WIDE, s); gl.uniform1f(U.uK, k); gl.uniform1f(U.uEdge, EDGE);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -654,18 +813,29 @@ if (form) form.addEventListener('submit', e => {
       raf = 0;
       if (dead) return;
       const dt = last ? Math.min(64, now - last) : 16; last = now;
-      const settling = now < settleUntil;
-      if (settling || !logoLive) readGeom();
+      const settling = now < settleUntil || (!introDone && t0 !== null);
+      if (settling || !logoRest) readGeom();
+      intro(now);
       let moving = false;
       const kf = 1 - Math.exp(-dt / 100);   // cada bola persegue o seu tamanho com um ligeiro atraso
       for (let i = 0; i < rad.length; i++) {
         const d = target[i] - rad[i];
         if (d > 0.02 || d < -0.02) { rad[i] += d * kf; moving = true; } else rad[i] = target[i];
       }
-      if (draw() && !shown) { shown = true; hero.classList.add('hi-gl'); }   // só agora o logo em imagem sai de cena
+      // inércia: o que a página andou desde o último quadro empurra cada bola; a mola trá-la de volta
+      const y = window.scrollY, dy = y - lastY, dts = dt / 1000;
+      lastY = y;
+      for (let i = 0; i < off.length; i++) {
+        let o = off[i] + dy * mass[i], v = vel[i];
+        v += (-STIFF * o - DAMP * v) * dts; o += v * dts;
+        if (o > SHIFT * 4) o = SHIFT * 4; else if (o < -SHIFT * 4) o = -SHIFT * 4;
+        if (o > 0.05 || o < -0.05 || v > 1 || v < -1) moving = true; else { o = 0; v = 0; }
+        off[i] = o; vel[i] = v;
+      }
+      if (draw() && !shown) { shown = true; hero.classList.add('hi-gl'); hero.classList.remove('hi-wait'); }
       if (moving || settling) raf = requestAnimationFrame(frame); else last = 0;
     }
-    // "kick": volta a desenhar e, durante ms, acompanha as animações do CSS (entrada do logo, abertura da Home)
+    // "kick": volta a desenhar e, durante ms, vai confirmando onde está o logo (a moldura da Home ainda pode estar a crescer)
     function kick(ms) {
       settleUntil = Math.max(settleUntil, performance.now() + (ms || 0));
       if (!raf && !dead) raf = requestAnimationFrame(frame);
@@ -681,7 +851,7 @@ if (form) form.addEventListener('submit', e => {
       if (dead) return;
       dead = true;
       if (raf) cancelAnimationFrame(raf);
-      hero.classList.remove('hi-gl');
+      hero.classList.remove('hi-gl', 'hi-wait');
       if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
       startDom();
     }
@@ -700,6 +870,11 @@ if (form) form.addEventListener('submit', e => {
       field.tex = null;
       kick(4000);
       // o cursor conta em toda a janela, para o efeito continuar com o cursor sobre o header
+      window.addEventListener('scroll', () => {   // só enquanto a animação está no ecrã
+        const cr = canvas.getBoundingClientRect();
+        if (cr.bottom < -40 || cr.top > window.innerHeight + 40) { lastY = window.scrollY; return; }
+        kick(0);
+      }, { passive: true });
       window.addEventListener('pointermove', point, { passive: true });
       window.addEventListener('pointerdown', point, { passive: true });
       const lift = e => { if (e.pointerType !== 'mouse') release(); };   // no telemóvel, as bolas voltam ao levantar o dedo
@@ -709,13 +884,14 @@ if (form) form.addEventListener('submit', e => {
       document.documentElement.addEventListener('mouseleave', release);
       if ('ResizeObserver' in window) new ResizeObserver(() => { if (layout()) kick(600); }).observe(hero);
       else addEventListener('resize', () => { if (layout()) kick(600); });
-      // entrada do logo e abertura da Home: quando o estado muda, acompanha-se o CSS durante uns segundos
-      const root = document.documentElement;
-      const state = () => (root.classList.contains('is-ready') ? 1 : 0) + (root.classList.contains('is-open') ? 2 : 0) + (hero.classList.contains('is-in') ? 4 : 0);
-      let seen = state();
-      const mo = new MutationObserver(() => { const s = state(); if (s !== seen) { seen = s; kick(4000); } });
-      mo.observe(root, { attributes: true, attributeFilter: ['class'] });
-      mo.observe(hero, { attributes: true, attributeFilter: ['class'] });
+      // a entrada começa quando o ecrã do logo sai (Home); noutra página, logo que o canvas esteja pronto
+      const begin = () => { if (t0 === null && !introDone) { t0 = performance.now(); kick(LOGO_AT + LOGO_DUR + 400); } };
+      if (!onHome || root.classList.contains('is-ready')) begin();
+      else {
+        const mo = new MutationObserver(() => { if (root.classList.contains('is-ready')) { mo.disconnect(); begin(); } });
+        mo.observe(root, { attributes: true, attributeFilter: ['class'] });
+        setTimeout(begin, 8000);   // segurança
+      }
       addEventListener('load', () => kick(1500));
       addEventListener('pageshow', () => kick(1500));
       document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(300); });

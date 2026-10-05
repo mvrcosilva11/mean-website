@@ -1,8 +1,8 @@
 # Arquivo
 
-Páginas retiradas do site mas guardadas para o caso de as querermos recuperar.
+Páginas retiradas do site. Não há cópias aqui: as páginas eliminadas ficam no histórico do git.
 
-(De momento não há nenhuma.)
-
-- `index-intro.html`: a homepage "Intro" esteve aqui de 2026-10-03 a 2026-10-04. Voltou à raiz do site e ao menu
-  (com o header e o footer atuais, o aparecimento com blur ao dar scroll e o fade nas pontas da faixa de marcas).
+- `index-intro.html` (página "Intro") e `contact.html` (página "Talk with us"): eliminadas a 2026-10-05.
+  A animação da Intro passou a ser a abertura da Home e o contacto passou a ser um painel que abre em
+  todas as páginas. A última versão das duas páginas está no commit `05920af`
+  (para recuperar uma: `git show 05920af:contact.html > contact.html`).

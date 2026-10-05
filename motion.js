@@ -397,15 +397,16 @@
   });
 
   /* ── 6b. Abertura da Home ──
-     O ecrã do logo sobe como uma cortina; no ecrã em branco a animação da Intro (logo e grelha de bolas,
-     em fundo bordô) aparece em miniatura e cresce num só movimento até encher o ecrã. A coreografia está
+     O ecrã do logo sobe como uma cortina; no ecrã em branco o fundo bordô aparece em miniatura e cresce
+     num só movimento até encher o ecrã; só depois se formam as bolas e se constrói o logo (main.js). A coreografia está
      toda no CSS (m-rise, m-grow, m-pre-up), em transformações que o browser anima fora da thread
      principal. Aqui só se marcam dois momentos no <html>: .is-nav (o header pode entrar) e .is-open (acabou).
      Se a página chegar já com .is-open (troca de língua), a abertura não se repete. */
   var OPEN_DELAY = 500, OPEN_GROW = 1500;   // iguais aos tempos de m-grow no CSS (ms)
-  var opened = function () { root.classList.add('is-open', 'is-nav'); toneGate(); };
+  var OPEN_NAV = 2850;                      // o header entra com o logo já quase construído
+  var opened = function (all) { root.classList.add('is-open'); if (all) root.classList.add('is-nav'); toneGate(); };
   var skipOpening = !openFrame || reduce || root.classList.contains('is-open');
-  if (skipOpening) opened();
+  if (skipOpening) opened(true);
 
   /* ── 7. Arranque: espera que o logo animado (abertura ou mudança de página) saia ── */
   // O vídeo da Home já não está no topo: só começa a tocar quando a secção dele se aproxima do ecrã
@@ -419,10 +420,11 @@
     onScroll();
     if (!skipOpening) {
       // acaba quando a moldura termina de crescer
-      openFrame.addEventListener('animationend', function (e) { if (e.animationName === 'm-grow') opened(); });
-      // o header começa a entrar quando a moldura já cobre a zona onde ele fica (98% do tamanho final)
-      setTimeout(function () { root.classList.add('is-nav'); toneGate(); }, OPEN_DELAY + OPEN_GROW * 0.86);
-      setTimeout(opened, OPEN_DELAY + OPEN_GROW + 700);   // segurança
+      openFrame.addEventListener('animationend', function (e) { if (e.animationName === 'm-grow') opened(false); });
+      // o header é o último a entrar: fundo, bolas, logo e só então o menu (tempos da entrada no main.js)
+      setTimeout(function () { root.classList.add('is-nav'); toneGate(); }, OPEN_NAV);
+      setTimeout(function () { opened(false); }, OPEN_DELAY + OPEN_GROW + 700);   // segurança
+      setTimeout(function () { opened(true); }, OPEN_NAV + 900);                    // segurança
     }
   }
   var pre = document.getElementById('preloader');

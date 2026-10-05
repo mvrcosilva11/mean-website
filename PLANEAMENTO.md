@@ -11,8 +11,8 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 | **Work** | `work.html` | **construída** com conteúdo provisório (2026-10-03) |
 | **About** | `about.html` | **construída** com conteúdo provisório (2026-10-03) |
 | **Projeto** | `projeto.html` | **construída** com conteúdo provisório (2026-10-04); é o modelo para todos os projetos |
-| Contact | `contact.html` | por planear (mantém a versão anterior) |
-| Intro | `index-intro.html` | de volta ao menu (2026-10-04): animação do logo com a grelha de bolas e o footer. A tira "Brands we've worked with" saiu a 2026-10-04 |
+| **Talk with us** | painel em todas as páginas (sem página própria) | **construído** (2026-10-05). A página `contact.html` foi eliminada. **O formulário ainda não envia nada** (simula o envio) |
+| Intro | eliminada (2026-10-05) | a animação da Intro é agora a abertura da Home |
 | 404 | não existe | por criar |
 | Política de privacidade | não existe | por criar (o formulário recolhe dados) |
 
@@ -24,6 +24,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - **Referências de proporção e movimento** (2026-10-03): madeinevolve.com para proporções e dinâmicas, twks.ch para o header a meio do ecrã, flabbergast.agency para a abertura do vídeo, esrbespoke.au para o footer, ondastudio.co para o vídeo que encolhe com o scroll (2026-10-04). Destas referências vêm só a escala, o espaçamento e o movimento. Ficaram de fora as linhas verticais de fundo, as maiúsculas e a fonte monoespaçada do Evolve. Está tudo nas camadas "MEAN v3" e "FOOTER" no fim do `style.css`.
 - **Línguas:** o site está em **inglês por defeito**. O botão `PT` / `EN` no header troca a língua e guarda a escolha no browser. O HTML tem o inglês; o português está todo em `i18n.js`, numa lista "texto em inglês → texto em português". Para mudar um texto em português, muda-se só no `i18n.js`. Para mudar um texto em inglês, muda-se no HTML **e** no lado esquerdo da lista do `i18n.js` (têm de ficar iguais). Para conferir, abrir o site em PT com `?i18ncheck` no endereço: a consola lista o que ficou sem tradução. Os textos das fichas deste documento estão em português; o inglês é tradução minha, por validar.
 - **Header** (igual em todas as páginas, sempre no topo): tudo em texto, do mesmo tamanho (15 px, logo com 17 px de altura), sem fundo e sem botão vermelho: logo, Home, Work, About à esquerda; "Talk with us" e língua à direita. **O header fica sempre em inglês**, seja qual for a língua do site (atributo `data-i18n-skip`); no resto da página, em PT, "Talk with us" aparece como "Fala connosco". A página continua a ser `contact.html`. Usa "negativo" para se ler sobre qualquer fundo. Sobre o vídeo da Home passa a branco ou preto conforme o brilho do vídeo por baixo. Sai de cena quando o footer chega ao topo.
+- **Talk with us** (2026-10-05): já não é uma página. Qualquer ligação "Talk with us" (header, footer, fechos do Work e do About) abre um painel que entra da direita para a esquerda, por cima da página: fundo no vermelho escuro, tudo o resto no vermelho claro, tipografia do footer. Tem a frase "Let's talk about your project.", o formulário (nome, email, orçamento em quatro opções, mensagem) e os contactos diretos. Fecha em "Close", na tecla Esc ou clicando fora. É criado pelo `main.js` (um só sítio para editar) e os textos em português estão no `i18n.js`. Também abre com `#talk` no fim do endereço de qualquer página. Nas páginas, uma ligação que abre o painel é `<a href="#talk" data-talk>`. **Por resolver: o formulário só simula o envio; falta escolher o serviço que entrega as mensagens.** Saiu, com a página antiga, a secção "How it works" (3 passos).
 - **Barra de progresso** (todas as páginas, criada pelo `motion.js`): uma barra de 6 px presa ao fundo do ecrã, no vermelho escuro do footer. Enche com o scroll e fica completa no momento em que o footer começa a aparecer; como têm a mesma cor, a barra cheia transforma-se no footer que sobe.
 - **Cores** (2026-10-04): o site tem só dois vermelhos, os da animação da página Intro e do favicon: o bordô `#531316` (`--bordo`) e o vermelho `#E62834` (`--accent`). Usam-nos o ecrã do logo, a cortina entre páginas, o footer, a barra de progresso e os destaques. Os logos em imagem (`intro-logo.webp`, `intro-logo.png`, `logo-mean-red-tight.png`, `logo-mean-red.png`) foram recolorados para o mesmo vermelho. Para mudar uma cor no site todo, basta mudar `--bordo` ou `--accent` no topo do `style.css`; os logos em imagem têm de ser recolorados à parte.
 - **Footer** (igual em todas as páginas): ecrã inteiro no vermelho escuro da MEAN (`#531316`), com texto e logo no vermelho do logótipo (`#E62834`), nas proporções de esrbespoke.au (texto a 14 px em maiúsculas, grelha de 12 colunas, logo com 32% da largura a meio da altura, contactos em baixo à direita). Em ecrãs largos fica preso ao ecrã e é revelado pela página a subir. A frase "Vamos construir a tua próxima marca, juntos." do footer antigo saiu; a referência não tem newsletter nem a pusemos.
@@ -41,7 +42,7 @@ As referências servem para a **estrutura e o tipo de conteúdo**. Textos, image
 - **Ficheiro:** `index.html` (página principal)
 - **Referência:** https://www.burocratik.com
 - **Objetivo:** mostrar o trabalho logo à entrada, dizer numa frase quem é a MEAN, e levar o visitante aos projetos ou ao contacto.
-- **De onde se chega:** entrada do site. **Para onde leva:** Projeto (destaques), Work, About (serviços), Contact.
+- **De onde se chega:** entrada do site. **Para onde leva:** Projeto (destaques), Work, About (serviços), painel Talk with us.
 
 ### Secções
 
@@ -59,8 +60,9 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 
 ### Como se comporta
 
-- **Abertura:** a animação da Intro é o objeto. O ecrã do logo sobe como uma cortina e deixa ver o ecrã em branco, onde a animação já está, pequena, inteira e ao centro (fundo bordô, logo e bolas). Sem chegar a parar, cresce num só movimento até encher o ecrã, e o header entra quando ela acaba de crescer. Dura cerca de 2 segundos depois do logo. Não há recortes nem máscaras. Num recarregamento (sem logo) a miniatura aparece sobre o branco e cresce da mesma forma. As bolas reagem ao cursor, como na página Intro.
-- **Bolas e logo fundidos** (2026-10-05, na abertura da Home e na página Intro): as bolas e o logo são desenhados juntos num `<canvas>` (WebGL, no `main.js`), como se fossem a mesma matéria. Quando o cursor faz crescer as bolas, elas fundem-se umas com as outras e com as letras; na orla de cada bola o logo funde-se com ela, e mais para dentro reaparece em negativo (bordô sobre vermelho), por isso lê-se sempre. Junto ao logo, em repouso, as bolas recolhem-se para a tinta ficar limpa. No telemóvel funciona com o dedo. Sem WebGL, ou com "reduzir movimento", fica a versão antiga (bolas em HTML por trás do logo). O contorno do logo é lido da própria imagem `assets/logo2-red.png`: trocar a imagem basta. Afinar no `main.js`: `K` (quanto as formas se fundem), `EDGE` (largura da orla fundida), `BASE_R`/`MAX_R`/`RADIUS` (tamanhos e alcance).
+- **Abertura, progressiva** (2026-10-05): o ecrã do logo sobe como uma cortina e deixa ver o ecrã em branco, onde o fundo bordô aparece em miniatura e cresce num só movimento até encher o ecrã. Só então as bolas se formam, do centro para fora, e a seguir o logo constrói-se da esquerda para a direita (os traços nascem finos e engrossam; as bolas por baixo recolhem-se à passagem). O menu é o último a entrar. Dura cerca de 3,5 segundos depois do logo. Tempos no `main.js` (`BALLS_AT`, `LOGO_AT`, `LOGO_DUR`) e no `motion.js` (`OPEN_NAV`).
+- **Inércia das bolas** (2026-10-05): ao fazer scroll, as bolas ficam um pouco para trás e voltam ao sítio com um pequeno balanço, cada uma com o seu peso. Afinar no `main.js`: `SHIFT` (desvio máximo), `STIFF` e `DAMP` (mola).
+- **Bolas e logo fundidos** (2026-10-05, na abertura da Home): as bolas e o logo são desenhados juntos num `<canvas>` (WebGL, no `main.js`), como se fossem a mesma matéria. Quando o cursor faz crescer as bolas, elas fundem-se umas com as outras e com as letras; na orla de cada bola o logo funde-se com ela, e mais para dentro reaparece em negativo (bordô sobre vermelho), por isso lê-se sempre. Junto ao logo, em repouso, as bolas recolhem-se para a tinta ficar limpa. No telemóvel funciona com o dedo. Sem WebGL, ou com "reduzir movimento", fica a versão antiga (bolas em HTML por trás do logo). O contorno do logo é lido da própria imagem `assets/logo2-red.png`: trocar a imagem basta. Afinar no `main.js`: `K` (quanto as formas se fundem), `EDGE` (largura da orla fundida), `BASE_R`/`MAX_R`/`RADIUS` (tamanhos e alcance).
 - **Menu:** fica sempre no topo (já não abre a meio do ecrã: o centro é do logo da abertura). Sobre o bordô é branco simples; sobre o vídeo passa a branco ou preto conforme o brilho; no resto da página usa o "negativo".
 - **Vídeo depois da frase** (movimento de ondastudio.co): o vídeo chega com a página em ecrã inteiro e fica preso ao ecrã. Depois de um instante inteiro, encolhe até uma miniatura ao centro (40% do ecrã; 50% no telemóvel) sobre o fundo escuro, de forma suave, e só então se solta e sai com a página; os projetos em destaque vêm a seguir. Sem grão nem filtros. Só toca quando está perto do ecrã. Com "reduzir movimento" é um bloco de ecrã inteiro, sem encolher. Afinar em `style.css`: `--hero-min` (tamanho da miniatura), `--hero-travel` (scroll em que fica preso) e `--hero-hold` (fração desse scroll em que ainda está inteiro).
 - **Frase:** acende linha a linha com o scroll.
@@ -91,7 +93,7 @@ Legenda: ✅ feito · ✏️ rascunho, falta validar · ❌ falta conteúdo
 4. Frase de apresentação fica provisória até haver a final.
 5. Vídeo, Motion e Fotografia passam a quinta disciplina.
 6. "O que fazemos": versão curta na Home, versão completa no About.
-7. ~~A página Intro sai do site e fica guardada em `arquivo/`.~~ Voltou ao site a 2026-10-04 (`index-intro.html`, ligação "Intro" no menu).
+7. A página Intro foi eliminada a 2026-10-05 (pedido do Marco). A animação dela é a abertura da Home. A última versão da página está no histórico do git (commit `05920af`).
 8. A grelha de tamanhos mistos é a do Work. Os 4 destaques da Home usam o mesmo componente.
 9. Sem barra flutuante.
 
@@ -106,7 +108,7 @@ Sequência rápida de imagens do trabalho, lista de todas as pessoas que passara
 - **Ficheiro:** `work.html`
 - **Referência:** grelha de projetos de https://www.burocratik.com
 - **Objetivo:** mostrar todos os projetos com o mesmo peso visual que a referência dá aos seus, e levar a cada página de projeto.
-- **De onde se chega:** menu, Home. **Para onde leva:** Projeto, Contact (fecho).
+- **De onde se chega:** menu, Home. **Para onde leva:** Projeto, painel Talk with us (fecho).
 
 ### Secções
 
@@ -225,7 +227,7 @@ Legenda: ✅ feito · ❌ falta conteúdo
 - **Ficheiro:** `about.html`
 - **Referência:** https://www.burocratik.com/studios
 - **Objetivo:** mostrar quem é a MEAN e como pensa, para que o cliente certo se reconheça e avance para o contacto.
-- **De onde se chega:** menu, Home (serviços). **Para onde leva:** Contact (fecho da página), Work.
+- **De onde se chega:** menu, Home (serviços). **Para onde leva:** painel Talk with us (fecho da página), Work.
 
 ### Secções, pela ordem da referência
 

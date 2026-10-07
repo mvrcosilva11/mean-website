@@ -1899,13 +1899,12 @@ html.i18n-wait body { visibility: hidden; }
    no vermelho claro, com a tipografia do footer (14 px em maiúsculas espaçadas); a frase tem o tamanho
    das frases do site e os campos são linhas, sem caixas.
    ============================================================ */
-html.talk-open { overflow: hidden; }
-/* Fechar é o abrir ao contrário: o conteúdo sai em cadeia (do último para o primeiro, a descer),
-   depois o painel desliza para a direita com a mesma curva e a mesma duração (.75s) com que entrou
-   e o véu apaga-se ao mesmo ritmo com que apareceu (.6s). */
+/* Sem `html.talk-open { overflow: hidden }`: mudar o overflow da página no instante em que o painel
+   começa a deslizar corta a animação de fecho no Safari (o painel desaparece de repente). O scroll por
+   trás já fica preso pelo Lenis (stop() ao abrir) e o painel tem overscroll-behavior: contain. */
 .m-talk-veil {
   position: fixed; inset: 0; z-index: 900; background: rgba(10, 10, 10, .55);
-  opacity: 0; visibility: hidden; transition: opacity .6s linear .35s, visibility 0s linear .95s;
+  opacity: 0; visibility: hidden; transition: opacity .45s linear, visibility 0s linear .45s;
 }
 .talk-open .m-talk-veil { opacity: 1; visibility: visible; transition: opacity .6s linear; }
 .m-talk {
@@ -1915,7 +1914,7 @@ html.talk-open { overflow: hidden; }
   font-size: 14px; line-height: 14px; font-weight: 500; letter-spacing: .09em; text-transform: uppercase;
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; outline: none;
   transform: translate3d(100%, 0, 0); visibility: hidden;
-  transition: transform .75s cubic-bezier(.76, 0, .24, 1) .2s, visibility 0s linear .95s;
+  transition: transform .55s cubic-bezier(.76, 0, .24, 1), visibility 0s linear .55s;
 }
 .talk-open .m-talk { transform: none; visibility: visible; transition: transform .75s cubic-bezier(.76, 0, .24, 1); }
 .m-talk-in { display: flex; flex-direction: column; min-height: 100%; box-sizing: border-box; padding: 28px 32px; }
@@ -1986,13 +1985,8 @@ html.talk-open { overflow: hidden; }
 .m-talk-block p { margin: 0; }
 .m-talk-block p > * { display: block; }
 .m-talk-ext { justify-self: start; }
-/* o conteúdo entra em cadeia, depois de o painel abrir; ao fechar sai pela ordem inversa (8 blocos, --i 0 a 7),
-   com a curva da entrada ao contrário */
-.m-talk-rise {
-  opacity: 0; transform: translate3d(0, 16px, 0);
-  transition: opacity .35s ease-in calc((7 - var(--i, 0)) * .035s),
-              transform .45s cubic-bezier(.78, 0, .81, 0) calc((7 - var(--i, 0)) * .035s);
-}
+/* o conteúdo entra em cadeia, depois de o painel abrir */
+.m-talk-rise { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .2s linear, transform 0s linear .3s; }
 .talk-open .m-talk-rise {
   opacity: 1; transform: none;
   transition: opacity .7s ease calc(.32s + var(--i, 0) * .055s), transform .9s var(--m-ease) calc(.32s + var(--i, 0) * .055s);
@@ -2049,8 +2043,17 @@ html.talk-open { overflow: hidden; }
               background-color .5s var(--ease) 0s;
 }
 
+/* frases que acendem com o scroll ([data-split="scrub"]): cada palavra ganha foco à medida que acende.
+   --o vem do motion.js (.26 por acender → 1 acesa); o desfoque acompanha, de 20px a 0 */
+.js [data-split="scrub"] .w { overflow: visible; }   /* a máscara das palavras cortava o desfoque (só é precisa no "rise") */
+.js [data-split="scrub"] .wi {
+  filter: blur(calc((1 - var(--o, .26)) / .74 * 20px));
+  transition: opacity .25s linear, filter .25s linear;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal, .js [data-reveal], .js [data-split="rise"], .js .m-media[data-media] {
     opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important;
   }
+  .js [data-split="scrub"] .wi { filter: none !important; }
 }

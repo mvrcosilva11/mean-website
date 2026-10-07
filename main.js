@@ -308,6 +308,51 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   observer.observe(el);
 });
 
+// ── Footer: a bola que marca a página atual desliza para o link debaixo do rato ──
+// Uma só bola para a lista de páginas (em vez de uma por link): parada na página atual; ao passar o rato
+// (ou o foco do teclado) por outro link desliza até ele, e volta quando o rato sai da lista. Numa página
+// que não está na lista (a de projeto) a bola só aparece enquanto o rato lá está. No telemóvel não existe.
+(function () {
+  const nav = document.querySelector('.m-foot-nav');
+  if (!nav) return;
+  const links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+  const current = nav.querySelector('a[aria-current="page"]');
+  const ball = document.createElement('span');
+  ball.className = 'm-foot-ball'; ball.setAttribute('aria-hidden', 'true');
+  nav.appendChild(ball); nav.classList.add('has-ball');
+  const place = (a, instant) => {
+    if (!a) { ball.classList.remove('is-on'); return; }
+    const jump = instant || !ball.classList.contains('is-on');      // escondida: aparece já no sítio, sem deslizar
+    if (jump) ball.style.transition = 'none';
+    ball.style.transform = 'translate3d(0,' + (a.offsetTop + (a.offsetHeight - ball.offsetHeight) / 2).toFixed(2) + 'px,0)';
+    if (jump) { void ball.offsetWidth; ball.style.transition = ''; }
+    ball.classList.add('is-on');
+  };
+  links.forEach(a => {
+    a.addEventListener('pointerenter', () => place(a));
+    a.addEventListener('focus', () => place(a));
+  });
+  nav.addEventListener('pointerleave', () => place(current));
+  nav.addEventListener('focusout', e => { if (!nav.contains(e.relatedTarget)) place(current); });
+  const reset = () => place(current, true);
+  window.addEventListener('resize', reset);
+  window.addEventListener('load', reset);
+  reset();
+})();
+
+// ── Durante o scroll: marca o <html> com .is-scrolling ──
+// Com o rato parado, cada item que passa por baixo dele durante o scroll recebia o efeito de hover
+// (na lista de serviços do About dava um salto para a direita e voltava). O CSS usa esta classe para
+// só reagir ao rato quando a página está parada.
+(function () {
+  const root = document.documentElement; let timer = 0;
+  window.addEventListener('scroll', () => {
+    if (!timer) root.classList.add('is-scrolling');
+    clearTimeout(timer);
+    timer = setTimeout(() => { timer = 0; root.classList.remove('is-scrolling'); }, 160);
+  }, { passive: true });
+})();
+
 // ── "Talk with us": painel de contacto que entra da direita para a esquerda ──
 // Substitui a página de contacto. É criado aqui para ser igual em todas as páginas. Abre em qualquer
 // ligação com data-talk (header, footer, fechos de página) e quando o endereço acaba em #talk.
@@ -316,6 +361,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const tx = esc;   // os textos entram em inglês; quem os põe (e troca) na língua certa é o i18n.js
   const budgets = ['Under €3,000', '€3,000 – €8,000', '€8,000 – €20,000', 'Over €20,000'];
+  const types = ['Brand Identity', 'Website / Landing Page', 'Social Media', 'Video, Motion & Photography', 'Marketing Strategy', 'Other'];
 
   const veil = document.createElement('div');
   veil.className = 'm-talk-veil'; veil.setAttribute('data-talk-close', '');
@@ -332,26 +378,36 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       '</div>' +
       '<h2 class="m-talk-title m-talk-rise" id="talkTitle" style="--i:1">' + tx("Let's talk about your project.") + '</h2>' +
       '<form class="m-talk-form" novalidate>' +
-        '<label class="m-talk-field m-talk-rise" style="--i:2"><span>' + tx('Name') + '</span>' +
-          '<input type="text" name="name" autocomplete="name" required /></label>' +
+        // nome e empresa na mesma linha (a empresa é o único campo opcional; nada no ecrã marca os obrigatórios)
+        '<div class="m-talk-row m-talk-rise" style="--i:2">' +
+          '<label class="m-talk-field"><span>' + tx('Name') + '</span>' +
+            '<input type="text" name="name" autocomplete="name" required /></label>' +
+          '<label class="m-talk-field"><span>' + tx('Company') + '</span>' +
+            '<input type="text" name="company" autocomplete="organization" /></label>' +
+        '</div>' +
         '<label class="m-talk-field m-talk-rise" style="--i:3"><span>' + tx('Email') + '</span>' +
           '<input type="email" name="email" autocomplete="email" inputmode="email" required /></label>' +
-        '<fieldset class="m-talk-budget m-talk-rise" style="--i:4"><legend>' + tx('Estimated budget') + '</legend>' +
+        '<fieldset class="m-talk-budget m-talk-type m-talk-rise" style="--i:4"><legend>' + tx('Project type') + '</legend>' +
+          '<div class="m-talk-opts">' + types.map(t =>
+            '<label class="m-talk-opt"><input type="checkbox" name="type" value="' + esc(t) + '" /><span>' + tx(t) + '</span></label>').join('') +
+          '</div></fieldset>' +
+        '<fieldset class="m-talk-budget m-talk-rise" style="--i:5"><legend>' + tx('Estimated budget') + '</legend>' +
           '<div class="m-talk-opts">' + budgets.map(b =>
             '<label class="m-talk-opt"><input type="radio" name="budget" value="' + esc(b) + '" /><span>' + tx(b) + '</span></label>').join('') +
           '</div></fieldset>' +
-        '<label class="m-talk-field m-talk-rise" style="--i:5"><span>' + tx('Message') + '</span>' +
+        '<label class="m-talk-field m-talk-rise" style="--i:6"><span>' + tx('Message') + '</span>' +
           '<textarea name="message" rows="3" required></textarea></label>' +
-        '<div class="m-talk-send m-talk-rise" style="--i:6">' +
-          '<button type="submit" class="m-talk-submit"><span class="m-talk-submit-t">' + tx('Send message') + '</span> <span class="m-arrow" aria-hidden="true">→</span></button>' +
+        '<div class="m-talk-send m-talk-rise" style="--i:7">' +
+          // a seta do botão são duas: ao passar o rato, uma sai pela direita e a outra entra pela esquerda
+          '<button type="submit" class="m-talk-submit"><span class="m-talk-submit-t">' + tx('Send message') + '</span> <span class="m-talk-submit-a" aria-hidden="true"><span class="m-arrow">→</span><span class="m-arrow">→</span></span></button>' +
           '<p class="form-feedback" role="status"></p>' +
         '</div>' +
       '</form>' +
-      '<div class="m-talk-bottom m-talk-rise" style="--i:7">' +
-        '<div class="m-talk-block"><h3>' + tx('Contact') + '</h3><p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a><span>' + tx('We reply within 24h') + '</span></p></div>' +
+      '<div class="m-talk-bottom m-talk-rise" style="--i:8">' +
+        '<div class="m-talk-block"><h3>' + tx('Contact') + '</h3><p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a></p></div>' +
         '<div class="m-talk-block"><h3>' + tx('Studio') + '</h3><p><span>Porto, Portugal</span></p></div>' +
         '<a class="m-talk-ext" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>' +
-        '<a class="m-talk-ext" href="https://www.linkedin.com/company/mean-agency" target="_blank" rel="noopener">LinkedIn</a>' +
+        '<a class="m-talk-ext" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>' +
       '</div>' +
     '</div>';
   document.body.appendChild(veil);
@@ -425,8 +481,12 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   const form = panel.querySelector('form'), feedback = panel.querySelector('.form-feedback');
   const btn = panel.querySelector('.m-talk-submit'), btnText = panel.querySelector('.m-talk-submit-t');
   let clearTimer = 0;
+  // a caixa da mensagem cresce com o texto: começa com 3 linhas e, quando enche, ganha mais uma de cada vez
+  const area = form.elements.message;
+  const grow = () => { area.style.height = 'auto'; area.style.height = (area.scrollHeight + area.offsetHeight - area.clientHeight) + 'px'; };
+  area.addEventListener('input', grow);
   const say = (kind, en) => { feedback.className = 'form-feedback' + (kind ? ' ' + kind : ''); put(feedback, en); };
-  // orçamento: clicar outra vez na opção escolhida volta a deixá-la em branco (o campo é opcional)
+  // orçamento: clicar outra vez na opção escolhida volta a deixá-la em branco
   form.addEventListener('click', e => {
     const r = e.target;
     if (!r || r.type !== 'radio') return;
@@ -438,9 +498,12 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     e.preventDefault();
     clearTimeout(clearTimer); say('', '');
     const f = form.elements, name = f.name.value.trim(), email = f.email.value.trim(), message = f.message.value.trim();
-    if (!name || !email || !message) {
-      say('error', 'Please fill in all fields.');
-      (!name ? f.name : !email ? f.email : f.message).focus();
+    // obrigatórios: nome, email, tipo de projeto (pelo menos um), orçamento e mensagem; a empresa é opcional
+    const type = form.querySelector('input[name="type"]:checked'), budget = form.querySelector('input[name="budget"]:checked');
+    if (!name || !email || !type || !budget || !message) {
+      say('error', 'Please fill in the missing fields.');
+      (!name ? f.name : !email ? f.email : !type ? form.querySelector('input[name="type"]') :
+        !budget ? form.querySelector('input[name="budget"]') : f.message).focus();
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -452,7 +515,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     // formulários ou a um endpoint próprio.
     btn.disabled = true; put(btnText, 'Sending…');
     setTimeout(() => {
-      form.reset();
+      form.reset(); area.style.height = '';
       form.querySelectorAll('input[type="radio"]').forEach(o => o.removeAttribute('data-on'));
       btn.disabled = false; put(btnText, 'Send message');
       say('success', "Message sent! We'll reply soon.");

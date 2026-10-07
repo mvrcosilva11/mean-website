@@ -1959,7 +1959,7 @@ html.i18n-wait body { visibility: hidden; }
 .m-talk-opts { clear: both; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; }   /* as mesmas duas colunas dos contactos ao fundo */
 .m-talk-opt { position: relative; display: inline-flex; justify-self: start; cursor: pointer; }
 .m-talk-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.m-talk-opt span { position: relative; padding-left: 16px; opacity: .68; transition: opacity .12s linear; }
+.m-talk-opt span { position: relative; padding-left: 16px; }   /* opções na cor normal do painel; a escolhida distingue-se pela bola cheia */
 .m-talk-opt span::before {
   content: ""; position: absolute; left: 0; top: 50%; width: 7px; height: 7px; margin-top: -4px;
   box-sizing: border-box; border: 1px solid currentColor; border-radius: 50%;
@@ -1985,6 +1985,7 @@ html.i18n-wait body { visibility: hidden; }
 .m-talk-block p { margin: 0; }
 .m-talk-block p > * { display: block; }
 .m-talk-ext { justify-self: start; }
+.m-talk-block p > a { width: fit-content; }   /* o link (e o traço do hover) só ocupa o texto, não a linha toda */
 /* o conteúdo entra em cadeia, depois de o painel abrir */
 .m-talk-rise { opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .2s linear, transform 0s linear .3s; }
 .talk-open .m-talk-rise {
@@ -2057,3 +2058,183 @@ html.i18n-wait body { visibility: hidden; }
   }
   .js [data-split="scrub"] .wi { filter: none !important; }
 }
+
+/* ── Setas: um só desenho em todo o site, a traço médio (2/24) com pontas e cantos retos ──
+   O glifo da fonte (→ ← ↗ ↳) fica no HTML por acessibilidade e como reserva, mas é escondido;
+   a seta é a máscara pintada com currentColor, por isso acompanha as cores de hover já existentes. */
+:root {
+  --arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='butt' stroke-linejoin='miter'%3E%3Cpath d='M3.5 12h16M13 5.5l6.5 6.5-6.5 6.5'/%3E%3C/svg%3E");
+  --arrow-left:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='butt' stroke-linejoin='miter'%3E%3Cpath d='M20.5 12h-16M11 5.5L4.5 12l6.5 6.5'/%3E%3C/svg%3E");
+  --arrow-ext:   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='butt' stroke-linejoin='miter'%3E%3Cpath d='M6 18L18 6M8 6h10v10'/%3E%3C/svg%3E");
+  --arrow-turn:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='butt' stroke-linejoin='miter'%3E%3Cpath d='M5 3.5v12.5h15.5M15.5 11l5 5-5 5'/%3E%3C/svg%3E");
+}
+.m-arrow, .m-svc-arrow {
+  display: inline-block; width: 1em; height: 1em; vertical-align: -.14em; flex: none;
+  overflow: hidden; text-indent: 200%; white-space: nowrap;        /* esconde o glifo */
+  background: currentColor;
+  -webkit-mask: var(--arrow-right) center / contain no-repeat; mask: var(--arrow-right) center / contain no-repeat;
+}
+.m-arrow--back { -webkit-mask-image: var(--arrow-left); mask-image: var(--arrow-left); }
+.m-arrow--ext  { -webkit-mask-image: var(--arrow-ext);  mask-image: var(--arrow-ext); }
+.m-arrow--turn { -webkit-mask-image: var(--arrow-turn); mask-image: var(--arrow-turn); width: .95em; height: .95em; vertical-align: -.1em; }
+/* ── Botões redondos dos testemunhos (← →) ──
+   A seta é desenhada ao centro (o texto do botão fica invisível). Ao passar o rato: o botão enche de claro
+   da borda para o centro, e a seta sai na direção para onde aponta enquanto outra entra pelo lado oposto
+   (são os dois pseudo-elementos; o círculo do botão serve de máscara). */
+.m-quotes-nav { gap: .6rem; }
+.m-btn-round {
+  position: relative; overflow: hidden; isolation: isolate; width: 48px; height: 48px; font-size: 0;
+  border-color: rgba(244, 244, 241, .35);          /* contorno visível sobre o preto (3:1) */
+  box-shadow: inset 0 0 0 0 var(--text);
+  transition: box-shadow .45s var(--m-ease), color .3s var(--ease), border-color .3s var(--ease), transform .4s var(--m-ease);
+}
+.m-btn-round::before, .m-btn-round::after {
+  /* presas ao centro exato do círculo (o texto invisível do botão ocupava uma linha e empurrava-as para cima) */
+  content: ""; position: absolute; left: 50%; top: 50%; width: 18px; height: 18px; margin: -9px 0 0 -9px; background: currentColor;
+  -webkit-mask: var(--arrow-right) center / contain no-repeat; mask: var(--arrow-right) center / contain no-repeat;
+  transition: transform .5s cubic-bezier(.65, 0, .35, 1);
+}
+.m-btn-round::after { transform: translateX(-48px); }                     /* a seta que espera fora do círculo */
+.m-btn-round[data-prev]::before, .m-btn-round[data-prev]::after { -webkit-mask-image: var(--arrow-left); mask-image: var(--arrow-left); }
+.m-btn-round[data-prev]::after { transform: translateX(48px); }
+@media (hover: hover) {
+  .m-btn-round:hover { background: transparent; color: var(--bg); border-color: var(--text); box-shadow: inset 0 0 0 26px var(--text); }
+  .m-btn-round:hover::before { transform: translateX(48px); }
+  .m-btn-round[data-prev]:hover::before { transform: translateX(-48px); }
+  .m-btn-round:hover::after { transform: none; }
+}
+.m-btn-round:active { color: var(--bg); border-color: var(--text); box-shadow: inset 0 0 0 26px var(--text); transform: scale(.93); }
+@media (prefers-reduced-motion: reduce) {
+  .m-btn-round, .m-btn-round::before, .m-btn-round::after { transition: none; }
+}
+
+/* ── Sublinhado de hover animado, em todos os links que sublinhavam ao passar o rato ──
+   Entra da esquerda para a direita e sai para a direita (a origem muda de lado sem transição).
+   Substitui o text-decoration; a página atual (header e footer) fica com o traço sempre visível. */
+.nav-links a, .nav-cta, .nav-lang, .m-foot a:not(.m-foot-logo), .m-pj-bar a, .m-talk a, .m-talk-close {
+  position: relative; text-decoration: none;
+}
+.nav-links a:hover, .nav-cta:hover, .nav-lang:hover, .m-foot a:hover, .m-pj-bar a:hover, .m-talk a:hover, .m-talk-close:hover,
+.nav-links a[aria-current="page"], .nav-cta[aria-current="page"], .m-foot-nav a[aria-current="page"] {
+  text-decoration: none;
+}
+.nav-links a::after, .nav-cta::after, .nav-lang::after, .m-foot a:not(.m-foot-logo)::after, .m-pj-bar a::after, .m-talk a::after, .m-talk-close::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: right center;
+  transition: transform .65s cubic-bezier(.65, 0, .35, 1);   /* lento e uniforme, para se ver o traço a entrar e a sair */
+}
+.nav-links a:hover::after, .nav-cta:hover::after, .nav-lang:hover::after, .m-foot a:not(.m-foot-logo):hover::after, .m-pj-bar a:hover::after, .m-talk a:hover::after, .m-talk-close:hover::after,
+.nav-links a[aria-current="page"]::after, .nav-cta[aria-current="page"]::after {
+  transform: scaleX(1); transform-origin: left center;
+}
+/* Footer: a página atual já é marcada pela bola, por isso não fica sublinhada (o sublinhado só aparece no
+   hover, como nos outros links). No telemóvel a bola não existe: aí a página atual mantém o traço. */
+@media (max-width: 768px) {
+  .m-foot-nav a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-links a::after, .nav-cta::after, .nav-lang::after, .m-foot a::after, .m-pj-bar a::after, .m-talk a::after, .m-talk-close::after { transition: none; }
+}
+
+/* ── Formulário do painel "Talk with us" ──
+   Nome e empresa lado a lado (a empresa à direita), nas mesmas duas colunas das opções e dos contactos. */
+.m-talk-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(22px, 3.4vh, 34px) 40px; }
+/* o que a pessoa escreve: letra mais pequena do que a do botão (17px; abaixo de 16px o iPhone faz zoom ao focar) */
+.m-talk-field input, .m-talk-field textarea { font-size: 17px; }
+/* a caixa da mensagem cresce com o texto (main.js acerta a altura); sem barra de scroll própria */
+.m-talk-field textarea { overflow: hidden; }
+@media (max-width: 520px) { .m-talk-row { grid-template-columns: minmax(0, 1fr); } }
+
+/* Botão de enviar: ao passar o rato, a seta sai pela direita e outra entra pela esquerda,
+   e a linha por baixo recolhe para a direita e volta a desenhar-se a partir da esquerda. */
+.m-talk-submit { position: relative; display: inline-flex; align-items: center; gap: .4em; background: none; }
+.m-talk-submit::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: currentColor;
+  transform-origin: left center;
+}
+.m-talk-submit-a { position: relative; display: block; flex: none; width: 1em; height: 1em; overflow: hidden; }
+.m-talk-submit-a .m-arrow {
+  position: absolute; left: 0; top: 0; vertical-align: 0;
+  transition: transform .6s cubic-bezier(.65, 0, .35, 1);
+}
+.m-talk-submit-a .m-arrow + .m-arrow { transform: translateX(-130%); }
+.m-talk-submit:not(:disabled):hover .m-talk-submit-a .m-arrow,
+.m-talk-submit:not(:disabled):focus-visible .m-talk-submit-a .m-arrow { transform: translateX(130%); }
+.m-talk-submit:not(:disabled):hover .m-talk-submit-a .m-arrow + .m-arrow,
+.m-talk-submit:not(:disabled):focus-visible .m-talk-submit-a .m-arrow + .m-arrow { transform: none; }
+.m-talk-submit:not(:disabled):hover::after { animation: m-talk-line .8s cubic-bezier(.65, 0, .35, 1); }
+.m-talk-submit:not(:disabled):active .m-talk-submit-t { transform: translateX(.12em); }
+.m-talk-submit-t { display: inline-block; transition: transform .25s var(--m-ease); }
+@keyframes m-talk-line {
+  0%     { transform: scaleX(1); transform-origin: right center; }
+  45%    { transform: scaleX(0); transform-origin: right center; }
+  45.01% { transform: scaleX(0); transform-origin: left center; }
+  100%   { transform: scaleX(1); transform-origin: left center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .m-talk-submit-a .m-arrow, .m-talk-submit-t { transition: none; }
+  .m-talk-submit:not(:disabled):hover::after { animation: none; }
+}
+
+/* ── Home: o vídeo ganha cantos redondos à medida que encolhe ──
+   Em ecrã inteiro não tem cantos; na miniatura fica com 14px à vista (o raio é dividido pela escala,
+   para não encolher com o vídeo). clip-path em vez de overflow + border-radius: recorta o vídeo de
+   forma fiável também no Safari. --hero-s vem do motion.js; --hero-min é o tamanho da miniatura. */
+.js .page-home .m-hero-media {
+  --hero-r: 14px;
+  clip-path: inset(0 round calc((1 - var(--hero-s, 1)) / (1 - var(--hero-min, .4)) * var(--hero-r) / var(--hero-s, 1)));
+}
+
+/* ── About, disciplinas ──
+   A frase por cima de cada lista de serviços começa encostada à margem, sem o avanço da primeira linha. */
+.m-disc-pitch { text-indent: 0; }
+/* Durante o scroll os itens não reagem ao rato: o que passa por baixo dele deixava de dar o salto para a
+   direita (o hover só volta quando a página pára; .is-scrolling vem do main.js). */
+.is-scrolling .m-branches li:hover { color: var(--m-soft); padding-left: 0; }
+.is-scrolling .m-branches li:hover::before { transform: scale(0); }
+
+/* ── Listas de serviços (Home) e de disciplinas (About): bolinha vermelha em vez do número ──
+   O número fica no HTML (ordem da lista, leitores de ecrã) mas não se vê; no lugar dele desenha-se a bolinha. */
+.m-svc-num, .m-disc-num { font-size: 0; line-height: 0; letter-spacing: 0; padding: 0; }
+.m-svc-num::before, .m-disc-num::before {
+  content: ""; display: block; width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+}
+/* Home: título, texto, bolinha e seta ao centro entre as duas linhas divisórias (antes: pela base do texto) */
+.m-svc-row { align-items: center; }
+/* About: a bolinha fica à altura do meio da 1.ª linha do título. O título (e a bolinha) ficam sempre no
+   topo do seu bloco: já não descem presos ao ecrã com o scroll até à linha divisória seguinte. */
+.m-disc-num { display: flex; align-items: center; height: var(--m-mid); }
+.m-disc-name { position: static; }
+
+/* ── About, "What we believe": o texto da direita fica ao centro entre as duas linhas divisórias ──
+   (antes alinhava pela base do título). O título mantém-se onde estava, no topo da linha. */
+.m-mani-text { align-self: center; }
+
+/* ── Header (experiência): logo MEAN ao centro, menu à esquerda ──
+   O logo sai da fila e fica preso ao centro exato do header (sem transform, para não interferir com a
+   animação de entrada, que o usa). O menu passa a começar na margem esquerda. Para voltar atrás: apagar este bloco. */
+.nav-logo-link { position: absolute; inset: 0; margin: auto; width: fit-content; height: fit-content; }
+/* no telemóvel fica como antes (logo à esquerda): ao centro ficava por baixo do "Talk with us" */
+@media (max-width: 768px) { .nav-logo-link { position: static; margin: 0; } }
+
+/* ── Footer: mais espaço entre as linhas ──
+   A letra continua a 14px; a altura de linha passa de 14px (linhas coladas) para 18px. A lista de páginas
+   tinha um intervalo extra de 3.5px que deixa de ser preciso: todos os grupos ficam com o mesmo ritmo.
+   O sublinhado do hover sobe 2px para ficar à mesma distância do texto de antes. */
+.m-foot-in { line-height: 18px; }
+.m-foot-nav { row-gap: 0; }
+.m-foot a:not(.m-foot-logo)::after { bottom: -1px; }
+
+/* ── Footer: uma só bola na lista de páginas, que desliza para o link debaixo do rato (main.js) ──
+   Substitui a bola fixa de cada link (::before). Só no computador: no telemóvel a lista é uma linha e
+   a página atual é marcada pelo traço. */
+.m-foot-nav { position: relative; }
+.m-foot-ball {
+  position: absolute; left: -16px; top: 0; width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  opacity: 0; pointer-events: none;
+  transition: transform .45s var(--m-ease), opacity .25s linear;
+}
+.m-foot-ball.is-on { opacity: 1; }
+.m-foot-nav.has-ball a[aria-current="page"]::before { display: none; }
+@media (max-width: 768px) { .m-foot-ball { display: none; } }
+@media (prefers-reduced-motion: reduce) { .m-foot-ball { transition: opacity .2s linear; } }

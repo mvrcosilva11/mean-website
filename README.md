@@ -20,6 +20,7 @@ _Mean_Website/
 ├── style.css             # Estilos + temas light/dark
 │
 ├── Projetos/             # 1 pasta por projeto: NN-slug/ com 00-capa.png + 01.png, 02.png…
+├── Clientes/             # logótipos dos clientes (secção "Clients" do About): 01-nome.svg, 02-nome.svg…
 ├── assets/               # imagens gerais (about-visual.jpg, etc.)
 └── fonts/                # fontes locais (opcional)
 ```
@@ -30,6 +31,14 @@ _Mean_Website/
 2. Mete lá a capa `00-capa.png` (e, se quiseres, `00-capa-hover.png`) + as imagens `01.png`, `02.jpg`, …
 3. Adiciona o bloco do projeto no `EDITAR-PROJETOS.js` (há um exemplo lá em cima).
 4. Pede ao Claude para **regenerar o `imagens.js`** a partir das pastas.
+
+## Como adicionar os logótipos dos clientes
+
+1. Mete os ficheiros na pasta `Clientes/`, um por cliente, com o número à frente para definir a ordem:
+   `01-nome-do-cliente.svg`, `02-nome-do-cliente.svg`, … (a secção do About tem 8 espaços).
+2. Formato: **SVG** de preferência (ou PNG com fundo transparente, com pelo menos 600 px de largura).
+3. Cor: o logótipo numa só cor **clara** (branco), porque a secção tem fundo escuro.
+4. Pede ao Claude para os **ligar à secção "Clients" do About** (hoje estão lá os marcadores "Logo 01"…"Logo 08").
 
 ## Marca / contactos
 

@@ -2238,3 +2238,140 @@ html.i18n-wait body { visibility: hidden; }
 .m-foot-nav.has-ball a[aria-current="page"]::before { display: none; }
 @media (max-width: 768px) { .m-foot-ball { display: none; } }
 @media (prefers-reduced-motion: reduce) { .m-foot-ball { transition: opacity .2s linear; } }
+
+/* ── Forms: opções (Project type e orçamento) sempre alinhadas com a sua bola ──
+   A bola ficava a meio da caixa da opção; em ecrãs estreitos, quando a opção vizinha partia em duas linhas,
+   a caixa esticava e a bola descia, desalinhada do texto. Agora cada opção tem só a altura do seu texto e
+   fica ao centro da linha: uma opção de uma linha ao lado de outra de duas fica a meio dessas duas, com a
+   bola junto ao texto; as bolas dos dois lados ficam à mesma altura. */
+.m-talk-opts { align-items: center; }
+
+/* ── About, listas de serviços: grelha de duas colunas em vez de colunas de texto (multi-coluna) ──
+   No Safari, o primeiro item da 2.ª coluna ("Brand guidelines", "Portfolios") aparecia depois dos outros:
+   as colunas de texto baralham o cálculo da posição dos itens, de que depende a entrada com o scroll.
+   A grelha enche primeiro a coluna da esquerda, de cima para baixo (--rows = n.º de linhas, definido em cada
+   lista no HTML), por isso a ordem e o aspeto são os mesmos. No telemóvel fica uma só coluna, como antes. */
+.m-branches {
+  columns: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(var(--rows, 6), auto); grid-auto-flow: column; column-gap: var(--m-gap);
+}
+@media (max-width: 700px) {
+  .m-branches { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; grid-auto-flow: row; }
+}
+
+
+/* ── Página de projeto: blocos para projetos com mais imagens do que texto (1.º: Metais Jaime Dias) ──
+   .m-pj-pair  = duas imagens lado a lado, entre as margens da página (no telemóvel, uma por baixo da outra);
+   .r-43       = proporção 4:3, que faltava às outras (r-169, r-32, r-45, r-11);
+   .m-pj-links = mais de uma ligação na barra do projeto (website, Instagram…), lado a lado. */
+.m-pj-pair {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--m-gap);
+  padding: var(--m-gap) var(--m-gut);
+}
+.m-pj-pair > .m-media:nth-child(2) { --d: 120ms; }
+.m-media.r-43 { aspect-ratio: 4 / 3; }
+.m-pj-links { display: flex; flex-wrap: wrap; gap: .3em 1.6em; }
+@media (max-width: 700px) {
+  .m-pj-pair { grid-template-columns: minmax(0, 1fr); }
+  .m-pj-pair > .m-media:nth-child(2) { --d: 0ms; }
+}
+
+/* ── Páginas de projeto: todas as imagens ficam entre as margens da página ──
+   As imagens grandes (.m-pj-full) iam de um lado ao outro do ecrã, sem margem; agora têm a mesma margem
+   lateral que a capa, os capítulos e os pares de imagens. Vale para todos os projetos e para o modelo. */
+.m-pj-full { padding: 0 var(--m-gut); }
+
+/* ── Páginas de projeto: sequências de imagens ──
+   Duas imagens grandes seguidas ficam separadas pelo mesmo intervalo que as outras; dois pares seguidos também
+   (sem isto ficavam coladas, ou com o dobro do espaço).
+   .m-pj-pair--fit = par de imagens com proporções diferentes: cada uma fica com a largura que lhe dá a mesma
+   altura da vizinha, sem cortes (--r = largura / altura da imagem, posta em cada bloco no HTML). */
+.m-pj-full + .m-pj-full { margin-top: var(--m-gap); }
+.m-pj-pair + .m-pj-pair { padding-top: 0; }
+.m-pj-pair--fit { display: flex; }
+.m-pj-pair--fit > .m-media { flex: var(--r, 1.5) 1 0; min-width: 0; aspect-ratio: var(--r, 1.5); }
+@media (max-width: 700px) {
+  .m-pj-pair--fit { display: grid; }
+}
+
+/* ── Header sobre imagens: preto ou branco conforme o brilho da imagem (main.js põe .nav--onimg e .is-ink) ──
+   Sem "negativo" enquanto está sobre uma imagem: sobre um cinzento médio o negativo ficava da cor do fundo. */
+.nav.nav--onimg { mix-blend-mode: normal; }
+.nav--onimg .nav-links a, .nav--onimg .nav-cta, .nav--onimg .nav-lang { transition: color .25s linear; }
+.nav--onimg .nav-logo { transition: filter .25s linear; }
+.nav--onimg .nav-toggle span { transition: background-color .25s linear, transform .3s var(--ease), opacity .3s; }
+.nav.nav--onimg .is-ink a, .nav.nav--onimg .is-ink a:hover, .nav.nav--onimg .is-ink a[aria-current="page"],
+.nav.nav--onimg .is-ink .nav-lang { color: #0a0a0a; }
+.nav.nav--onimg .nav-logo-link.is-ink .nav-logo { filter: invert(1); }
+.nav.nav--onimg .is-ink .nav-toggle span { background: #0a0a0a; }
+
+/* ── Projeto seguinte (fundo das páginas de projeto): só o nome e a capa são clicáveis ──
+   O bloco inteiro era uma ligação, por isso clicava-se também na zona preta à volta. Agora só o nome do
+   projeto (as letras e a seta) e a capa respondem ao rato e ao toque; no hover o nome fica no vermelho da marca.
+   O bloco continua a ser a ligação (para o teclado e leitores de ecrã); só deixa de apanhar o rato no resto. */
+.m-pj-next { pointer-events: none; transition: color .25s linear; }
+.m-pj-next-name, .m-pj-next .m-media { pointer-events: auto; }
+.m-pj-next:hover, .m-pj-next:focus-visible { color: var(--accent); }
+
+/* ── About, abertura: a imagem 3D (assets/3d-circulos.png) à direita do título, encostada à margem direita ──
+   Entra como fundo de um bloco recortado à medida do desenho (sem a margem transparente do ficheiro), para a
+   ponta dos círculos ficar mesmo na margem da página. O título mantém a largura que tinha (58%). */
+.m-ahero { display: grid; grid-template-columns: minmax(0, 58%) minmax(0, 1fr); column-gap: var(--m-gap); align-items: center; }
+.m-ahero > .m-label { grid-column: 1 / -1; }
+.m-ahero-title { max-width: none; }
+.m-ahero-art {
+  justify-self: end; width: min(100%, 30rem); aspect-ratio: 908 / 264; margin-top: clamp(1.25rem, 2vw, 2rem);
+  background: url(assets/3d-circulos.png) 52.94% 50.98% / 116.85% 138.64% no-repeat;
+}
+@media (max-width: 1000px) {
+  .m-ahero { grid-template-columns: minmax(0, 1fr); }
+  .m-ahero-art { width: min(80%, 24rem); margin-top: clamp(1.75rem, 6vw, 2.75rem); }
+}
+
+/* ── About, clientes: logótipos em caixas iguais, todos no mesmo cinzento claro ──
+   Cada logótipo é desenhado como máscara (a forma vem do PNG, a cor vem daqui), por isso ficam todos no cinzento
+   claro dos textos secundários seja qual for a cor do ficheiro; no hover passam a branco, como as caixas provisórias.
+   O desenho cabe sempre na mesma moldura (48% da largura da caixa por 44% da altura), o que lhes dá o mesmo peso.
+   Um logótipo que pese mais do que os outros (formas cheias) leva --s no HTML para ficar mais pequeno (ex.: --s: .8). */
+.m-logo--img { color: var(--m-soft); }
+.m-logo-img {
+  display: block; width: calc(min(48%, 24.75% * var(--bw) / var(--bh)) * var(--s, 1)); aspect-ratio: var(--bw) / var(--bh);
+  position: relative; left: var(--dx, 0);     /* --dx no HTML: acerto ótico para um lado (em % da largura da caixa) */
+  background: currentColor;
+  -webkit-mask: var(--src) no-repeat; mask: var(--src) no-repeat;
+  -webkit-mask-size: calc(100% * var(--w) / var(--bw)) calc(100% * var(--h) / var(--bh));
+  mask-size: calc(100% * var(--w) / var(--bw)) calc(100% * var(--h) / var(--bh));
+  -webkit-mask-position: calc(100% * var(--bx) / (var(--w) - var(--bw))) calc(100% * var(--by) / (var(--h) - var(--bh)));
+  mask-position: calc(100% * var(--bx) / (var(--w) - var(--bw))) calc(100% * var(--by) / (var(--h) - var(--bh)));
+}
+
+/* ── Quebras de linha manuais (<br class="m-br">, postas pelos ficheiros de texto com "<br>") ──
+   Valem em computador e tablet. No telemóvel a coluna é estreita e o texto volta a partir sozinho. */
+@media (max-width: 700px) {
+  br.m-br { display: none; }
+}
+
+/* ── About, testemunhos: letra mais pequena e texto a toda a largura da coluna ──
+   Um testemunho verdadeiro é um parágrafo, não uma frase: no tamanho das frases do site ocupava três vezes a
+   altura que a secção tinha. Com este tamanho e a largura toda, cabe na altura que a secção tinha antes
+   (medido em inglês e em português, de 820 px de largura para cima; no telemóvel fica mais alta). */
+.m-quote blockquote {
+  font-size: clamp(1.1rem, 1.7vw, 1.8rem); line-height: 1.16; letter-spacing: -.03em;
+  max-width: none; text-wrap: pretty;
+}
+
+/* ── Sem avanço na primeira linha ──
+   Os textos pequenos começavam com um espaço de parágrafo (text-indent). Deixam de o ter em todo o site:
+   texto por baixo do título do Work, parágrafos do About e das páginas de projeto, frases das disciplinas
+   e resumo em duas colunas. (As setas usam text-indent para esconder o caráter; essas não mudam.) */
+.page-work .work-lead > .work-lead-sub,
+.m-body, .m-disc-pitch, .m-pj-cols p { text-indent: 0; }
+
+/* ── Páginas de projeto: bloco com um logótipo (.m-media--logo) ──
+   A imagem não enche a moldura nem é cortada: fica inteira, ao centro, com espaço à volta (ex.: o logótipo
+   animado do Comédia a Preto & Branco, um GIF de fundo transparente sobre o painel escuro). */
+.m-media--logo { display: grid; place-items: center; }
+.m-media--logo > img { width: auto; height: 46%; max-width: 70%; object-fit: contain; }
+
+/* proporção 2:3 (ao alto), para fotografias e mockups verticais nas páginas de projeto */
+.m-media.r-23 { aspect-ratio: 2 / 3; }

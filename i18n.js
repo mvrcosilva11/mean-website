@@ -18,13 +18,14 @@
   var PT = {
     "MEAN · Creative agency, Porto": "MEAN · Agência criativa, Porto",
     "Brand": "Marca",
-    "MEAN's opening statement. One long sentence that says who we are, what we do and what sets us apart from other agencies. Placeholder text, to be replaced with the final line.": "Frase de apresentação da MEAN. Uma frase longa, que diz quem somos, o que fazemos e o que nos distingue das outras agências. Texto provisório, a substituir pela frase final.",
     "Featured projects": "Projetos em destaque",
     "All projects": "Todos os projetos",
     "Project image": "Imagem do projeto",
     "↳ Short project tagline": "↳ Frase curta do projeto",
     "Type of work": "Tipo de trabalho",
+    "Visual Identity, Motion": "Identidade visual, Motion",
     "Sector": "Setor",
+    "Metal recycling": "Reciclagem de metais",
     "What we do": "O que fazemos",
     "Everything we do": "Tudo o que fazemos",
     "Five disciplines working as one.": "Cinco disciplinas que trabalham como uma só.",
@@ -32,42 +33,42 @@
     "Websites built to work, load and convert.": "Sites feitos para funcionar, carregar e converter.",
     "Presence with direction, not posts to fill a calendar.": "Presença com direção, não posts a encher o calendário.",
     "Video, Motion & Photography": "Vídeo, Motion e Fotografia",
-    "Imagery made for the brand, still or moving.": "Imagem pensada para a marca, parada ou em movimento.",
+    "Imagery made for the brand, still or moving.": "Imagem pensada para a marca, <br> parada ou em movimento.",
     "Strategy": "Estratégia",
     "The first page, not the last.": "A primeira página, não a última.",
-    "MEAN is a creative agency from Porto. Branding, web, social media, video and strategy, without splitting what should be born together.": "MEAN é uma agência criativa do Porto. Branding, web, social media, vídeo e estratégia, sem dividir o que devia nascer junto.",
-    "MEAN project reel": "Vídeo dos projetos da MEAN",
+    "MEAN is a creative agency in Porto that brings strategy, design and copy together so brands stop whispering and start shouting, because the quiet ones get scrolled past.": "A MEAN é uma agência criativa no Porto que junta estratégia, design e copy para as marcas deixarem de sussurrar e começarem a gritar, porque as discretas passam ao lado.",
     "View": "Ver",
-    "We build brands that don't go unnoticed.": "Construímos marcas que não passam despercebidas.",
-    "A selection of projects where branding, web, social and strategy were born together — not in pieces.": "Uma seleção de projetos onde branding, web, social e estratégia nasceram juntos — não aos bocados.",
+    "Brands that don’t need introductions.": "Marcas que não precisam de introdução.",
+    "A selection of work across branding, web, social and strategy. Whatever the brief, the standard is the same.": "Uma seleção de trabalhos em marca, web, social e estratégia. Seja qual for o pedido, a exigência é a mesma.",
     "Want to be the next case?": "Queres ser o próximo caso?",
     "Talk with us": "Fala connosco",
     "MEAN projects: branding, web, social media, video and strategy.": "Projetos da MEAN: branding, web, social media, vídeo e estratégia.",
     "We are a creative agency based in Porto.": "Somos uma agência criativa baseada no Porto.",
     "Clients": "Clientes",
+    "Client": "Cliente",
     "Brands we've worked with.": "Marcas com quem já trabalhámos.",
-    "A short paragraph about our clients and the kind of relationship we have with them. Placeholder text.": "Parágrafo curto sobre os clientes e o tipo de relação que temos com eles. Texto provisório.",
+    "We treat every brand like it’s ours, which means we’re annoyingly invested in how it turns out.": "Tratamos cada marca como se fosse nossa, o que nos torna irritantemente preocupados com o resultado.",
     "What we believe": "No que acreditamos",
     "We're called MEAN because we have opinions and we don't apologise for them.": "Chamamo-nos MEAN porque temos opinião e não pedimos desculpa por isso.",
-    "We don't believe in brands that please everyone, because those usually mean nothing to anyone. We'd rather build something a few people fully identify with than something nobody hates but nobody remembers either.": "Não acreditamos em marcas que agradam a todos, porque essas normalmente não significam nada para ninguém. Preferimos construir algo com que algumas pessoas se identifiquem completamente a construir algo que ninguém odeie, mas que também ninguém lembre.",
+    "We don't believe in brands that please everyone, because those usually mean nothing to anyone. We'd rather build something a few people fully identify with than something nobody hates but nobody remembers either.": "Não acreditamos em marcas que agradam a todos, porque essas normalmente não significam nada para ninguém. Preferimos construir algo com <br> que algumas pessoas se identifiquem completamente a construir algo que ninguém odeie, mas que também ninguém lembre.",
     "Strategy comes in on day one, not at the end to justify the rest. We think a brand without clear direction is just pretty design looking for a purpose.": "A estratégia entra desde o primeiro dia, não no fim para justificar o resto. Achamos que uma marca sem direção clara é só design bonito à procura de um propósito.",
     "No sugarcoating.": "Sem paninhos quentes.",
-    "If something isn't going to work, we say so before you move ahead. We'd rather bother you once than politely deliver mediocrity.": "Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar uma vez a entregar mediocridade educadamente.",
+    "If something isn't going to work, we say so before you move ahead. We'd rather bother you once than politely deliver mediocrity.": "Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar <br> uma vez a entregar mediocridade educadamente.",
     "Together, not in pieces.": "Junto, não aos bocados.",
-    "Identity, web, social, strategy. Either they're born together or they're born limping. Whoever splits them is selling you half a brand.": "Identidade, web, social, estratégia. Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade de uma marca.",
+    "Identity, web, social, strategy. Either they're born together or they're born limping. Whoever splits them is selling you half a brand.": "Identidade, web, social, estratégia. <br> Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade <br> de uma marca.",
     "Disagree with us.": "Discorda de nós.",
-    "A brief is a starting point, not a bible. You pay us to think with you, not to take dictation.": "Um brief é um ponto de partida, não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.",
+    "A brief is a starting point, not a bible. You pay us to think with you, not to take dictation.": "Um brief é um ponto de partida, <br> não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.",
     "No empty phrases.": "Nada de frases vazias.",
     "“Tailor-made solutions” says nothing to anyone. We write things that only make sense coming from you. The rest is filler.": "“Soluções à medida” não diz nada a ninguém. Escrevemos coisas que só fazem sentido ditas por ti. O resto é enchimento.",
     "We're not for everyone.": "Não somos para todos.",
-    "If you're looking for someone who always agrees with you, there are plenty of agencies like that. We stick with those who want to be truly challenged.": "Se procuras alguém que concorde sempre contigo, há muitas agências assim. Nós ficamos com quem quer ser desafiado a sério.",
+    "If you're looking for someone who always agrees with you, there are plenty of agencies like that. We stick with those who want to be truly challenged.": "Se procuras alguém que concorde sempre contigo, há muitas agências assim. <br> Nós ficamos com quem quer ser desafiado a sério.",
     "Every brand is its own case.": "Cada marca é um caso.",
     "We have no formula, no template, and we don't copy what worked for another client. What worked there may mean nothing here.": "Não temos fórmula, não temos template, não copiamos o que funcionou noutro cliente. O que funcionou lá pode não significar nada aqui.",
     "Strategy from the start.": "Estratégia desde o início.",
-    "It's not the last page of the document, it's the first. If it only shows up once the visuals are done, it's already late.": "Não é a última página do documento, é a primeira. Se só aparece depois do visual pronto, já chegou tarde.",
+    "It's not the last page of the document, it's the first. If it only shows up once the visuals are done, it's already late.": "Não é a última página do documento, <br> é a primeira. Se só aparece depois do visual pronto, já chegou tarde.",
     "The name is no accident.": "O nome não é acidente.",
-    "We chose MEAN with this in mind. If you haven't figured out why yet, it's because you haven't worked with us yet.": "Escolhemos MEAN a pensar nisto. Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.",
-    "Name, visual identity, tone of voice. The foundation that decides how a brand is remembered — or forgotten.": "Nome, identidade visual, tom de voz. A base que decide como a marca é lembrada — ou esquecida.",
+    "We chose MEAN with this in mind. If you haven't figured out why yet, it's because you haven't worked with us yet.": "Escolhemos MEAN a pensar nisto. <br> Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.",
+    "Name, visual identity, tone of voice. The foundation that decides how a brand is remembered or forgotten.": "Nome, identidade visual, tom de voz. <br> A base que decide como a marca é lembrada ou esquecida.",
     "Brand strategy": "Estratégia de marca",
     "Positioning": "Posicionamento",
     "Visual identity": "Identidade visual",
@@ -84,7 +85,7 @@
     "Optimisation and performance": "Otimização e performance",
     "Web copywriting": "Textos para web",
     "Maintenance": "Manutenção",
-    "Presence with direction, not posts to pad out a calendar.": "Presença com direção, não posts a preencher o calendário.",
+    "Presence with direction, not posts to pad out a calendar.": "Presença com direção, não posts <br> a preencher o calendário.",
     "Content strategy": "Estratégia de conteúdo",
     "Art direction": "Direção de arte",
     "Social media management": "Gestão de redes",
@@ -98,16 +99,18 @@
     "Product photography": "Fotografia de produto",
     "Space and team photography": "Fotografia de espaço e equipa",
     "Editing and post-production": "Edição e pós-produção",
-    "The first page, not the last. Direction before decoration.": "A primeira página, não a última. Direção antes de decoração.",
+    "The first page, not the last. Direction before decoration.": "A primeira página, não a última. <br> Direção antes de decoração.",
     "Brand audit": "Diagnóstico de marca",
     "Brand architecture": "Arquitetura de marca",
     "Communication plan": "Plano de comunicação",
     "Campaigns": "Campanhas",
     "Consulting": "Consultoria",
     "Testimonials": "Testemunhos",
-    "“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”": "“Espaço para um testemunho de cliente: duas ou três frases, reais, sobre como foi trabalhar com a MEAN.”",
+    "“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”": "“Sempre acreditei nas minhas ideias, mas ao trabalhar com a Mean apercebi-me que elas podem chegar mais longe do que eu próprio imaginava. Não me ofereceram apenas um serviço, mas um trabalho de visão partilhada. Souberam ouvir, interpretar e transformar aquilo que tinha na cabeça em algo ainda melhor do que tinha pensado. E, pelo caminho, viram problemas e encontraram soluções antes de eu saber que precisava delas.”",
+    "“I’ve always believed in my ideas, but working with Mean made me realize they can go further than I ever imagined. They didn’t just offer me a service, they offered a shared vision. They knew how to listen, interpret, and turn what I had in my head into something even better than I had thought of. And along the way, they spotted problems and found solutions before I even knew I needed them.”": "“Sempre acreditei nas minhas ideias, mas ao trabalhar com a Mean apercebi-me que elas podem chegar mais longe do que eu próprio imaginava. Não me ofereceram apenas um serviço, mas um trabalho de visão partilhada. Souberam ouvir, interpretar e transformar aquilo que tinha na cabeça em algo ainda melhor do que tinha pensado. E, pelo caminho, viram problemas e encontraram soluções antes de eu saber que precisava delas.”",
     "Client name": "Nome do cliente",
     "Role, Company": "Cargo, Empresa",
+    "Founder, Comédia a Preto e Branco": "Fundador, Comédia a Preto e Branco",
     "We're not for everyone. Maybe we're for you.": "Não somos para todos. Talvez sejamos para ti.",
     "Work with us": "Trabalha connosco",
     "MEAN is an opinionated creative agency from Porto. Who we are, what we believe and what we do.": "A MEAN é uma agência criativa do Porto, com opinião. Quem somos, no que acreditamos e o que fazemos.",
@@ -131,7 +134,6 @@
     "Send message": "Enviar mensagem",
     "Studio": "Estúdio",
     "Project — MEAN AGENCY": "Projeto — MEAN AGENCY",
-    "Project 01": "Projeto 01",
     "Logo 01": "Logótipo 01",
     "Project 02": "Projeto 02",
     "Logo 02": "Logótipo 02",
@@ -145,7 +147,6 @@
     "Logo 06": "Logótipo 06",
     "Project 07": "Projeto 07",
     "Logo 07": "Logótipo 07",
-    "Project 08": "Projeto 08",
     "Logo 08": "Logótipo 08",
     "Creative agency.": "Agência criativa.",
     "All rights reserved.": "Todos os direitos reservados.",
@@ -178,7 +179,77 @@
     "Sending…": "A enviar…",
     "Message sent! We'll reply soon.": "Mensagem enviada! Respondemos em breve.",
     "Close": "Fechar",
-    "Contact": "Contacto"
+    "Contact": "Contacto",
+    // Projeto: Metais Jaime Dias (página e textos alternativos das imagens)
+    "Brand identity concept for Metais Jaime Dias, a Portuguese leader in metal recycling and industrial waste management.": "Conceito de identidade de marca para a Metais Jaime Dias, líder em Portugal na reciclagem de metais e na gestão de resíduos industriais.",
+    "Founded in 1996, Metais Jaime Dias is a Portuguese leader in industrial waste management and metal recycling.": "Fundada em 1996, a Metais Jaime Dias é líder em Portugal na gestão de resíduos industriais e na reciclagem de metais.",
+    "From end-of-life vehicles to ferrous and non-ferrous scrap, the company combines nearly three decades of experience, certified processes and a 180,000 m² operation built on environmental responsibility.": "Dos veículos em fim de vida à sucata ferrosa e não ferrosa, a empresa junta quase três décadas de experiência, processos certificados e uma operação de 180 000 m² assente na responsabilidade ambiental.",
+    "The following is a proposed concept that was not carried through to the final project.": "O que se segue é um conceito proposto que não chegou a ser usado no projeto final.",
+    "Metais Jaime Dias website on a desktop screen": "Website da Metais Jaime Dias num ecrã de computador",
+    "Metais Jaime Dias logo in yellow on grey": "Logótipo da Metais Jaime Dias a amarelo sobre cinzento",
+    "Construction grid of the Metais Jaime Dias symbol": "Grelha de construção do símbolo da Metais Jaime Dias",
+    "Metal tubes marked with coloured tape": "Tubos de metal marcados com fita colorida",
+    "Metais Jaime Dias app icon on a phone": "Ícone da aplicação da Metais Jaime Dias num telemóvel",
+    "Metais Jaime Dias business cards on concrete": "Cartões de visita da Metais Jaime Dias sobre betão",
+    "Metais Jaime Dias envelope and card": "Envelope e cartão da Metais Jaime Dias",
+    "Tape with the Metais Jaime Dias pattern": "Fita com o padrão da Metais Jaime Dias",
+    "Yellow container with the Metais Jaime Dias symbol": "Contentor amarelo com o símbolo da Metais Jaime Dias",
+    "Worker wearing a Metais Jaime Dias vest": "Trabalhador com um colete da Metais Jaime Dias",
+    "Metais Jaime Dias sticker on a laptop": "Autocolante da Metais Jaime Dias num portátil",
+    "Metais Jaime Dias sign on a building": "Placa da Metais Jaime Dias num edifício",
+    // Projeto: DNA Beauty (página e textos alternativos das imagens)
+    "Brand identity and website for DNA Beauty, a professional hair and beauty cosmetics brand.": "Identidade de marca e website para a DNA Beauty, uma marca de cosmética profissional para cabelo e beleza.",
+    "DNA Beauty is a cosmetics brand dedicated to supplying professional-grade products for hair and beauty care.": "A DNA Beauty é uma marca de cosmética dedicada a fornecer produtos de nível profissional para o cuidado do cabelo e da beleza.",
+    "Designed to meet the needs of both professionals and everyday users, it offers a curated selection of tools and essentials focused on performance and reliability.": "Pensada para responder às necessidades de profissionais e de quem a usa no dia a dia, oferece uma seleção cuidada de ferramentas e essenciais, com foco no desempenho e na fiabilidade.",
+    "Cosmetics": "Cosmética",
+    "Brand Identity, Website": "Identidade de marca, Website",
+    "Brand Identity, Website, E-Commerce": "Identidade de marca, Website, E-Commerce",
+    "DNA Beauty website header in a browser window": "Cabeçalho do website da DNA Beauty numa janela de browser",
+    "DNA Beauty logo on light blue": "Logótipo da DNA Beauty sobre azul claro",
+    "DNA Beauty branded tape and packaging": "Fita e embalagem com a marca DNA Beauty",
+    "DNA Beauty app icon and browser tab": "Ícone da aplicação e separador do browser da DNA Beauty",
+    "Hairdressing scissors on a teal background": "Tesoura de cabeleireiro sobre fundo azul-petróleo",
+    "Comb on a teal background": "Pente sobre fundo azul-petróleo",
+    "Razor blade on a teal background": "Lâmina de barbear sobre fundo azul-petróleo",
+    "Round hairbrush on a teal background": "Escova redonda sobre fundo azul-petróleo",
+    "Hair dryer on a teal background": "Secador de cabelo sobre fundo azul-petróleo",
+    "Black comb on a teal background": "Pente preto sobre fundo azul-petróleo",
+    "DNA Beauty business cards": "Cartões de visita da DNA Beauty",
+    "DNA Beauty social media posts": "Publicações da DNA Beauty nas redes sociais",
+    "DNA Beauty content on a phone": "Conteúdos da DNA Beauty num telemóvel",
+    "DNA Beauty brand board: logo, colours and typefaces": "Quadro da marca DNA Beauty: logótipo, cores e tipos de letra",
+    // Projeto: Solnovo (página e textos alternativos das imagens e dos vídeos)
+    "Visual identity and motion for Solnovo, a travel agency that crafts personalized trips.": "Identidade visual e motion para a Solnovo, uma agência de viagens que cria viagens personalizadas.",
+    "Solnovo is a travel agency dedicated to crafting personalized trips while securing the best discounts for its clients.": "A Solnovo é uma agência de viagens dedicada a criar viagens personalizadas e a garantir os melhores descontos para os seus clientes.",
+    "The visual identity is inspired by the idea of seeing the sun from a new corner of the world symbolizing fresh experiences and new perspectives.": "A identidade visual inspira-se na ideia de ver o sol a partir de um novo canto do mundo, símbolo de experiências novas e de outras perspetivas.",
+    "Each continent is represented by a unique color, reflecting the diversity of destinations Solnovo offers.": "Cada continente é representado por uma cor própria, que reflete a diversidade de destinos que a Solnovo oferece.",
+    "The identity combines warmth and vibrancy to communicate trust, adventure, and a tailored approach to travel planning.": "A identidade junta calor e energia para comunicar confiança, aventura e uma forma de planear viagens feita à medida.",
+    "Travel": "Viagens",
+    "Visual Identity": "Identidade visual",
+    "Solnovo street posters with a view of Florence": "Cartazes de rua da Solnovo com uma vista de Florença",
+    "Solnovo notebook and city-name stickers": "Caderno da Solnovo e autocolantes com nomes de cidades",
+    "Solnovo business cards": "Cartões de visita da Solnovo",
+    "Solnovo logo on dark green": "Logótipo da Solnovo sobre verde-escuro",
+    "Solnovo animation: city guide cards": "Animação da Solnovo: cartões de guias de cidades",
+    "Solnovo logo over aerial footage of green cliffs": "Logótipo da Solnovo sobre imagens aéreas de falésias verdes",
+    "Solnovo logo over aerial footage of a rocky cove": "Logótipo da Solnovo sobre imagens aéreas de uma enseada rochosa",
+    "Solnovo animation: city names on colour": "Animação da Solnovo: nomes de cidades sobre cor",
+    "Solnovo animation: travel photos": "Animação da Solnovo: fotografias de viagem",
+    // Projeto: Comédia a Preto & Branco (página e textos alternativos das imagens)
+    "Brand identity and website for Comédia a Preto & Branco, a stand-up comedy platform from Porto.": "Identidade de marca e website para o Comédia a Preto & Branco, uma plataforma de stand-up comedy do Porto.",
+    "Comédia a Preto & Branco was born in Porto in 2024, created by comedians David Santos and Tomás Matos to promote stand-up comedy and produce comedy video content.": "O Comédia a Preto & Branco nasceu no Porto, em 2024, pelas mãos dos humoristas David Santos e Tomás Matos, para promover stand-up comedy e criar conteúdos audiovisuais de humor.",
+    "It is a platform for comedy interaction, promotion and participation: it brings Portuguese comedians together in original productions and live shows, runs comedy nights and puts different generations of comedians on the same stage.": "É uma plataforma de interação, divulgação e participação humorística: reúne artistas da comédia nacional em produções originais e espetáculos ao vivo, dinamiza noites de comédia e junta diferentes gerações de humoristas no mesmo palco.",
+    "Comedy": "Comédia",
+    "Comédia a Preto & Branco website: home page": "Website do Comédia a Preto & Branco: página inicial",
+    "Comédia a Preto & Branco animated logo": "Logótipo animado do Comédia a Preto & Branco",
+    "Comédia a Preto & Branco website: content formats on the home page": "Website do Comédia a Preto & Branco: formatos de conteúdos na página inicial",
+    "Comédia a Preto & Branco website on a phone: home page": "Website do Comédia a Preto & Branco no telemóvel: página inicial",
+    "Comédia a Preto & Branco website: comedians page": "Website do Comédia a Preto & Branco: página dos humoristas",
+    "Comédia a Preto & Branco website: content page": "Website do Comédia a Preto & Branco: página de conteúdos",
+    "Comédia a Preto & Branco stand-up night": "Noite de stand-up do Comédia a Preto & Branco",
+    "Comédia a Preto & Branco website: about page": "Website do Comédia a Preto & Branco: página Sobre nós",
+    "Comédia a Preto & Branco website on a phone: comedians page": "Website do Comédia a Preto & Branco no telemóvel: página dos humoristas",
+    "T-shirt with the Comédia a Preto & Branco logo on the back": "T-shirt com o logótipo do Comédia a Preto & Branco nas costas",
   };
 
   var lang = 'en';
@@ -203,7 +274,34 @@
   // um texto na língua atual, mantendo os espaços à volta
   function say(en) {
     var pt = lang === 'pt' && PT[norm(en)];
-    return pt ? en.replace(en.trim(), function () { return pt; }) : en;
+    return pt ? en.replace(en.trim(), function () { return pt.replace(/\s*<br>\s*/g, ' '); }) : en;
+  }
+  /* Quebras de linha manuais (vêm dos ficheiros de texto). No HTML são <br class="m-br">; numa tradução são
+     "<br>" a meio do texto. Um elemento só com texto e quebras traduz-se inteiro: a chave no dicionário é a
+     frase sem as quebras, e é a tradução que diz onde o português parte (pode não ser onde parte o inglês). */
+  function plain(el) {      // só texto e quebras manuais lá dentro?
+    for (var c = el.firstChild; c; c = c.nextSibling) {
+      if (c.nodeType !== 3 && !(c.nodeType === 1 && c.tagName === 'BR' && c.className === 'm-br')) return false;
+    }
+    return !!el.firstChild;
+  }
+  function phrase(el) {     // o texto do elemento, com um espaço no lugar de cada quebra
+    var s = '';
+    for (var c = el.firstChild; c; c = c.nextSibling) s += c.nodeType === 3 ? c.nodeValue : ' ';
+    return norm(s);
+  }
+  function broken(el) {     // tem quebras manuais, ou a tradução dele tem?
+    for (var c = el.firstChild; c; c = c.nextSibling) if (c.nodeType === 1) return true;
+    var pt = PT[phrase(el)];
+    return !!pt && pt.indexOf('<br>') >= 0;
+  }
+  function fill(el, text) { // escreve um texto no elemento, com <br class="m-br"> onde ele tiver "<br>"
+    var parts = text.split(/\s*<br>\s*/);
+    el.textContent = '';
+    parts.forEach(function (p, i) {
+      if (i) { var b = document.createElement('br'); b.className = 'm-br'; el.appendChild(b); }
+      el.appendChild(document.createTextNode(i < parts.length - 1 ? p + ' ' : p));   // o espaço fica para quando a quebra não se usa (telemóvel)
+    });
   }
   function sayAttr(en) { return (lang === 'pt' && PT[norm(en)]) || en; }
   // o HTML de um bloco na língua atual
@@ -211,6 +309,9 @@
     if (lang !== 'pt') return en;
     var box = document.createElement('div');
     box.innerHTML = en;
+    [box].concat(Array.prototype.slice.call(box.querySelectorAll('*'))).forEach(function (el) {   // frases com quebras de linha
+      if (plain(el) && broken(el) && PT[phrase(el)]) fill(el, PT[phrase(el)]);
+    });
     var w = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, null), n;
     while ((n = w.nextNode())) n.nodeValue = say(n.nodeValue);
     ATTRS.forEach(function (attr) {
@@ -227,11 +328,18 @@
       el.__i18n = true;
       blocks.push({ el: el, en: el.innerHTML });
     });
+    // fora desses blocos, os elementos com quebras de linha manuais também se repõem inteiros ao trocar de língua
+    Array.prototype.forEach.call(rootEl.querySelectorAll('*'), function (el) {
+      if (el.__i18n || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(el.nodeName) || skipped(el) || (el.closest && el.closest(BLOCKS))) return;
+      if (!plain(el) || !broken(el)) return;
+      el.__i18n = el.__phrase = true;
+      blocks.push({ el: el, en: el.innerHTML });
+    });
     var w = document.createTreeWalker(rootEl, NodeFilter.SHOW_TEXT, null), n;
     while ((n = w.nextNode())) {
       var p = n.parentNode;
       if (!p || /^(SCRIPT|STYLE|NOSCRIPT)$/.test(p.nodeName) || skipped(p)) continue;
-      if (p.closest && p.closest(BLOCKS)) continue;
+      if (p.__phrase || (p.closest && p.closest(BLOCKS))) continue;
       if (norm(n.nodeValue)) texts.push({ node: n, en: n.nodeValue });
     }
     ATTRS.forEach(function (attr) {

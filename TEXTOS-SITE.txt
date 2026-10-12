@@ -1,0 +1,601 @@
+MEAN AGENCY — TEXTOS DO SITE
+============================
+
+Este ficheiro tem todo o texto do site, página a página, em inglês (EN) e em
+português (PT). Serve para escreveres e corrigires o copy sem mexer no código.
+
+COMO USAR
+  1. Muda só o texto que está à frente de "EN:" e de "PT:" (ou, nas listas,
+     de cada lado da barra | ).
+  2. Guarda (Cmd + S). O site local (http://localhost:8765) atualiza sozinho
+     em um ou dois segundos.
+  3. Não apagues nem acrescentes linhas, e não mudes as etiquetas (ex.: "Frase de
+     apresentação"): é pela posição delas que se sabe onde cada texto vai.
+     Cada texto fica numa só linha, por mais comprida que seja.
+  4. Se o site não mudar, procura o ficheiro TEXTOS-ERRO.txt nesta pasta: explica
+     o que está mal e em que linha.
+
+MUDAR DE LINHA ONDE QUISERES
+  Escreve <br> no sítio onde o texto deve passar para a linha de baixo. Exemplo:
+     EN: We are a creative agency <br> based in Porto.
+     PT: Somos uma agência criativa <br> sediada no Porto.
+  O inglês e o português podem partir em sítios diferentes (ou só um deles).
+  Vale em ecrãs de computador e tablet; no telemóvel o texto ajusta-se sozinho.
+  Dá em títulos, frases e parágrafos; não dá em botões, links com seta, no painel
+  de contacto nem nos textos para o Google (aí o ficheiro TEXTOS-ERRO.txt avisa).
+
+NOTAS
+  • As alterações ficam só no teu computador até dizeres ao Claude "fecha sessão";
+    é aí que vão para o site publicado.
+  • O site abre em inglês; o botão PT/EN do topo troca para português.
+  • O menu do topo fica sempre em inglês, por isso só tem linha EN.
+  • Se o mesmo texto em inglês aparecer em vários sítios, a tradução portuguesa é
+    a mesma em todos (o site só guarda uma tradução por texto).
+  • "Descrição (aparece nos resultados do Google)" não se vê na página: é o texto
+    que o Google mostra por baixo do link do site.
+  • Os textos dos projetos estão no ficheiro TEXTOS-PROJETOS.txt.
+  • Muitos textos ainda são provisórios (dizem "Placeholder text"): são os que
+    falta escrever.
+
+
+########################################################################
+#  EM TODAS AS PÁGINAS
+########################################################################
+
+--- Menu do topo (fica sempre em inglês) ---
+
+Menu 1
+  EN: Home
+
+Menu 2
+  EN: Work
+
+Menu 3
+  EN: About
+
+Botão de contacto (abre o painel "Talk with us")
+  EN: Talk with us
+
+--- Rodapé (footer) ---
+
+Nome, canto superior esquerdo
+  EN: MEAN Agency
+  PT: MEAN Agency
+
+Descrição, linha 1
+  EN: Creative agency.
+  PT: Agência criativa.
+
+Descrição, linha 2
+  EN: Porto, Portugal.
+  PT: Porto, Portugal.
+
+Descrição, linha 3
+  EN: 2026 © MEAN Agency.
+  PT: 2026 © MEAN Agency.
+
+Descrição, linha 4
+  EN: All rights reserved.
+  PT: Todos os direitos reservados.
+
+Lista de páginas  (um por linha: inglês | português)
+  - Home | Home
+  - Work | Work
+  - About | About
+  - Talk with us | Fala connosco
+
+Título do bloco de contacto
+  EN: Contact
+  PT: Contacto
+
+Email de contacto
+  EN: mean.geral@gmail.com
+
+Título do bloco da morada
+  EN: Studio
+  PT: Estúdio
+
+Morada
+  EN: Porto, Portugal
+  PT: Porto, Portugal
+
+Título do bloco de serviços
+  EN: Services
+  PT: Serviços
+
+Serviços  (um por linha: inglês | português)
+  - Branding | Branding
+  - Web | Web
+  - Social Media | Social Media
+  - Video, Motion & Photography | Vídeo, Motion e Fotografia
+  - Strategy | Estratégia
+
+Instagram (texto do link)
+  EN: @mean_agency
+
+LinkedIn (texto do link)
+  EN: LinkedIn
+
+--- Painel "Talk with us" (forms de contacto) ---
+
+Etiqueta do topo
+  EN: Talk with us
+  PT: Fala connosco
+
+Botão de fechar
+  EN: Close
+  PT: Fechar
+
+Título
+  EN: Let's talk about your project.
+  PT: Vamos falar sobre o teu projeto.
+
+Campo: nome
+  EN: Name
+  PT: Nome
+
+Campo: empresa (opcional)
+  EN: Company
+  PT: Empresa
+
+Campo: email
+  EN: Email
+  PT: Email
+
+Grupo: tipo de projeto
+  EN: Project type
+  PT: Tipo de projeto
+
+Opções do tipo de projeto  (um por linha: inglês | português)
+  - Brand Identity | Identidade de marca
+  - Website / Landing Page | Website / Landing page
+  - Social Media | Social Media
+  - Video, Motion & Photography | Vídeo, Motion e Fotografia
+  - Marketing Strategy | Estratégia de marketing
+  - Other | Outro
+
+Grupo: orçamento
+  EN: Estimated budget
+  PT: Orçamento estimado
+
+Opções de orçamento  (um por linha: inglês | português)
+  - Under €3,000 | Menos de 3.000€
+  - €3,000 – €8,000 | 3.000€ – 8.000€
+  - €8,000 – €20,000 | 8.000€ – 20.000€
+  - Over €20,000 | Mais de 20.000€
+
+Campo: mensagem
+  EN: Message
+  PT: Mensagem
+
+Botão de enviar
+  EN: Send message
+  PT: Enviar mensagem
+
+Botão enquanto envia
+  EN: Sending…
+  PT: A enviar…
+
+Aviso: faltam campos
+  EN: Please fill in the missing fields.
+  PT: Por favor preenche os campos em falta.
+
+Aviso: email inválido
+  EN: Invalid email.
+  PT: Email inválido.
+
+Aviso: mensagem enviada
+  EN: Message sent! We'll reply soon.
+  PT: Mensagem enviada! Respondemos em breve.
+
+Título do bloco de contacto
+  EN: Contact
+  PT: Contacto
+
+Título do bloco da morada
+  EN: Studio
+  PT: Estúdio
+
+
+########################################################################
+#  HOME  (index.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: MEAN AGENCY — Branding, Web & Digital
+  PT: MEAN AGENCY — Branding, Web & Digital
+
+Descrição (aparece nos resultados do Google)
+  EN: MEAN is a creative agency in Porto that brings strategy, design and copy together so brands stop whispering and start shouting, because the quiet ones get scrolled past.
+  PT: A MEAN é uma agência criativa no Porto que junta estratégia, design e copy para as marcas deixarem de sussurrar e começarem a gritar, porque as discretas passam ao lado.
+
+--- Frase de apresentação (logo a seguir à abertura) ---
+
+Etiqueta
+  EN: MEAN · Creative agency, Porto
+  PT: MEAN · Agência criativa, Porto
+
+Frase de apresentação
+  EN: MEAN is a creative agency in Porto that brings strategy, design and copy together so brands stop whispering and start shouting, because the quiet ones get scrolled past.
+  PT: A MEAN é uma agência criativa no Porto que junta estratégia, design e copy para as marcas deixarem de sussurrar e começarem a gritar, porque as discretas passam ao lado.
+
+--- Projetos em destaque ---
+
+Etiqueta
+  EN: Featured projects
+  PT: Projetos em destaque
+
+Link para todos os projetos
+  EN: All projects
+  PT: Todos os projetos
+
+  (os nomes e descrições dos 4 projetos estão no TEXTOS-PROJETOS.txt)
+
+--- O que fazemos (versão curta) ---
+
+Etiqueta
+  EN: What we do
+  PT: O que fazemos
+
+Frase
+  EN: Five disciplines working as one.
+  PT: Cinco disciplinas que trabalham como uma só.
+
+Serviço 1: nome
+  EN: Branding
+  PT: Branding
+
+Serviço 1: descrição
+  EN: The foundation that decides how a brand is remembered.
+  PT: A base que decide como a marca é lembrada.
+
+Serviço 2: nome
+  EN: Web
+  PT: Web
+
+Serviço 2: descrição
+  EN: Websites built to work, load and convert.
+  PT: Sites feitos para funcionar, carregar e converter.
+
+Serviço 3: nome
+  EN: Social Media
+  PT: Social Media
+
+Serviço 3: descrição
+  EN: Presence with direction, not posts to fill a calendar.
+  PT: Presença com direção, não posts a encher o calendário.
+
+Serviço 4: nome
+  EN: Video, Motion & Photography
+  PT: Vídeo, Motion e Fotografia
+
+Serviço 4: descrição
+  EN: Imagery made for the brand, still or moving.
+  PT: Imagem pensada para a marca, <br> parada ou em movimento.
+
+Serviço 5: nome
+  EN: Strategy
+  PT: Estratégia
+
+Serviço 5: descrição
+  EN: The first page, not the last.
+  PT: A primeira página, não a última.
+
+
+########################################################################
+#  WORK  (work.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: Work — MEAN AGENCY
+  PT: Work — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: MEAN projects: branding, web, social media, video and strategy.
+  PT: Projetos da MEAN: branding, web, social media, vídeo e estratégia.
+
+--- Abertura ---
+
+Etiqueta
+  EN: Work
+  PT: Work
+
+Título
+  EN: Brands that don’t need introductions.
+  PT: Marcas que não precisam de introdução.
+
+Texto por baixo do título
+  EN: A selection of work across branding, web, social and strategy. Whatever the brief, the standard is the same.
+  PT: Uma seleção de trabalhos em marca, web, social e estratégia. Seja qual for o pedido, a exigência é a mesma.
+
+  (os nomes e descrições dos projetos da grelha estão no TEXTOS-PROJETOS.txt)
+
+--- Fecho da página ---
+
+Frase
+  EN: Want to be the next case?
+  PT: Queres ser o próximo caso?
+
+Link (abre o painel de contacto)
+  EN: Talk with us
+  PT: Fala connosco
+
+
+########################################################################
+#  ABOUT  (about.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: About — MEAN AGENCY
+  PT: About — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: MEAN is an opinionated creative agency from Porto. Who we are, what we believe and what we do.
+  PT: A MEAN é uma agência criativa do Porto, com opinião. Quem somos, no que acreditamos e o que fazemos.
+
+--- Abertura ---
+
+Etiqueta
+  EN: About
+  PT: About
+
+Título
+  EN: We are a creative agency based in Porto.
+  PT: Somos uma agência criativa baseada no Porto.
+
+--- Clientes ---
+
+Etiqueta
+  EN: Clients
+  PT: Clientes
+
+Frase grande
+  EN: Brands we've worked with.
+  PT: Marcas com quem já trabalhámos.
+
+Parágrafo 1
+  EN: We treat every brand like it’s ours, which means we’re annoyingly invested <br> in how it turns out.
+  PT: Tratamos cada marca como se fosse nossa, o que nos torna irritantemente preocupados com o resultado.
+
+--- O que acreditamos (manifesto) ---
+
+Etiqueta
+  EN: What we believe
+  PT: No que acreditamos
+
+Frase grande
+  EN: We're called MEAN because we have opinions and we don't apologise for them.
+  PT: Chamamo-nos MEAN porque temos opinião e não pedimos desculpa por isso.
+
+Parágrafo 1
+  EN: We don't believe in brands that please everyone, because those usually mean nothing to anyone. We'd rather build something a few people fully identify with than something nobody hates but nobody remembers either.
+  PT: Não acreditamos em marcas que agradam a todos, porque essas normalmente não significam nada para ninguém. Preferimos construir algo com <br> que algumas pessoas se identifiquem completamente a construir algo que ninguém odeie, mas que também ninguém lembre.
+
+Parágrafo 2
+  EN: Strategy comes in on day one, not at the end to justify the rest. We think a brand without clear direction is just pretty design looking for a purpose.
+  PT: A estratégia entra desde o primeiro dia, não no fim para justificar o resto. Achamos que uma marca sem direção clara é só design bonito à procura de um propósito.
+
+Ponto 01: título
+  EN: No sugarcoating.
+  PT: Sem paninhos quentes.
+
+Ponto 01: texto
+  EN: If something isn't going to work, <br> we say so before you move ahead. <br> We'd rather bother you once than <br> politely deliver mediocrity.
+  PT: Se algo não vai funcionar, dizemos antes de avançares. Preferimos incomodar <br> uma vez a entregar mediocridade educadamente.
+
+Ponto 02: título
+  EN: Together, not in pieces.
+  PT: Junto, não aos bocados.
+
+Ponto 02: texto
+  EN: Identity, web, social, strategy. <br> Either they're born together or they're born limping. Whoever splits them is selling you half a brand.
+  PT: Identidade, web, social, estratégia. <br> Ou nascem juntas ou nascem coxas. Quem separa isto vende-te metade <br> de uma marca.
+
+Ponto 03: título
+  EN: Disagree with us.
+  PT: Discorda de nós.
+
+Ponto 03: texto
+  EN: A brief is a starting point, not a bible. <br> You pay us to think with you, not to take dictation.
+  PT: Um brief é um ponto de partida, <br> não uma bíblia. Pagas-nos para pensar contigo, não para escrever à tua ordem.
+
+Ponto 04: título
+  EN: No empty phrases.
+  PT: Nada de frases vazias.
+
+Ponto 04: texto
+  EN: “Tailor-made solutions” says nothing to anyone. We write things that only make sense coming from you. The rest is filler.
+  PT: “Soluções à medida” não diz nada a ninguém. Escrevemos coisas que só fazem sentido ditas por ti. O resto é enchimento.
+
+Ponto 05: título
+  EN: We're not for everyone.
+  PT: Não somos para todos.
+
+Ponto 05: texto
+  EN: If you're looking for someone who always agrees with you, there are plenty of agencies like that. We stick with those who want to be truly challenged.
+  PT: Se procuras alguém que concorde sempre contigo, há muitas agências assim. <br> Nós ficamos com quem quer ser desafiado a sério.
+
+Ponto 06: título
+  EN: Every brand is its own case.
+  PT: Cada marca é um caso.
+
+Ponto 06: texto
+  EN: We have no formula, no template, and we don't copy what worked for another client. What worked there may mean nothing here.
+  PT: Não temos fórmula, não temos template, não copiamos o que funcionou noutro cliente. O que funcionou lá pode não significar nada aqui.
+
+Ponto 07: título
+  EN: Strategy from the start.
+  PT: Estratégia desde o início.
+
+Ponto 07: texto
+  EN: It's not the last page of the document, <br> it's the first. If it only shows up once the visuals are done, it's already late.
+  PT: Não é a última página do documento, <br> é a primeira. Se só aparece depois do visual pronto, já chegou tarde.
+
+Ponto 08: título
+  EN: The name is no accident.
+  PT: O nome não é acidente.
+
+Ponto 08: texto
+  EN: We chose MEAN with this in mind. <br> If you haven't figured out why yet, it's because you haven't worked with us yet.
+  PT: Escolhemos MEAN a pensar nisto. <br> Se ainda não perceberam porquê, é porque ainda não trabalharam connosco.
+
+--- O que fazemos (disciplinas) ---
+
+Etiqueta
+  EN: What we do
+  PT: O que fazemos
+
+Frase grande
+  EN: Five disciplines working as one.
+  PT: Cinco disciplinas que trabalham como uma só.
+
+Disciplina 1: nome
+  EN: Branding
+  PT: Branding
+
+Disciplina 1: frase
+  EN: Name, visual identity, tone of voice. <br> The foundation that decides how a <br> brand is remembered or forgotten.
+  PT: Nome, identidade visual, tom de voz. <br> A base que decide como a marca é lembrada ou esquecida.
+
+Disciplina 1: serviços  (um por linha: inglês | português)
+  - Brand strategy | Estratégia de marca
+  - Positioning | Posicionamento
+  - Naming | Naming
+  - Visual identity | Identidade visual
+  - Logo | Logótipo
+  - Tone of voice | Tom de voz
+  - Brand guidelines | Manual de marca
+  - Rebranding | Rebranding
+  - Packaging | Embalagem
+  - Print materials | Materiais impressos
+  - Signage | Sinalética
+  - Illustration | Ilustração
+
+Disciplina 2: nome
+  EN: Web
+  PT: Web
+
+Disciplina 2: frase
+  EN: Websites that aren't just pretty. They're built to work, load and convert.
+  PT: Sites que não são só bonitos. São feitos para funcionar, carregar e converter.
+
+Disciplina 2: serviços  (um por linha: inglês | português)
+  - UX/UI | UX/UI
+  - Web design | Web design
+  - Development | Desenvolvimento
+  - Landing pages | Landing pages
+  - E-commerce | E-commerce
+  - Portfolios | Portfólios
+  - SEO | SEO
+  - Optimisation and performance | Otimização e performance
+  - Web copywriting | Textos para web
+  - Maintenance | Manutenção
+
+Disciplina 3: nome
+  EN: Social Media
+  PT: Social Media
+
+Disciplina 3: frase
+  EN: Presence with direction, not posts to pad out a calendar.
+  PT: Presença com direção, não posts <br> a preencher o calendário.
+
+Disciplina 3: serviços  (um por linha: inglês | português)
+  - Content strategy | Estratégia de conteúdo
+  - Art direction | Direção de arte
+  - Social media management | Gestão de redes
+  - Editorial calendar | Calendário editorial
+  - Post design | Design de publicações
+  - Paid campaigns | Campanhas pagas
+  - Reporting | Relatórios
+
+Disciplina 4: nome
+  EN: Video, Motion & Photography
+  PT: Vídeo, Motion e Fotografia
+
+Disciplina 4: frase
+  EN: Imagery made for the brand, still or moving.
+  PT: Imagem pensada para a marca, <br> parada ou em movimento.
+
+Disciplina 4: serviços  (um por linha: inglês | português)
+  - Brand video | Vídeo de marca
+  - Reels and short-form content | Reels e conteúdo curto
+  - Motion design | Motion design
+  - Logo animation | Animação de logótipo
+  - Product photography | Fotografia de produto
+  - Space and team photography | Fotografia de espaço e equipa
+  - Editing and post-production | Edição e pós-produção
+
+Disciplina 5: nome
+  EN: Strategy
+  PT: Estratégia
+
+Disciplina 5: frase
+  EN: The first page, not the last. <br> Direction before decoration.
+  PT: A primeira página, não a última. <br> Direção antes de decoração.
+
+Disciplina 5: serviços  (um por linha: inglês | português)
+  - Brand audit | Diagnóstico de marca
+  - Research | Research
+  - Positioning | Posicionamento
+  - Brand architecture | Arquitetura de marca
+  - Communication plan | Plano de comunicação
+  - Campaigns | Campanhas
+  - Consulting | Consultoria
+
+--- Testemunhos ---
+
+Etiqueta
+  EN: Testimonials
+  PT: Testemunhos
+
+Testemunho 1: citação
+  EN: “Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”
+  PT: “Sempre acreditei nas minhas ideias, mas ao trabalhar com a Mean apercebi-me que elas podem chegar mais longe do que eu próprio imaginava. Não me ofereceram apenas um serviço, mas um trabalho de visão partilhada. Souberam ouvir, interpretar e transformar aquilo que tinha na cabeça em algo ainda melhor do que tinha pensado. E, pelo caminho, viram problemas e encontraram soluções antes de eu saber que precisava delas.”
+
+Testemunho 1: nome
+  EN: Client name
+  PT: Nome do cliente
+
+Testemunho 1: cargo e empresa
+  EN: Role, Company
+  PT: Cargo, Empresa
+
+Testemunho 2: citação
+  EN: “I’ve always believed in my ideas, but working with Mean made me realize they can go further than I ever imagined. They didn’t just offer me a service, they offered a shared vision. They knew how to listen, interpret, and turn what I had in my head into something even better than I had thought of. And along the way, they spotted problems and found solutions before I even knew I needed them.”
+  PT: “Sempre acreditei nas minhas ideias, mas ao trabalhar com a Mean apercebi-me que elas podem chegar mais longe do que eu próprio imaginava. Não me ofereceram apenas um serviço, mas um trabalho de visão partilhada. Souberam ouvir, interpretar e transformar aquilo que tinha na cabeça em algo ainda melhor do que tinha pensado. E, pelo caminho, viram problemas e encontraram soluções antes de eu saber que precisava delas.”
+
+Testemunho 2: nome
+  EN: David Santos
+  PT: David Santos
+
+Testemunho 2: cargo e empresa
+  EN: Founder, Comédia a Preto e Branco
+  PT: Fundador, Comédia a Preto e Branco
+
+Testemunho 3: citação
+  EN: “Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”
+  PT: “Sempre acreditei nas minhas ideias, mas ao trabalhar com a Mean apercebi-me que elas podem chegar mais longe do que eu próprio imaginava. Não me ofereceram apenas um serviço, mas um trabalho de visão partilhada. Souberam ouvir, interpretar e transformar aquilo que tinha na cabeça em algo ainda melhor do que tinha pensado. E, pelo caminho, viram problemas e encontraram soluções antes de eu saber que precisava delas.”
+
+Testemunho 3: nome
+  EN: Client name
+  PT: Nome do cliente
+
+Testemunho 3: cargo e empresa
+  EN: Role, Company
+  PT: Cargo, Empresa
+
+--- Fecho da página ---
+
+Frase
+  EN: We're not for everyone. Maybe we're for you.
+  PT: Não somos para todos. Talvez sejamos para ti.
+
+Link (abre o painel de contacto)
+  EN: Work with us
+  PT: Trabalha connosco

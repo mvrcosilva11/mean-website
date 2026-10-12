@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
+  <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
+  <title>Comédia a Preto &amp; Branco — MEAN AGENCY</title>
+  <meta name="description" content="Brand identity and website for Comédia a Preto &amp; Branco, a stand-up comedy platform from Porto." />
+  <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
+       se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
+  <link rel="stylesheet" href="style.css?v=221" />
+</head>
+<body class="page-projeto">
+
+  <!-- LOGO ANIMADO: na 1.ª abertura do site e a cada mudança de página (num recarregamento não aparece) -->
+  <div class="preloader" id="preloader" data-duration="1440" data-anim="assets/intro-logo.webp?v=42" data-still="assets/intro-logo.png?v=42"></div>
+  <script>(function(){var p=document.getElementById('preloader');if(p&&window.__meanShow===false)p.parentNode.removeChild(p)})()</script>
+
+  <!-- NAV: igual em todas as páginas. Tudo em texto, do mesmo tamanho. Fica sempre em inglês (data-i18n-skip). -->
+  <header class="nav nav-over" data-i18n-skip>
+    <div class="nav-left-group">
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-mean-white.png?v=113" alt="MEAN" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="work.html" aria-current="page">Work</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+    <div class="nav-right-group">
+      <a href="#talk" data-talk class="nav-cta">Talk with us</a>
+      <button class="nav-lang" type="button" data-lang-switch aria-label="Mudar para português">PT</button>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PROJETO: Comédia a Preto & Branco. Página feita a partir do modelo (projeto.html); como se monta um projeto: PLANEAMENTO.md.
+       Texto: página "Sobre nós" de comediaapretoebranco.com. Ficheiros em Projetos/04-comedia-a-preto-e-branco/, pela ordem da página:
+       00-capa.gif (logótipo animado), 01 (t-shirt) e 09 a 33 (fotografias) vêm de iamnupi.com/project/comediapretoebranco, tal como lá estão;
+       02 a 08 são capturas do site (PNG, sem perdas), em computador e em telemóvel. Os cartazes ficaram de fora, a pedido. -->
+  <main class="m-pj">
+
+    <!-- 1. ABERTURA: barra do projeto, frase, ficha técnica e capa (o logótipo animado, inteiro e ao centro) -->
+    <section class="m-pj-intro">
+      <div class="m-pj-bar" data-reveal>
+        <a class="m-pj-back" href="work.html"><span class="m-arrow m-arrow--back" aria-hidden="true">←</span> Work</a>
+        <p class="m-pj-name">Comédia a Preto &amp; Branco</p>
+        <div class="m-pj-site m-pj-links">
+          <a href="https://comediaapretoebranco.com/" target="_blank" rel="noopener">Visit website <span class="m-arrow m-arrow--ext" aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/comediaapretoebranco" target="_blank" rel="noopener">Instagram <span class="m-arrow m-arrow--ext" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <span class="m-rule" data-line></span>
+      <div class="m-pj-top">
+        <h1 class="m-pj-statement" data-blur>Comédia a Preto &amp; Branco was born in Porto in 2024, created by comedians David Santos and Tomás Matos to promote stand-up comedy and produce comedy video content.</h1>
+        <dl class="m-pj-meta" data-stagger="70">
+          <div data-reveal><dt>Client</dt><dd>Comédia a Preto &amp; Branco</dd></div>
+          <div data-reveal><dt>Sector</dt><dd>Comedy</dd></div>
+          <div data-reveal><dt>Location</dt><dd>Porto, Portugal</dd></div>
+          <div data-reveal><dt>Deliverables</dt><dd><span>Brand Identity</span><span>Website</span></dd></div>
+        </dl>
+      </div>
+      <div class="m-pj-cover-wrap">
+        <div class="m-media m-pj-cover" data-media><img src="Projetos/04-comedia-a-preto-e-branco/00-capa.gif" alt="Comédia a Preto &amp; Branco animated logo" width="1920" height="1080" decoding="async" /></div>
+      </div>
+    </section>
+
+    <!-- 2. RESUMO: segunda frase -->
+    <section class="m-pj-summary">
+      <p class="m-pj-lead" data-split="rise">It is a platform for comedy interaction, promotion and participation: it brings Portuguese comedians together in original productions and live shows, runs comedy nights and puts different generations of comedians on the same stage.</p>
+    </section>
+
+    <!-- 3. IMAGEM A TODA A LARGURA: a página inicial do site -->
+    <div class="m-pj-full">
+      <div class="m-media" data-media><img src="Projetos/04-comedia-a-preto-e-branco/02.png" alt="Comédia a Preto &amp; Branco website: home page" width="2880" height="1620" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 4. CAPÍTULO: título preso à esquerda (a lista de entregáveis; vem sozinha); à direita, a t-shirt e o site em computador e telemóvel -->
+    <section class="m-pj-chapter">
+      <div class="m-pj-text">
+        <h2 class="m-label" data-reveal>Brand Identity, Website</h2>
+      </div>
+      <div class="m-pj-stack">
+        <div class="is-narrow"><div class="m-media r-23" data-media><img src="Projetos/04-comedia-a-preto-e-branco/01.png" alt="T-shirt with the Comédia a Preto &amp; Branco logo on the back" width="4000" height="6000" loading="lazy" decoding="async" /></div></div>
+        <div><div class="m-media r-169" data-media><img src="Projetos/04-comedia-a-preto-e-branco/03.png" alt="Comédia a Preto &amp; Branco website: content formats on the home page" width="2880" height="1620" loading="lazy" decoding="async" /></div></div>
+        <div class="is-narrow"><div class="m-media r-45" data-media><img src="Projetos/04-comedia-a-preto-e-branco/04.png" alt="Comédia a Preto &amp; Branco website on a phone: home page" width="1170" height="1464" loading="lazy" decoding="async" /></div></div>
+        <div><div class="m-media r-169" data-media><img src="Projetos/04-comedia-a-preto-e-branco/05.png" alt="Comédia a Preto &amp; Branco website: comedians page" width="2880" height="1620" loading="lazy" decoding="async" /></div></div>
+        <div class="is-small"><div class="m-media r-45" data-media><img src="Projetos/04-comedia-a-preto-e-branco/06.png" alt="Comédia a Preto &amp; Branco website on a phone: comedians page" width="1170" height="1464" loading="lazy" decoding="async" /></div></div>
+      </div>
+    </section>
+
+    <!-- 5. DUAS PÁGINAS DO SITE LADO A LADO -->
+    <div class="m-pj-pair">
+      <div class="m-media r-169" data-media><img src="Projetos/04-comedia-a-preto-e-branco/07.png" alt="Comédia a Preto &amp; Branco website: content page" width="2880" height="1620" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-169" data-media><img src="Projetos/04-comedia-a-preto-e-branco/08.png" alt="Comédia a Preto &amp; Branco website: about page" width="2880" height="1620" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 6. FOTOGRAFIAS DAS NOITES DE STAND-UP: aos pares e, no fim, uma a toda a largura -->
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/09.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/10.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/11.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/12.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/13.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/14.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/15.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/16.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair m-pj-pair--fit">
+      <div class="m-media" data-media style="--r: 0.667"><img src="Projetos/04-comedia-a-preto-e-branco/17.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="5760" loading="lazy" decoding="async" /></div>
+      <div class="m-media" data-media style="--r: 1.500"><img src="Projetos/04-comedia-a-preto-e-branco/18.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/19.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/20.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/21.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/22.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/23.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/24.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/25.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/26.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/27.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/28.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/29.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/30.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/31.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/04-comedia-a-preto-e-branco/32.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+    <div class="m-pj-full">
+      <div class="m-media" data-media><img src="Projetos/04-comedia-a-preto-e-branco/33.jpg" alt="Comédia a Preto &amp; Branco stand-up night" width="3840" height="2560" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 7. PROJETO SEGUINTE -->
+    <a class="m-pj-next" href="projeto.html" data-cursor="View">
+      <span class="m-pj-next-head">
+        <span class="m-label" data-reveal>Next project</span>
+        <span class="m-pj-next-name" data-reveal>Project 05 <span class="m-arrow" aria-hidden="true">→</span></span>
+      </span>
+      <span class="m-pj-next-media"><span class="m-media m-media--ph" data-media><span>Project cover</span></span></span>
+    </a>
+
+  </main>
+
+  <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
+  <footer class="m-foot">
+    <div class="m-foot-in">
+      <div class="m-foot-top">
+        <a class="m-foot-name" href="index.html">MEAN Agency</a>
+        <p class="m-foot-desc"><span>Creative agency.</span><span>Porto, Portugal.</span><span>2026 © MEAN Agency.</span><span>All rights reserved.</span></p>
+        <nav class="m-foot-nav" aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="work.html" aria-current="page">Work</a>
+          <a href="about.html">About</a>
+          <a href="#talk" data-talk>Talk with us</a>
+        </nav>
+      </div>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
+      <div class="m-foot-bottom">
+        <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
+        <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="m-foot-blocks">
+          <div class="m-foot-block">
+            <h3>Contact</h3>
+            <p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Studio</h3>
+            <p><span>Porto, Portugal</span></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Services</h3>
+            <p><span>Branding</span><span>Web</span><span>Social Media</span><span>Video, Motion &amp; Photography</span><span>Strategy</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
+</body>
+</html>

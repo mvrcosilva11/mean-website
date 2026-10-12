@@ -10,7 +10,7 @@
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="stylesheet" href="style.css?v=155" />
+  <link rel="stylesheet" href="style.css?v=221" />
 </head>
 <body class="page-work page-work--grid">
 
@@ -40,66 +40,59 @@
   <!-- 1. ABERTURA -->
   <section class="work-lead">
     <p class="m-label" data-reveal>Work</p>
-    <h1 class="work-lead-title" data-blur>We build brands that don't go unnoticed.</h1>
-    <p class="work-lead-sub" data-reveal style="--d: 250ms">A selection of projects where branding, web, social and strategy were born together — not in pieces.</p>
+    <h1 class="work-lead-title" data-blur>Brands that don’t need introductions.</h1>
+    <p class="work-lead-sub" data-reveal style="--d: 250ms">A selection of work across branding, web, social and strategy. Whatever the brief, the standard is the same.</p>
   </section>
 
   <!-- 2. GALERIA — grelha de tamanhos mistos (projetos provisórios) -->
   <main class="m-work">
     <div class="m-grid" data-stagger="90" data-stagger-mod="4">
+        <a class="m-tile m-tile--lg" href="projeto-metais-jaime-dias.html" data-cursor="View">
+          <div class="m-media" data-media><img src="Projetos/01-metais-jaime-dias/00-capa.png" alt="Metais Jaime Dias website on a desktop screen" width="1376" height="768" decoding="async" /></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Metais Jaime Dias</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Metais Jaime Dias</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Brand Identity</span><span class="m-cap-sector">Metal recycling</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto-dna-beauty.html" data-cursor="View">
+          <div class="m-media" data-media><img src="Projetos/02-dna-beauty/00-capa.png" alt="DNA Beauty website header in a browser window" width="1916" height="1080" decoding="async" /></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>DNA Beauty</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> DNA Beauty</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Brand Identity, Website, E-Commerce</span><span class="m-cap-sector">Cosmetics</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto-solnovo.html" data-cursor="View">
+          <div class="m-media" data-media><img src="Projetos/03-solnovo/00-capa.jpg" alt="Solnovo street posters with a view of Florence" width="1500" height="844" decoding="async" /></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Solnovo</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Solnovo</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Visual Identity, Motion</span><span class="m-cap-sector">Travel</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--full" href="projeto-comedia-a-preto-e-branco.html" data-cursor="View">
+          <div class="m-media" data-media><img src="Projetos/04-comedia-a-preto-e-branco/00-capa.gif" alt="Comédia a Preto &amp; Branco animated logo" width="1920" height="1080" decoding="async" /></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Comédia a Preto &amp; Branco</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Comédia a Preto &amp; Branco</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Brand Identity, Website</span><span class="m-cap-sector">Comedy</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
+          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Project 05</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Project 05</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
+          </div>
+        </a>
+        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
+          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
+          <div class="m-cap" data-reveal>
+            <span class="m-cap-name"><span>Project 06</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Project 06</span></span>
+            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
+          </div>
+        </a>
         <a class="m-tile m-tile--lg" href="projeto.html" data-cursor="View">
           <div class="m-media m-media--ph" data-media><span>Project image</span></div>
           <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 01</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 02</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 03</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--full" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 04</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 05</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--sm" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 06</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--lg" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 07</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
-            <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
-          </div>
-        </a>
-        <a class="m-tile m-tile--full" href="projeto.html" data-cursor="View">
-          <div class="m-media m-media--ph" data-media><span>Project image</span></div>
-          <div class="m-cap" data-reveal>
-            <span class="m-cap-name"><span>Project 08</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Short project tagline</span></span>
+            <span class="m-cap-name"><span>Project 07</span><span aria-hidden="true"><span class="m-arrow m-arrow--turn">↳</span> Project 07</span></span>
             <span class="m-cap-meta"><span class="m-cap-type">Type of work</span><span class="m-cap-sector">Sector</span></span>
           </div>
         </a>
@@ -126,7 +119,7 @@
           <a href="#talk" data-talk>Talk with us</a>
         </nav>
       </div>
-      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
       <div class="m-foot-bottom">
         <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
         <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
@@ -148,8 +141,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=155"></script>
-  <script src="main.js?v=155"></script>
-  <script src="motion.js?v=155"></script>
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
 </body>
 </html>

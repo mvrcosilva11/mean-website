@@ -10,7 +10,7 @@
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="stylesheet" href="style.css?v=155" />
+  <link rel="stylesheet" href="style.css?v=221" />
 </head>
 <body class="page-projeto">
 
@@ -51,7 +51,9 @@
       <div class="m-pj-top">
         <h1 class="m-pj-statement" data-blur>Opening sentence of the project: what it is and what changed, in one or two lines. Placeholder text, to be replaced.</h1>
         <dl class="m-pj-meta" data-stagger="70">
-          <div data-reveal><dt>Year</dt><dd>2026</dd></div>
+          <div data-reveal><dt>Client</dt><dd>Project name</dd></div>
+          <!-- Ano: escondido por agora. Para voltar a mostrar, tira este comentário (e junta a mesma linha às páginas de projeto):
+          <div data-reveal><dt>Year</dt><dd>2026</dd></div> -->
           <div data-reveal><dt>Sector</dt><dd>Client sector</dd></div>
           <div data-reveal><dt>Location</dt><dd>City, Country</dd></div>
           <div data-reveal><dt>Deliverables</dt><dd><span>Branding</span><span>Web</span><span>Social Media</span></dd></div>
@@ -71,7 +73,7 @@
       </div>
     </section>
 
-    <!-- 3. IMAGEM DE MARGEM A MARGEM -->
+    <!-- 3. IMAGEM A TODA A LARGURA (entre as margens da página) -->
     <div class="m-pj-full">
       <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
     </div>
@@ -94,10 +96,10 @@
 
     <!-- 5. FRASE A TODA A LARGURA -->
     <section class="m-pj-quote">
-      <p class="m-pj-phrase" data-split="scrub">A sentence that sums up the idea behind the project. Placeholder text.</p>
+      <p class="m-pj-phrase" data-split="rise">A sentence that sums up the idea behind the project. Placeholder text.</p>
     </section>
 
-    <!-- 6. IMAGEM DE MARGEM A MARGEM -->
+    <!-- 6. IMAGEM A TODA A LARGURA (entre as margens da página) -->
     <div class="m-pj-full">
       <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
     </div>
@@ -118,9 +120,9 @@
       </div>
     </section>
 
-    <!-- 8. FRASE DE FECHO + IMAGEM DE MARGEM A MARGEM -->
+    <!-- 8. FRASE DE FECHO + IMAGEM A TODA A LARGURA (entre as margens da página) -->
     <section class="m-pj-quote">
-      <p class="m-pj-phrase" data-split="scrub">A closing sentence: what the project left behind. Placeholder text.</p>
+      <p class="m-pj-phrase" data-split="rise">A closing sentence: what the project left behind. Placeholder text.</p>
     </section>
     <div class="m-pj-full">
       <div class="m-media m-media--ph" data-media><span>Full-width image</span></div>
@@ -150,7 +152,7 @@
           <a href="#talk" data-talk>Talk with us</a>
         </nav>
       </div>
-      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
       <div class="m-foot-bottom">
         <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
         <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
@@ -172,8 +174,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=155"></script>
-  <script src="main.js?v=155"></script>
-  <script src="motion.js?v=155"></script>
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
 </body>
 </html>

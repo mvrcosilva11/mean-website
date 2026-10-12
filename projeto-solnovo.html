@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
+  <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
+  <title>Solnovo — MEAN AGENCY</title>
+  <meta name="description" content="Visual identity and motion for Solnovo, a travel agency that crafts personalized trips." />
+  <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
+       se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
+  <link rel="stylesheet" href="style.css?v=221" />
+</head>
+<body class="page-projeto">
+
+  <!-- LOGO ANIMADO: na 1.ª abertura do site e a cada mudança de página (num recarregamento não aparece) -->
+  <div class="preloader" id="preloader" data-duration="1440" data-anim="assets/intro-logo.webp?v=42" data-still="assets/intro-logo.png?v=42"></div>
+  <script>(function(){var p=document.getElementById('preloader');if(p&&window.__meanShow===false)p.parentNode.removeChild(p)})()</script>
+
+  <!-- NAV: igual em todas as páginas. Tudo em texto, do mesmo tamanho. Fica sempre em inglês (data-i18n-skip). -->
+  <header class="nav nav-over" data-i18n-skip>
+    <div class="nav-left-group">
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-mean-white.png?v=113" alt="MEAN" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="work.html" aria-current="page">Work</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+    <div class="nav-right-group">
+      <a href="#talk" data-talk class="nav-cta">Talk with us</a>
+      <button class="nav-lang" type="button" data-lang-switch aria-label="Mudar para português">PT</button>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PROJETO: Solnovo. Página feita a partir do modelo (projeto.html); como se monta um projeto: PLANEAMENTO.md.
+       Texto, imagens e vídeos: marco-da-silva.com/project-sol-novo, guardados em Projetos/03-solnovo/ tal como lá estão.
+       Os ficheiros estão numerados pela ordem em que aparecem na página. -->
+  <main class="m-pj">
+
+    <!-- 1. ABERTURA: barra do projeto, frase, ficha técnica e capa -->
+    <section class="m-pj-intro">
+      <div class="m-pj-bar" data-reveal>
+        <a class="m-pj-back" href="work.html"><span class="m-arrow m-arrow--back" aria-hidden="true">←</span> Work</a>
+        <p class="m-pj-name">Solnovo</p>
+      </div>
+      <span class="m-rule" data-line></span>
+      <div class="m-pj-top">
+        <h1 class="m-pj-statement" data-blur>Solnovo is a travel agency dedicated to crafting personalized trips while securing the best discounts for its clients.</h1>
+        <dl class="m-pj-meta" data-stagger="70">
+          <div data-reveal><dt>Client</dt><dd>Solnovo</dd></div>
+          <!-- Ano: escondido por agora, como nos outros projetos. Para voltar a mostrar, tira este comentário:
+          <div data-reveal><dt>Year</dt><dd>2024</dd></div> -->
+          <div data-reveal><dt>Sector</dt><dd>Travel</dd></div>
+          <div data-reveal><dt>Deliverables</dt><dd><span>Visual Identity</span><span>Motion</span></dd></div>
+        </dl>
+      </div>
+      <div class="m-pj-cover-wrap">
+        <div class="m-media m-pj-cover" data-media><img src="Projetos/03-solnovo/00-capa.jpg" alt="Solnovo street posters with a view of Florence" width="1500" height="844" decoding="async" /></div>
+      </div>
+    </section>
+
+    <!-- 2. RESUMO: segunda frase -->
+    <section class="m-pj-summary">
+      <p class="m-pj-lead" data-split="rise">The visual identity is inspired by the idea of seeing the sun from a new corner of the world symbolizing fresh experiences and new perspectives.</p>
+    </section>
+
+    <!-- 3. DOIS VÍDEOS LADO A LADO, a toda a largura -->
+    <div class="m-pj-pair">
+      <div class="m-media r-45" data-media><video src="Projetos/03-solnovo/01.mp4" aria-label="Solnovo animation: city guide cards" width="1080" height="1350" muted loop playsinline preload="metadata"></video></div>
+      <div class="m-media r-45" data-media><video src="Projetos/03-solnovo/02.mp4" aria-label="Solnovo logo over aerial footage of a rocky cove" width="1080" height="1350" muted loop playsinline preload="metadata"></video></div>
+    </div>
+
+    <!-- 4. CAPÍTULO: texto preso à esquerda; à direita, a imagem do caderno e os vídeos (o título é a lista de entregáveis; vem sozinho) -->
+    <section class="m-pj-chapter">
+      <div class="m-pj-text">
+        <h2 class="m-label" data-reveal>Visual Identity, Motion</h2>
+        <p class="m-body" data-reveal>Each continent is represented by a unique color, reflecting the diversity of destinations Solnovo offers.</p>
+        <p class="m-body" data-reveal>The identity combines warmth and vibrancy to communicate trust, adventure, and a tailored approach to travel planning.</p>
+      </div>
+      <div class="m-pj-stack">
+        <div><div class="m-media r-169" data-media><img src="Projetos/03-solnovo/03.jpg" alt="Solnovo notebook and city-name stickers" width="1500" height="844" loading="lazy" decoding="async" /></div></div>
+        <div class="is-narrow"><div class="m-media r-45" data-media><video src="Projetos/03-solnovo/04.mp4" aria-label="Solnovo logo over aerial footage of green cliffs" width="1080" height="1350" muted loop playsinline preload="metadata"></video></div></div>
+        <div class="is-small"><div class="m-media r-45" data-media><video src="Projetos/03-solnovo/05.mp4" aria-label="Solnovo animation: city names on colour" width="1080" height="1350" muted loop playsinline preload="metadata"></video></div></div>
+        <div class="is-narrow"><div class="m-media r-45" data-media><video src="Projetos/03-solnovo/06.mp4" aria-label="Solnovo animation: travel photos" width="1080" height="1350" muted loop playsinline preload="metadata"></video></div></div>
+      </div>
+    </section>
+
+    <!-- 5. DUAS IMAGENS LADO A LADO -->
+    <div class="m-pj-pair">
+      <div class="m-media r-45" data-media><img src="Projetos/03-solnovo/07.jpg" alt="Solnovo business cards" width="959" height="1200" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-45" data-media><img src="Projetos/03-solnovo/08.jpg" alt="Solnovo logo on dark green" width="959" height="1200" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 6. PROJETO SEGUINTE -->
+    <a class="m-pj-next" href="projeto-comedia-a-preto-e-branco.html" data-cursor="View">
+      <span class="m-pj-next-head">
+        <span class="m-label" data-reveal>Next project</span>
+        <span class="m-pj-next-name" data-reveal>Comédia a Preto &amp; Branco <span class="m-arrow" aria-hidden="true">→</span></span>
+      </span>
+      <span class="m-pj-next-media"><span class="m-media" data-media><img src="Projetos/04-comedia-a-preto-e-branco/00-capa.gif" alt="Comédia a Preto &amp; Branco animated logo" width="1920" height="1080" loading="lazy" decoding="async" /></span></span>
+    </a>
+
+  </main>
+
+  <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
+  <footer class="m-foot">
+    <div class="m-foot-in">
+      <div class="m-foot-top">
+        <a class="m-foot-name" href="index.html">MEAN Agency</a>
+        <p class="m-foot-desc"><span>Creative agency.</span><span>Porto, Portugal.</span><span>2026 © MEAN Agency.</span><span>All rights reserved.</span></p>
+        <nav class="m-foot-nav" aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="work.html" aria-current="page">Work</a>
+          <a href="about.html">About</a>
+          <a href="#talk" data-talk>Talk with us</a>
+        </nav>
+      </div>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
+      <div class="m-foot-bottom">
+        <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
+        <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="m-foot-blocks">
+          <div class="m-foot-block">
+            <h3>Contact</h3>
+            <p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Studio</h3>
+            <p><span>Porto, Portugal</span></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Services</h3>
+            <p><span>Branding</span><span>Web</span><span>Social Media</span><span>Video, Motion &amp; Photography</span><span>Strategy</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
+</body>
+</html>

@@ -10,7 +10,7 @@
   <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
        se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
   <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
-  <link rel="stylesheet" href="style.css?v=155" />
+  <link rel="stylesheet" href="style.css?v=221" />
 </head>
 <body class="page-about">
 
@@ -44,6 +44,7 @@
     <section class="m-ahero">
       <p class="m-label" data-reveal>About</p>
       <h1 class="m-ahero-title" data-blur>We are a creative agency based in Porto.</h1>
+      <div class="m-ahero-art" aria-hidden="true" data-reveal style="--d: 250ms"></div>
     </section>
 
     <!-- 2. CLIENTES -->
@@ -51,8 +52,19 @@
       <div class="m-sec-side"><h2 class="m-label" id="clientes" data-reveal>Clients</h2></div>
       <div class="m-sec-main">
         <p class="m-lead" data-split="rise">Brands we've worked with.</p>
-        <p class="m-body" data-reveal>A short paragraph about our clients and the kind of relationship we have with them. Placeholder text.</p>
-        <div class="m-logos" data-stagger="45"><div class="m-logo" data-reveal>Logo 01</div><div class="m-logo" data-reveal>Logo 02</div><div class="m-logo" data-reveal>Logo 03</div><div class="m-logo" data-reveal>Logo 04</div><div class="m-logo" data-reveal>Logo 05</div><div class="m-logo" data-reveal>Logo 06</div><div class="m-logo" data-reveal>Logo 07</div><div class="m-logo" data-reveal>Logo 08</div></div>
+        <p class="m-body" data-reveal>We treat every brand like it’s ours, which means we’re annoyingly invested <br class="m-br">in how it turns out.</p>
+        <!-- logótipos: ficheiros da pasta Clientes/. --w/--h = tamanho da imagem; --bx/--by/--bw/--bh = caixa do desenho
+             dentro dela (sem a margem transparente), para todos ficarem com o mesmo peso nas caixas -->
+        <div class="m-logos" data-stagger="45">
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="Comédia a Preto &amp; Branco" style="--src: url('Clientes/CPB.png'); --w: 500; --h: 500; --bx: 56; --by: 117; --bw: 387; --bh: 265"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="DNA Beauty" style="--s: .8; --dx: -3%; --src: url('Clientes/DNA.png'); --w: 1500; --h: 1500; --bx: 213; --by: 524; --bw: 1074; --bh: 452"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="Metais Jaime Dias" style="--s: .75; --src: url('Clientes/MJD_Logo.png'); --w: 1920; --h: 1080; --bx: 231; --by: 297; --bw: 1458; --bh: 486"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="Solnovo" style="--s: .88; --src: url('Clientes/Solnovo.png'); --w: 633; --h: 180; --bx: 24; --by: 24; --bw: 585; --bh: 132"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="ibis Hotels" style="--s: .78; --src: url('Clientes/Ibis%20Hotels.png'); --w: 500; --h: 500; --bx: 90; --by: 90; --bw: 320; --bh: 320"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="Nors" style="--s: .8; --src: url('Clientes/Nors.png'); --w: 500; --h: 500; --bx: 15; --by: 193; --bw: 470; --bh: 114"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="SirFred" style="--src: url('Clientes/SirFred.png'); --w: 615; --h: 89; --bx: 12; --by: 12; --bw: 591; --bh: 65"></span></div>
+          <div class="m-logo m-logo--img" data-reveal><span class="m-logo-img" role="img" aria-label="Fundamentum" style="--s: 1.1; --src: url('Clientes/Fundamentum.png'); --w: 500; --h: 500; --bx: 15; --by: 230; --bw: 470; --bh: 40"></span></div>
+        </div>
       </div>
     </section>
 
@@ -73,21 +85,21 @@
             <span class="m-mani-num">01</span>
             <div>
               <h3 class="m-mani-title" data-split="rise">No sugarcoating.</h3>
-              <p class="m-mani-text" data-reveal>If something isn't going to work, we say so before you move ahead. We'd rather bother you once than politely deliver mediocrity.</p>
+              <p class="m-mani-text" data-reveal>If something isn't going to work, <br class="m-br">we say so before you move ahead. <br class="m-br">We'd rather bother you once than <br class="m-br">politely deliver mediocrity.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">02</span>
             <div>
               <h3 class="m-mani-title" data-split="rise">Together, not in pieces.</h3>
-              <p class="m-mani-text" data-reveal>Identity, web, social, strategy. Either they're born together or they're born limping. Whoever splits them is selling you half a brand.</p>
+              <p class="m-mani-text" data-reveal>Identity, web, social, strategy. <br class="m-br">Either they're born together or they're born limping. Whoever splits them is selling you half a brand.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">03</span>
             <div>
               <h3 class="m-mani-title" data-split="rise">Disagree with us.</h3>
-              <p class="m-mani-text" data-reveal>A brief is a starting point, not a bible. You pay us to think with you, not to take dictation.</p>
+              <p class="m-mani-text" data-reveal>A brief is a starting point, not a bible. <br class="m-br">You pay us to think with you, not to take dictation.</p>
             </div>
           </li>
           <li>
@@ -115,14 +127,14 @@
             <span class="m-mani-num">07</span>
             <div>
               <h3 class="m-mani-title" data-split="rise">Strategy from the start.</h3>
-              <p class="m-mani-text" data-reveal>It's not the last page of the document, it's the first. If it only shows up once the visuals are done, it's already late.</p>
+              <p class="m-mani-text" data-reveal>It's not the last page of the document, <br class="m-br">it's the first. If it only shows up once the visuals are done, it's already late.</p>
             </div>
           </li>
           <li>
             <span class="m-mani-num">08</span>
             <div>
               <h3 class="m-mani-title" data-split="rise">The name is no accident.</h3>
-              <p class="m-mani-text" data-reveal>We chose MEAN with this in mind. If you haven't figured out why yet, it's because you haven't worked with us yet.</p>
+              <p class="m-mani-text" data-reveal>We chose MEAN with this in mind. <br class="m-br">If you haven't figured out why yet, it's because you haven't worked with us yet.</p>
             </div>
           </li>
         </ol>
@@ -139,8 +151,8 @@
             <span class="m-disc-num">01</span>
             <h3 class="m-disc-name" data-split="rise">Branding</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>Name, visual identity, tone of voice. The foundation that decides how a brand is remembered — or forgotten.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand strategy</li><li data-reveal>Positioning</li><li data-reveal>Naming</li><li data-reveal>Visual identity</li><li data-reveal>Logo</li><li data-reveal>Tone of voice</li><li data-reveal>Brand guidelines</li><li data-reveal>Rebranding</li><li data-reveal>Packaging</li><li data-reveal>Print materials</li><li data-reveal>Signage</li><li data-reveal>Illustration</li></ul>
+              <p class="m-disc-pitch" data-reveal>Name, visual identity, tone of voice. <br class="m-br">The foundation that decides how a <br class="m-br">brand is remembered or forgotten.</p>
+              <ul class="m-branches" data-stagger="35" data-stagger-mod="6" style="--rows: 6"><li data-reveal>Brand strategy</li><li data-reveal>Positioning</li><li data-reveal>Naming</li><li data-reveal>Visual identity</li><li data-reveal>Logo</li><li data-reveal>Tone of voice</li><li data-reveal>Brand guidelines</li><li data-reveal>Rebranding</li><li data-reveal>Packaging</li><li data-reveal>Print materials</li><li data-reveal>Signage</li><li data-reveal>Illustration</li></ul>
             </div>
           </li>
           <li>
@@ -148,7 +160,7 @@
             <h3 class="m-disc-name" data-split="rise">Web</h3>
             <div class="m-disc-body">
               <p class="m-disc-pitch" data-reveal>Websites that aren't just pretty. They're built to work, load and convert.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>UX/UI</li><li data-reveal>Web design</li><li data-reveal>Development</li><li data-reveal>Landing pages</li><li data-reveal>E-commerce</li><li data-reveal>Portfolios</li><li data-reveal>SEO</li><li data-reveal>Optimisation and performance</li><li data-reveal>Web copywriting</li><li data-reveal>Maintenance</li></ul>
+              <ul class="m-branches" data-stagger="35" data-stagger-mod="5" style="--rows: 5"><li data-reveal>UX/UI</li><li data-reveal>Web design</li><li data-reveal>Development</li><li data-reveal>Landing pages</li><li data-reveal>E-commerce</li><li data-reveal>Portfolios</li><li data-reveal>SEO</li><li data-reveal>Optimisation and performance</li><li data-reveal>Web copywriting</li><li data-reveal>Maintenance</li></ul>
             </div>
           </li>
           <li>
@@ -156,7 +168,7 @@
             <h3 class="m-disc-name" data-split="rise">Social Media</h3>
             <div class="m-disc-body">
               <p class="m-disc-pitch" data-reveal>Presence with direction, not posts to pad out a calendar.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Content strategy</li><li data-reveal>Art direction</li><li data-reveal>Social media management</li><li data-reveal>Editorial calendar</li><li data-reveal>Post design</li><li data-reveal>Paid campaigns</li><li data-reveal>Reporting</li></ul>
+              <ul class="m-branches" data-stagger="35" data-stagger-mod="4" style="--rows: 4"><li data-reveal>Content strategy</li><li data-reveal>Art direction</li><li data-reveal>Social media management</li><li data-reveal>Editorial calendar</li><li data-reveal>Post design</li><li data-reveal>Paid campaigns</li><li data-reveal>Reporting</li></ul>
             </div>
           </li>
           <li>
@@ -164,15 +176,15 @@
             <h3 class="m-disc-name" data-split="rise">Video, Motion &amp; Photography</h3>
             <div class="m-disc-body">
               <p class="m-disc-pitch" data-reveal>Imagery made for the brand, still or moving.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand video</li><li data-reveal>Reels and short-form content</li><li data-reveal>Motion design</li><li data-reveal>Logo animation</li><li data-reveal>Product photography</li><li data-reveal>Space and team photography</li><li data-reveal>Editing and post-production</li></ul>
+              <ul class="m-branches" data-stagger="35" data-stagger-mod="4" style="--rows: 4"><li data-reveal>Brand video</li><li data-reveal>Reels and short-form content</li><li data-reveal>Motion design</li><li data-reveal>Logo animation</li><li data-reveal>Product photography</li><li data-reveal>Space and team photography</li><li data-reveal>Editing and post-production</li></ul>
             </div>
           </li>
           <li>
             <span class="m-disc-num">05</span>
             <h3 class="m-disc-name" data-split="rise">Strategy</h3>
             <div class="m-disc-body">
-              <p class="m-disc-pitch" data-reveal>The first page, not the last. Direction before decoration.</p>
-              <ul class="m-branches" data-stagger="35"><li data-reveal>Brand audit</li><li data-reveal>Research</li><li data-reveal>Positioning</li><li data-reveal>Brand architecture</li><li data-reveal>Communication plan</li><li data-reveal>Campaigns</li><li data-reveal>Consulting</li></ul>
+              <p class="m-disc-pitch" data-reveal>The first page, not the last. <br class="m-br">Direction before decoration.</p>
+              <ul class="m-branches" data-stagger="35" data-stagger-mod="4" style="--rows: 4"><li data-reveal>Brand audit</li><li data-reveal>Research</li><li data-reveal>Positioning</li><li data-reveal>Brand architecture</li><li data-reveal>Communication plan</li><li data-reveal>Campaigns</li><li data-reveal>Consulting</li></ul>
             </div>
           </li>
         </ol>
@@ -190,8 +202,8 @@
               <figcaption><strong>Client name</strong>Role, Company</figcaption>
             </figure>
             <figure class="m-quote" data-slide>
-              <blockquote>“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”</blockquote>
-              <figcaption><strong>Client name</strong>Role, Company</figcaption>
+              <blockquote>“I’ve always believed in my ideas, but working with Mean made me realize they can go further than I ever imagined. They didn’t just offer me a service, they offered a shared vision. They knew how to listen, interpret, and turn what I had in my head into something even better than I had thought of. And along the way, they spotted problems and found solutions before I even knew I needed them.”</blockquote>
+              <figcaption><strong>David Santos</strong>Founder, Comédia a Preto e Branco</figcaption>
             </figure>
             <figure class="m-quote" data-slide>
               <blockquote>“Space for a client testimonial: two or three real sentences about what it was like to work with MEAN.”</blockquote>
@@ -228,7 +240,7 @@
           <a href="#talk" data-talk>Talk with us</a>
         </nav>
       </div>
-      <a class="m-foot-logo" href="index.html" aria-label="Home"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></a>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
       <div class="m-foot-bottom">
         <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
         <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
@@ -250,8 +262,8 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=155"></script>
-  <script src="main.js?v=155"></script>
-  <script src="motion.js?v=155"></script>
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
 </body>
 </html>

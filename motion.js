@@ -154,7 +154,9 @@
   // miniatura ao centro (como em ondastudio.co) e só depois se solta e sai com a página.
   // A .m-hero é a calha (mais alta do que o ecrã); a .m-hero-media é a moldura presa dentro dela.
   //   --hero-min  = tamanho da miniatura;  --hero-hold = fração do percurso em que o vídeo fica inteiro.
-  var isHome = !!hero && !!heroMedia && document.body.classList.contains('page-home');
+  // (O vídeo foi tirado da Home a pedido; o código dele fica, e volta a funcionar se a secção [data-hero] voltar.)
+  var isHome = document.body.classList.contains('page-home');
+  var hasHero = !!hero && !!heroMedia;
   var heroMin = 0.4, heroHold = 0.15, heroNear = false;
   function readHeroVars() {
     if (!hero) return;
@@ -166,6 +168,7 @@
   readHeroVars();
   function updateHero() {
     if (!isHome) return;
+    if (!hasHero) { toneGate(); return; }                       // Home sem o vídeo: só a cor do header sobre a abertura
     var vh = window.innerHeight;
     var r = hero.getBoundingClientRect();
     var travel = r.height - (heroMedia.offsetHeight || vh);     // scroll em que o vídeo está preso ao ecrã
@@ -262,7 +265,7 @@
         nav.classList.add('nav--onvideo'); plain(); return null;
       }
     }
-    var fr = toneOK ? heroMedia.getBoundingClientRect() : null;   // onde o vídeo está agora (já com a escala)
+    var fr = toneOK && hasHero ? heroMedia.getBoundingClientRect() : null;   // onde o vídeo está agora (já com a escala)
     var on = !!fr && live && (overFrame(navGroups[0], fr) || overFrame(navGroups[1], fr));
     nav.classList.toggle('nav--onvideo', on);
     if (!on) { plain(); return null; }

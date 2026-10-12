@@ -1,0 +1,644 @@
+MEAN AGENCY — TEXTOS DOS PROJETOS
+=================================
+
+Este ficheiro tem o texto dos projetos: o que aparece nas grelhas (Home e Work)
+e o que aparece na página de projeto. Em inglês (EN) e em português (PT).
+
+COMO ESTÁ ORGANIZADO
+  • PROJETO 01, 02, …: o que aparece nas grelhas da página Work (os 4 primeiros
+    aparecem também na Home, em "Featured projects"). Ao passar o rato num
+    projeto aparece o nome dele com uma seta.
+  • PÁGINA DO PROJETO: o texto da página de cada projeto que já tem página própria.
+    Os entregáveis da ficha aparecem sozinhos no cartão das grelhas (tipo de
+    trabalho) e no título do capítulo: basta mudá-los na ficha.
+  • PÁGINA DE PROJETO: MODELO: a página provisória para onde vão os projetos que
+    ainda não têm página.
+  • Para um projeto novo, põe as imagens na pasta Projetos/ e pede ao Claude para
+    lhe criar a página: passa a ter o seu bloco neste ficheiro.
+
+COMO USAR
+  1. Muda só o texto à frente de "EN:" e de "PT:" (ou, nas listas, de cada lado
+     da barra | ).
+  2. Guarda (Cmd + S). O site local (http://localhost:8765) atualiza sozinho.
+  3. Não apagues nem acrescentes linhas, e não mudes as etiquetas. Cada texto
+     numa só linha.
+  4. Para acrescentar, tirar ou trocar a ordem de projetos, pede ao Claude.
+  5. Se o site não mudar, procura o ficheiro TEXTOS-ERRO.txt nesta pasta.
+  6. Para mudar de linha num sítio certo, escreve <br> nesse sítio (como está
+     explicado no TEXTOS-SITE.txt).
+
+IMAGENS
+  As imagens de cada projeto vão para a pasta Projetos/NN-nome-do-projeto/
+  (00-capa é a imagem das grelhas; depois 01, 02, … pela ordem em que aparecem
+  na página). O site usa estes ficheiros tal como estão, sem os converter.
+
+
+########################################################################
+#  PROJETO 01  (em destaque na Home)
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Metais Jaime Dias
+  PT: Metais Jaime Dias
+
+  (o tipo de trabalho do cartão é sempre a lista de entregáveis da página do projeto: muda-se lá)
+
+Setor
+  EN: Metal recycling
+  PT: Reciclagem de metais
+
+
+########################################################################
+#  PROJETO 02  (em destaque na Home)
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: DNA Beauty
+  PT: DNA Beauty
+
+  (o tipo de trabalho do cartão é sempre a lista de entregáveis da página do projeto: muda-se lá)
+
+Setor
+  EN: Cosmetics
+  PT: Cosmética
+
+
+########################################################################
+#  PROJETO 03  (em destaque na Home)
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Solnovo
+  PT: Solnovo
+
+  (o tipo de trabalho do cartão é sempre a lista de entregáveis da página do projeto: muda-se lá)
+
+Setor
+  EN: Travel
+  PT: Viagens
+
+
+########################################################################
+#  PROJETO 04  (em destaque na Home)
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Comédia a Preto & Branco
+  PT: Comédia a Preto & Branco
+
+  (o tipo de trabalho do cartão é sempre a lista de entregáveis da página do projeto: muda-se lá)
+
+Setor
+  EN: Comedy
+  PT: Comédia
+
+
+########################################################################
+#  PROJETO 05
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Project 05
+  PT: Projeto 05
+
+Tipo de trabalho
+  EN: Type of work
+  PT: Tipo de trabalho
+
+Setor
+  EN: Sector
+  PT: Setor
+
+
+########################################################################
+#  PROJETO 06
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Project 06
+  PT: Projeto 06
+
+Tipo de trabalho
+  EN: Type of work
+  PT: Tipo de trabalho
+
+Setor
+  EN: Sector
+  PT: Setor
+
+
+########################################################################
+#  PROJETO 07
+########################################################################
+
+--- Nas grelhas (Home e Work) ---
+
+Nome
+  EN: Project 07
+  PT: Projeto 07
+
+Tipo de trabalho
+  EN: Type of work
+  PT: Tipo de trabalho
+
+Setor
+  EN: Sector
+  PT: Setor
+
+
+########################################################################
+#  PÁGINA DO PROJETO: Metais Jaime Dias  (projeto-metais-jaime-dias.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: Metais Jaime Dias — MEAN AGENCY
+  PT: Metais Jaime Dias — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: Brand identity concept for Metais Jaime Dias, a Portuguese leader in metal recycling and industrial waste management.
+  PT: Conceito de identidade de marca para a Metais Jaime Dias, líder em Portugal na reciclagem de metais e na gestão de resíduos industriais.
+
+--- Abertura ---
+
+Link para voltar à grelha
+  EN: Work
+  PT: Work
+
+Nome no topo da página
+  EN: Metais Jaime Dias
+  PT: Metais Jaime Dias
+
+Link 1 da barra (texto)
+  EN: Visit website
+  PT: Ver website
+
+Link 2 da barra (texto)
+  EN: Instagram
+  PT: Instagram
+
+Frase de abertura
+  EN: Founded in 1996, Metais Jaime Dias is a Portuguese leader in industrial waste management and metal recycling.
+  PT: Fundada em 1996, a Metais Jaime Dias é líder em Portugal na gestão de resíduos industriais e na reciclagem de metais.
+
+Ficha, linha 1: etiqueta
+  EN: Client
+  PT: Cliente
+
+Ficha, linha 1: valor
+  EN: Metais Jaime Dias
+  PT: Metais Jaime Dias
+
+Ficha, linha 2: etiqueta
+  EN: Sector
+  PT: Setor
+
+Ficha, linha 2: valor
+  EN: Metal recycling
+  PT: Reciclagem de metais
+
+Ficha, linha 3: etiqueta
+  EN: Location
+  PT: Local
+
+Ficha, linha 3: valor
+  EN: Portugal
+  PT: Portugal
+
+Ficha, linha 4: etiqueta
+  EN: Deliverables
+  PT: Entregáveis
+
+Ficha, linha 4: valores  (um por linha: inglês | português)
+  - Brand Identity | Identidade de marca
+
+--- Resumo ---
+
+Segunda frase (contexto ou resultado)
+  EN: From end-of-life vehicles to ferrous and non-ferrous scrap, the company combines nearly three decades of experience, certified processes and a 180,000 m² operation built on environmental responsibility.
+  PT: Dos veículos em fim de vida à sucata ferrosa e não ferrosa, a empresa junta quase três décadas de experiência, processos certificados e uma operação de 180 000 m² assente na responsabilidade ambiental.
+
+--- Capítulo 1 ---
+
+  (o título do capítulo é sempre a lista de entregáveis da ficha, acima: muda-se lá)
+
+Parágrafo 1
+  EN: The following is a proposed concept that was not carried through to the final project.
+  PT: O que se segue é um conceito proposto que não chegou a ser usado no projeto final.
+
+--- Fundo da página ---
+
+Etiqueta do projeto seguinte
+  EN: Next project
+  PT: Projeto seguinte
+
+Nome do projeto seguinte
+  EN: DNA Beauty
+  PT: DNA Beauty
+
+
+########################################################################
+#  PÁGINA DO PROJETO: DNA Beauty  (projeto-dna-beauty.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: DNA Beauty — MEAN AGENCY
+  PT: DNA Beauty — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: Brand identity and website for DNA Beauty, a professional hair and beauty cosmetics brand.
+  PT: Identidade de marca e website para a DNA Beauty, uma marca de cosmética profissional para cabelo e beleza.
+
+--- Abertura ---
+
+Link para voltar à grelha
+  EN: Work
+  PT: Work
+
+Nome no topo da página
+  EN: DNA Beauty
+  PT: DNA Beauty
+
+Link 1 da barra (texto)
+  EN: Visit website
+  PT: Ver website
+
+Link 2 da barra (texto)
+  EN: Instagram
+  PT: Instagram
+
+Frase de abertura
+  EN: DNA Beauty is a cosmetics brand dedicated to supplying professional-grade products for hair and beauty care.
+  PT: A DNA Beauty é uma marca de cosmética dedicada a fornecer produtos de nível profissional para o cuidado do cabelo e da beleza.
+
+Ficha, linha 1: etiqueta
+  EN: Client
+  PT: Cliente
+
+Ficha, linha 1: valor
+  EN: DNA Beauty
+  PT: DNA Beauty
+
+Ficha, linha 2: etiqueta
+  EN: Sector
+  PT: Setor
+
+Ficha, linha 2: valor
+  EN: Cosmetics
+  PT: Cosmética
+
+Ficha, linha 3: etiqueta
+  EN: Location
+  PT: Local
+
+Ficha, linha 3: valor
+  EN: Portugal
+  PT: Portugal
+
+Ficha, linha 4: etiqueta
+  EN: Deliverables
+  PT: Entregáveis
+
+Ficha, linha 4: valores  (um por linha: inglês | português)
+  - Brand Identity | Identidade de marca
+  - Website | Website
+  - E-Commerce | E-Commerce
+
+--- Resumo ---
+
+Segunda frase (contexto ou resultado)
+  EN: Designed to meet the needs of both professionals and everyday users, it offers a curated selection of tools and essentials focused on performance and reliability.
+  PT: Pensada para responder às necessidades de profissionais e de quem a usa no dia a dia, oferece uma seleção cuidada de ferramentas e essenciais, com foco no desempenho e na fiabilidade.
+
+--- Capítulo 1 ---
+
+  (o título do capítulo é sempre a lista de entregáveis da ficha, acima: muda-se lá)
+
+--- Fundo da página ---
+
+Etiqueta do projeto seguinte
+  EN: Next project
+  PT: Projeto seguinte
+
+Nome do projeto seguinte
+  EN: Solnovo
+  PT: Solnovo
+
+
+########################################################################
+#  PÁGINA DO PROJETO: Solnovo  (projeto-solnovo.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: Solnovo — MEAN AGENCY
+  PT: Solnovo — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: Visual identity and motion for Solnovo, a travel agency that crafts personalized trips.
+  PT: Identidade visual e motion para a Solnovo, uma agência de viagens que cria viagens personalizadas.
+
+--- Abertura ---
+
+Link para voltar à grelha
+  EN: Work
+  PT: Work
+
+Nome no topo da página
+  EN: Solnovo
+  PT: Solnovo
+
+Frase de abertura
+  EN: Solnovo is a travel agency dedicated to crafting personalized trips while securing the best discounts for its clients.
+  PT: A Solnovo é uma agência de viagens dedicada a criar viagens personalizadas e a garantir os melhores descontos para os seus clientes.
+
+Ficha, linha 1: etiqueta
+  EN: Client
+  PT: Cliente
+
+Ficha, linha 1: valor
+  EN: Solnovo
+  PT: Solnovo
+
+Ficha, linha 2: etiqueta
+  EN: Sector
+  PT: Setor
+
+Ficha, linha 2: valor
+  EN: Travel
+  PT: Viagens
+
+Ficha, linha 3: etiqueta
+  EN: Deliverables
+  PT: Entregáveis
+
+Ficha, linha 3: valores  (um por linha: inglês | português)
+  - Visual Identity | Identidade visual
+  - Motion | Motion
+
+--- Resumo ---
+
+Segunda frase (contexto ou resultado)
+  EN: The visual identity is inspired by the idea of seeing the sun from a new corner of the world symbolizing fresh experiences and new perspectives.
+  PT: A identidade visual inspira-se na ideia de ver o sol a partir de um novo canto do mundo, símbolo de experiências novas e de outras perspetivas.
+
+--- Capítulo 1 ---
+
+  (o título do capítulo é sempre a lista de entregáveis da ficha, acima: muda-se lá)
+
+Parágrafo 1
+  EN: Each continent is represented by a unique color, reflecting the diversity of destinations Solnovo offers.
+  PT: Cada continente é representado por uma cor própria, que reflete a diversidade de destinos que a Solnovo oferece.
+
+Parágrafo 2
+  EN: The identity combines warmth and vibrancy to communicate trust, adventure, and a tailored approach to travel planning.
+  PT: A identidade junta calor e energia para comunicar confiança, aventura e uma forma de planear viagens feita à medida.
+
+--- Fundo da página ---
+
+Etiqueta do projeto seguinte
+  EN: Next project
+  PT: Projeto seguinte
+
+Nome do projeto seguinte
+  EN: Comédia a Preto & Branco
+  PT: Comédia a Preto & Branco
+
+
+########################################################################
+#  PÁGINA DO PROJETO: Comédia a Preto & Branco  (projeto-comedia-a-preto-e-branco.html)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: Comédia a Preto & Branco — MEAN AGENCY
+  PT: Comédia a Preto & Branco — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: Brand identity and website for Comédia a Preto & Branco, a stand-up comedy platform from Porto.
+  PT: Identidade de marca e website para o Comédia a Preto & Branco, uma plataforma de stand-up comedy do Porto.
+
+--- Abertura ---
+
+Link para voltar à grelha
+  EN: Work
+  PT: Work
+
+Nome no topo da página
+  EN: Comédia a Preto & Branco
+  PT: Comédia a Preto & Branco
+
+Link 1 da barra (texto)
+  EN: Visit website
+  PT: Ver website
+
+Link 2 da barra (texto)
+  EN: Instagram
+  PT: Instagram
+
+Frase de abertura
+  EN: Comédia a Preto & Branco was born in Porto in 2024, created by comedians David Santos and Tomás Matos to promote stand-up comedy and produce comedy video content.
+  PT: O Comédia a Preto & Branco nasceu no Porto, em 2024, pelas mãos dos humoristas David Santos e Tomás Matos, para promover stand-up comedy e criar conteúdos audiovisuais de humor.
+
+Ficha, linha 1: etiqueta
+  EN: Client
+  PT: Cliente
+
+Ficha, linha 1: valor
+  EN: Comédia a Preto & Branco
+  PT: Comédia a Preto & Branco
+
+Ficha, linha 2: etiqueta
+  EN: Sector
+  PT: Setor
+
+Ficha, linha 2: valor
+  EN: Comedy
+  PT: Comédia
+
+Ficha, linha 3: etiqueta
+  EN: Location
+  PT: Local
+
+Ficha, linha 3: valor
+  EN: Porto, Portugal
+  PT: Porto, Portugal
+
+Ficha, linha 4: etiqueta
+  EN: Deliverables
+  PT: Entregáveis
+
+Ficha, linha 4: valores  (um por linha: inglês | português)
+  - Brand Identity | Identidade de marca
+  - Website | Website
+
+--- Resumo ---
+
+Segunda frase (contexto ou resultado)
+  EN: It is a platform for comedy interaction, promotion and participation: it brings Portuguese comedians together in original productions and live shows, runs comedy nights and puts different generations of comedians on the same stage.
+  PT: É uma plataforma de interação, divulgação e participação humorística: reúne artistas da comédia nacional em produções originais e espetáculos ao vivo, dinamiza noites de comédia e junta diferentes gerações de humoristas no mesmo palco.
+
+--- Capítulo 1 ---
+
+  (o título do capítulo é sempre a lista de entregáveis da ficha, acima: muda-se lá)
+
+--- Fundo da página ---
+
+Etiqueta do projeto seguinte
+  EN: Next project
+  PT: Projeto seguinte
+
+Nome do projeto seguinte
+  EN: Project 05
+  PT: Projeto 05
+
+
+########################################################################
+#  PÁGINA DE PROJETO: MODELO  (projeto.html, para onde vão os projetos que ainda não têm página)
+########################################################################
+
+--- Para o Google e para a aba do browser ---
+
+Título da aba
+  EN: Project — MEAN AGENCY
+  PT: Projeto — MEAN AGENCY
+
+Descrição (aparece nos resultados do Google)
+  EN: A MEAN project: what it was, what we did and what came out of it.
+  PT: Um projeto da MEAN: o que era, o que fizemos e o que saiu daí.
+
+--- Abertura ---
+
+Link para voltar à grelha
+  EN: Work
+  PT: Work
+
+Nome no topo da página
+  EN: Project name
+  PT: Nome do projeto
+
+Link 1 da barra (texto)
+  EN: Visit website
+  PT: Ver website
+
+Frase de abertura
+  EN: Opening sentence of the project: what it is and what changed, in one or two lines. Placeholder text, to be replaced.
+  PT: Frase de abertura do projeto: o que é e o que mudou, em uma ou duas linhas. Texto provisório, a substituir.
+
+Ficha, linha 1: etiqueta
+  EN: Client
+  PT: Cliente
+
+Ficha, linha 1: valor
+  EN: Project name
+  PT: Nome do projeto
+
+Ficha, linha 2: etiqueta
+  EN: Sector
+  PT: Setor
+
+Ficha, linha 2: valor
+  EN: Client sector
+  PT: Setor do cliente
+
+Ficha, linha 3: etiqueta
+  EN: Location
+  PT: Local
+
+Ficha, linha 3: valor
+  EN: City, Country
+  PT: Cidade, País
+
+Ficha, linha 4: etiqueta
+  EN: Deliverables
+  PT: Entregáveis
+
+Ficha, linha 4: valores  (um por linha: inglês | português)
+  - Branding | Branding
+  - Web | Web
+  - Social Media | Social Media
+
+--- Resumo ---
+
+Segunda frase (contexto ou resultado)
+  EN: Second sentence: the context, or the result in numbers. Placeholder text.
+  PT: Segunda frase: o contexto, ou o resultado em números. Texto provisório.
+
+Resumo, parágrafo 1
+  EN: First paragraph of the summary. Who the client is, what they asked for and why it mattered. Placeholder text.
+  PT: Primeiro parágrafo do resumo. Quem é o cliente, o que pediu e porque importava. Texto provisório.
+
+Resumo, parágrafo 2
+  EN: Second paragraph of the summary. What MEAN did and what came out of it. Placeholder text.
+  PT: Segundo parágrafo do resumo. O que a MEAN fez e o que saiu daí. Texto provisório.
+
+--- Capítulo 1 ---
+
+Título do capítulo
+  EN: Branding
+  PT: Branding
+
+Parágrafo 1
+  EN: Text for this chapter. What was done in this discipline and the decisions behind it. Placeholder text.
+  PT: Texto deste capítulo. O que foi feito nesta disciplina e as decisões por trás. Texto provisório.
+
+Parágrafo 2
+  EN: Continue here: the process, the difficulties, what was tried and dropped. Placeholder text.
+  PT: Continua aqui: o processo, as dificuldades, o que se tentou e ficou de fora. Texto provisório.
+
+Parágrafo 3
+  EN: End with what was delivered. Placeholder text.
+  PT: Fecha com o que foi entregue. Texto provisório.
+
+Frase em destaque
+  EN: A sentence that sums up the idea behind the project. Placeholder text.
+  PT: Uma frase que resume a ideia por trás do projeto. Texto provisório.
+
+--- Capítulo 2 ---
+
+Título do capítulo
+  EN: Web
+  PT: Web
+
+Parágrafo 1
+  EN: Text for this chapter. What was done in this discipline and the decisions behind it. Placeholder text.
+  PT: Texto deste capítulo. O que foi feito nesta disciplina e as decisões por trás. Texto provisório.
+
+Parágrafo 2
+  EN: Continue here: the process, the difficulties, what was tried and dropped. Placeholder text.
+  PT: Continua aqui: o processo, as dificuldades, o que se tentou e ficou de fora. Texto provisório.
+
+Parágrafo 3
+  EN: End with what was delivered. Placeholder text.
+  PT: Fecha com o que foi entregue. Texto provisório.
+
+Frase em destaque
+  EN: A closing sentence: what the project left behind. Placeholder text.
+  PT: Uma frase de fecho: o que o projeto deixou. Texto provisório.
+
+--- Fundo da página ---
+
+Etiqueta do projeto seguinte
+  EN: Next project
+  PT: Projeto seguinte
+
+Nome do projeto seguinte
+  EN: Project 02
+  PT: Projeto 02

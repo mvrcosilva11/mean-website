@@ -308,6 +308,25 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
   observer.observe(el);
 });
 
+// ── About: nas listas de serviços, os dois itens de cada linha entram sempre a par ──
+// O motion.js revela cada item quando ele entra no ecrã. Aqui garante-se que, quando um item de uma linha
+// é revelado, o da outra coluna na mesma linha também é: assim "Brand guidelines" nunca fica para depois
+// de "Brand strategy", mesmo que o browser se atrase a dar por um deles.
+(function () {
+  const lists = document.querySelectorAll('.m-branches');
+  if (!lists.length || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver(entries => {
+    if (!document.documentElement.classList.contains('is-ready')) return;   // nunca antes de o ecrã do logo sair
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const li = e.target, top = li.offsetTop;
+      Array.prototype.forEach.call(li.parentNode.children, o => { if (Math.abs(o.offsetTop - top) < 2) o.classList.add('is-in'); });
+      io.unobserve(li);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+  lists.forEach(u => Array.prototype.forEach.call(u.children, li => io.observe(li)));
+})();
+
 // ── Footer: a bola que marca a página atual desliza para o link debaixo do rato ──
 // Uma só bola para a lista de páginas (em vez de uma por link): parada na página atual; ao passar o rato
 // (ou o foco do teclado) por outro link desliza até ele, e volta quando o rato sai da lista. Numa página
@@ -617,12 +636,24 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     'uniform sampler2D uLogo;',  // distância ao contorno do logo: R = fina, G = larga
     'uniform vec4 uLogoRect;',   // onde está a textura do logo, px de CSS
     'uniform vec4 uClip;',       // máscara do logo (x0, y0, x1, y1): o logo entra por baixo, de trás dela
+    'uniform vec3 uSplit;',      // linha que separa as duas faixas do logo (fração da textura); quanto falta subir à de cima e à de baixo (px)
     'uniform vec3 uSdf;',        // alcance fino, alcance largo (em texels), px de CSS por texel
     'uniform float uK;',         // raio da fusão entre formas
     'uniform float uEdge;',      // largura da orla em que o logo se funde com a bola
     'uniform vec3 uColor;',
     // união suave: onde duas formas se aproximam, nasce uma ponte entre elas
     'float smin(float a, float b, float k) { float h = max(k - abs(a - b), 0.0) / k; return min(a, b) - h * h * k * 0.25; }',
+    // distância à faixa do logo entre v0 e v1 (frações da altura da textura), deslocada oy px para baixo;
+    // fora da faixa a distância continua a crescer a partir da borda dela (sem saltos)
+    'float band(vec2 p, float oy, float v0, float v1) {',
+    '  vec2 uv = (p - vec2(uLogoRect.x, uLogoRect.y + oy)) / uLogoRect.zw;',
+    '  if (uv.x <= 0.0 || uv.x >= 1.0 || uv.y <= 0.0 || uv.y >= 1.0) return 1.0e4;',
+    '  float v = clamp(uv.y, v0, v1);',
+    '  vec4 s = texture2D(uLogo, vec2(uv.x, v));',
+    '  float wide = (s.g * 2.0 - 1.0) * uSdf.y;',
+    '  float fine = (s.r * 2.0 - 1.0) * uSdf.x;',
+    '  return (abs(wide) < uSdf.x * 0.75 ? fine : wide) * uSdf.z + abs(uv.y - v) * uLogoRect.w;',
+    '}',
     'void main() {',
     '  vec2 p = vec2(gl_FragCoord.x, uRes.y - gl_FragCoord.y) / uDpr;',
     '  vec2 c = floor((p - uGrid.xy) / uGrid.zw);',
@@ -637,15 +668,13 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     '      dB = smin(dB, length(p - (uGrid.xy + (cc + 0.5) * uGrid.zw + vec2(0.0, oy))) - r, uK);',
     '    }',
     '  }',
-    '  float dL = 1.0e4;',       // distância ao logo
-    '  vec2 uv = (p - uLogoRect.xy) / uLogoRect.zw;',
-    '  if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {',
-    '    vec4 s = texture2D(uLogo, uv);',
-    '    float wide = (s.g * 2.0 - 1.0) * uSdf.y;',
-    '    float fine = (s.r * 2.0 - 1.0) * uSdf.x;',
-    '    dL = (abs(wide) < uSdf.x * 0.75 ? fine : wide) * uSdf.z;',
-    '  }',
-    '  dL = max(dL, max(max(uClip.x - p.x, p.x - uClip.z), max(uClip.y - p.y, p.y - uClip.w)));',   // fora da máscara não há logo
+    // distância ao logo: duas faixas. A de cima ("MEAN") sai de trás da linha que as separa; a de baixo, do fundo
+    // da máscara. Fora da máscara de cada uma não há logo. Paradas, as duas juntas são o logo inteiro, como antes.
+    '  float cx = max(uClip.x - p.x, p.x - uClip.z);',
+    '  float ys = uLogoRect.y + uSplit.x * uLogoRect.w;',
+    '  float dTop = max(band(p, uSplit.y, 0.0, uSplit.x), max(cx, max(uClip.y - p.y, p.y - ys)));',
+    '  float dBot = max(band(p, uSplit.z, uSplit.x, 1.0), max(cx, max(uClip.y - p.y, p.y - uClip.w)));',
+    '  float dL = min(dTop, dBot);',
     '  float aU = clamp(0.5 - smin(dB, dL, uK) * uDpr, 0.0, 1.0);',   // bolas e logo fundidos
     '  float aL = clamp(0.5 - dL * uDpr, 0.0, 1.0);',
     // na orla de uma bola o logo funde-se com ela (vermelho sobre vermelho); mais para dentro reaparece em negativo
@@ -666,9 +695,10 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     const src = cx.getImageData(0, 0, W, H).data;
     const outer = new Float64Array(n), inner = new Float64Array(n);
     let ink = 0;
+    const rowInk = new Uint8Array(H);   // linhas da imagem com tinta: serve para achar o intervalo entre as duas faixas do logo
     for (let i = 0; i < n; i++) {
       const al = src[i * 4 + 3] / 255;
-      if (al > 0.5) ink++;
+      if (al > 0.5) { ink++; rowInk[(i / W) | 0] = 1; }
       if (al >= 1) { outer[i] = 0; inner[i] = INF; }
       else if (al <= 0) { outer[i] = INF; inner[i] = 0; }
       else { const d = 0.5 - al; outer[i] = d > 0 ? d * d : 0; inner[i] = d < 0 ? d * d : 0; }
@@ -699,7 +729,18 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       const d = Math.sqrt(outer[i]) - Math.sqrt(inner[i]);
       sd[i] = d; tex[i * 4] = enc(d / FINE); tex[i * 4 + 1] = enc(d / WIDE); tex[i * 4 + 3] = 255;
     }
-    return { W: W, H: H, PAD: PAD, FINE: FINE, WIDE: WIDE, iw: iw, ih: ih, sd: sd, tex: tex };
+    // As duas faixas do logo ("MEAN" em cima, "CREATIVE AGENCY" em baixo) entram cada uma da sua linha: a de cima
+    // sai de trás da linha que as separa, a de baixo do fundo da máscara. Essa linha é o meio do maior intervalo
+    // sem tinta entre a primeira e a última linha com tinta. Sem intervalo claro, o logo entra inteiro (split = 0).
+    let inkTop = -1, inkBot = -1;
+    for (let y = 0; y < H; y++) if (rowInk[y]) { if (inkTop < 0) inkTop = y; inkBot = y + 1; }
+    let split = 0, botTop = inkTop, gap = 0;
+    for (let y = inkTop, g0 = -1; y < inkBot; y++) {
+      if (!rowInk[y]) { if (g0 < 0) g0 = y; }
+      else if (g0 >= 0) { if (y - g0 > gap) { gap = y - g0; split = (g0 + y) / 2; botTop = y; } g0 = -1; }
+    }
+    if (gap < 6) { split = 0; botTop = inkTop; }
+    return { W: W, H: H, PAD: PAD, FINE: FINE, WIDE: WIDE, iw: iw, ih: ih, sd: sd, tex: tex, split: split, inkTop: inkTop, botTop: botTop };
   }
 
   function startGl() {
@@ -725,7 +766,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     const loc = gl.getAttribLocation(prog, 'a');
     gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
     const U = {};
-    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uClip', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
+    ['uRes', 'uDpr', 'uGrid', 'uCells', 'uRad', 'uRadRange', 'uLogo', 'uLogoRect', 'uClip', 'uSplit', 'uSdf', 'uK', 'uEdge', 'uColor'].forEach(n => { U[n] = gl.getUniformLocation(prog, n); });
     const texture = unit => {
       const t = gl.createTexture();
       gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
@@ -757,6 +798,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     const WAVE = 500, BALL_DUR = 700;       // do centro até aos cantos; tempo que cada bola leva a formar-se
     const LOGO_AT = onHome ? 2150 : 700;    // o logo começa a subir
     const LOGO_DUR = 900;                   // duração da subida (a curva é a do CSS: cubic-bezier(.16, 1, .3, 1))
+    const LOGO_LAG = 350;                   // a faixa de baixo ("CREATIVE AGENCY") começa a subir 0,35 s depois da de cima ("MEAN")
     let t0 = null, introDone = root.classList.contains('is-open');   // página já aberta (troca de língua): sem entrada
     let dead = false, shown = false, field = null;
     let G = null, px = [], py = [], rest = new Float32Array(0), shy = rest, target = rest, rad = rest, bytes = new Uint8Array(0);
@@ -764,7 +806,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     // Inércia ao scroll: cada bola tem o seu peso; fica para trás quando a página anda e volta com uma mola
     const SHIFT = 46, STIFF = 60, DAMP = 8.5;     // desvio máximo (px); rigidez e amortecimento da mola
     let off = rest, vel = rest, mass = rest, lastY = window.scrollY;
-    let logoRest = null, maskH = 0, rise = introDone ? 0 : 1.1, k = K;   // rise: quanto o logo ainda está abaixo do sítio (em alturas do logo)
+    let logoRest = null, maskH = 0, rise = introDone ? 0 : 1, rise2 = rise, k = K;   // quanto falta a cada faixa do logo para chegar ao sítio (1 = escondida, 0 = no sítio): rise = a de cima, rise2 = a de baixo
     let mx = -1e4, my = -1e4, raf = 0, last = 0, settleUntil = 0;
     hero.classList.add('hi-wait');   // o logo em imagem não chega a aparecer: quem o mostra é o canvas
 
@@ -844,14 +886,16 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
         a = a < 0 ? 0 : a > 1 ? 1 : a; a = 1 - a;
         appear[i] = 1 - a * a * a;
       }
-      let u = (t - LOGO_AT) / LOGO_DUR;
-      u = u < 0 ? 0 : u > 1 ? 1 : u;
-      rise = 1.1 * (1 - bezier(0.16, 1, 0.3, 1, u));
-      // as bolas que estão no sítio do logo recolhem-se um instante antes de ele chegar
-      let g = (t - (LOGO_AT - 220)) / 420;
-      g = g < 0 ? 0 : g > 1 ? 1 : g; g = g * g * (3 - 2 * g);
-      stay.fill(g);
-      if (t >= LOGO_AT + LOGO_DUR && t >= BALLS_AT + WAVE + BALL_DUR) { introDone = true; rise = 0; appear.fill(1); stay.fill(1); }
+      // primeiro sobe a faixa de cima ("MEAN"); a de baixo começa LOGO_LAG depois (sem divisão, o logo sobe inteiro e de uma vez)
+      const lag = field.split ? LOGO_LAG : 0;
+      const prog = at => { let u = (t - at) / LOGO_DUR; u = u < 0 ? 0 : u > 1 ? 1 : u; return 1 - bezier(0.16, 1, 0.3, 1, u); };
+      rise = prog(LOGO_AT); rise2 = prog(LOGO_AT + lag);
+      // as bolas que estão no sítio de cada faixa recolhem-se um instante antes de ela chegar
+      const give = at => { let g = (t - (at - 220)) / 420; g = g < 0 ? 0 : g > 1 ? 1 : g; return g * g * (3 - 2 * g); };
+      const gTop = give(LOGO_AT), gBot = give(LOGO_AT + lag);
+      const ySplit = logoRest.y + (field.split - field.PAD) * (logoRest.w / field.iw);   // linha entre as duas faixas, no ecrã
+      for (let i = 0; i < stay.length; i++) stay[i] = lag && py[i] > ySplit ? gBot : gTop;
+      if (t >= LOGO_AT + lag + LOGO_DUR && t >= BALLS_AT + WAVE + BALL_DUR) { introDone = true; rise = 0; rise2 = 0; appear.fill(1); stay.fill(1); }
       aim();
     }
     function draw() {
@@ -876,8 +920,14 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       gl.uniform2f(U.uRes, pw, ph); gl.uniform1f(U.uDpr, pw / cw);
       gl.uniform4f(U.uGrid, G.x, G.y, G.cellW, G.cellH); gl.uniform2f(U.uCells, G.cols, G.rows);
       gl.uniform3f(U.uRadRange, R_MIN, R_SPAN, SHIFT);
-      gl.uniform4f(U.uLogoRect, logoRest.x - field.PAD * s, logoRest.y + rise * logoRest.h - field.PAD * s, field.W * s, field.H * s);
+      gl.uniform4f(U.uLogoRect, logoRest.x - field.PAD * s, logoRest.y - field.PAD * s, field.W * s, field.H * s);
       gl.uniform4f(U.uClip, logoRest.x, logoRest.y, logoRest.x + logoRest.w, logoRest.y + maskH);
+      // Quanto cada faixa ainda tem de subir (px). A de baixo parte de trás do fundo da máscara, como sempre; a de
+      // cima ("MEAN") parte de trás da linha que separa as duas faixas. 10% de folga, como na subida original.
+      // Sem divisão (split = 0) o logo entra inteiro, de baixo.
+      const topRun = field.split ? (field.split - field.inkTop) * s * 1.1 : 0;
+      const botRun = field.split ? (maskH - (field.botTop - field.PAD) * s) * 1.1 : logoRest.h * 1.1;
+      gl.uniform3f(U.uSplit, field.split / field.H, rise * topRun, (field.split ? rise2 : rise) * botRun);
       gl.uniform3f(U.uSdf, field.FINE, field.WIDE, s); gl.uniform1f(U.uK, k); gl.uniform1f(U.uEdge, EDGE);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -959,7 +1009,7 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
       if ('ResizeObserver' in window) new ResizeObserver(() => { if (layout()) kick(600); }).observe(hero);
       else addEventListener('resize', () => { if (layout()) kick(600); });
       // a entrada começa quando o ecrã do logo sai (Home); noutra página, logo que o canvas esteja pronto
-      const begin = () => { if (t0 === null && !introDone) { t0 = performance.now(); kick(LOGO_AT + LOGO_DUR + 400); } };
+      const begin = () => { if (t0 === null && !introDone) { t0 = performance.now(); kick(LOGO_AT + LOGO_LAG + LOGO_DUR + 400); } };
       if (!onHome || root.classList.contains('is-ready')) begin();
       else {
         const mo = new MutationObserver(() => { if (root.classList.contains('is-ready')) { mo.disconnect(); begin(); } });
@@ -995,4 +1045,103 @@ document.querySelectorAll('.w-item').forEach((el, i) => {
     window.__lenis = lenis;   // referência (ex.: voltar-ao-topo pode usar lenis.scrollTo)
   };
   document.head.appendChild(s);
+})();
+
+// ── Header sobre imagens: preto ou branco, conforme o brilho do que tem por baixo ──
+// (Vale para imagens e para os vídeos das páginas de projeto.)
+// O header vive em "negativo" (mix-blend-mode: difference, no style.css). Sobre uma imagem de tom médio
+// (um cinzento, por exemplo) o negativo dá uma cor quase igual à do fundo e o header deixa de se ler; sobre
+// imagens de cor, tinge o texto. Por isso, enquanto alguma parte do header estiver por cima de uma imagem,
+// o negativo desliga-se (.nav--onimg) e cada parte fica preta (.is-ink) ou branca conforme o brilho dessa
+// zona da imagem. É o que o motion.js já faz sobre o vídeo da Home (.nav--onvideo), que tem prioridade.
+(function () {
+  const nav = document.querySelector('.nav');
+  if (!nav || !document.elementsFromPoint) return;
+  const parts = [nav.querySelector('.nav-links'), nav.querySelector('.nav-logo-link'), nav.querySelector('.nav-right-group')].filter(Boolean);
+  const thumbs = new WeakMap();   // imagem → miniatura onde se lê o brilho
+  let ok = true, queued = false;
+
+  const natural = el => el.tagName === 'VIDEO' ? [el.videoWidth, el.videoHeight] : [el.naturalWidth, el.naturalHeight];
+  const thumb = el => {
+    const video = el.tagName === 'VIDEO', now = performance.now();
+    let t = thumbs.get(el);
+    if (t && t.src === el.currentSrc && (!video || now - t.at < 200)) return t;   // num vídeo, lê-se o fotograma do momento
+    const [nw, nh] = natural(el);
+    const w = 48, h = Math.max(1, Math.round(48 * nh / nw));
+    const c = (t && t.c) || document.createElement('canvas'); c.width = w; c.height = h;
+    const ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(el, 0, 0, w, h);
+    t = { src: el.currentSrc, at: now, c: video ? c : null, w, h, data: ctx.getImageData(0, 0, w, h).data };   // dá erro em file:// ou com ficheiros de outro site
+    thumbs.set(el, t);
+    return t;
+  };
+  // brilho (0 a 1) da imagem que está no ponto (x, y) do ecrã, por baixo do header; null se aí não houver imagem
+  const lumAt = (x, y) => {
+    const els = document.elementsFromPoint(x, y);
+    for (let i = 0; i < els.length; i++) {
+      const el = els[i];
+      if (nav.contains(el)) continue;
+      if (el.tagName === 'IMG' ? !(el.complete && el.naturalWidth) : !(el.tagName === 'VIDEO' && el.readyState >= 2 && el.videoWidth)) return null;
+      const t = thumb(el), r = el.getBoundingClientRect(), [nw, nh] = natural(el);
+      let u = (x - r.left) / r.width, v = (y - r.top) / r.height;
+      if (getComputedStyle(el).objectFit === 'cover') {   // a imagem enche a moldura e sobra para os lados ou para cima
+        const k = Math.max(r.width / nw, r.height / nh);
+        u = (x - r.left + (nw * k - r.width) / 2) / (nw * k);
+        v = (y - r.top + (nh * k - r.height) / 2) / (nh * k);
+      }
+      const o = (Math.min(t.h - 1, Math.max(0, Math.floor(v * t.h))) * t.w + Math.min(t.w - 1, Math.max(0, Math.floor(u * t.w)))) * 4;
+      return (0.2126 * t.data[o] + 0.7152 * t.data[o + 1] + 0.0722 * t.data[o + 2]) / 255;
+    }
+    return null;
+  };
+  const update = () => {
+    queued = false;
+    const off = !ok || nav.classList.contains('nav--onvideo') || nav.classList.contains('nav--menu') || nav.classList.contains('nav--away');
+    let tones = parts.map(() => null);
+    if (!off) {
+      try {
+        tones = parts.map(p => {
+          const r = p.getBoundingClientRect();
+          if (!r.width || !r.height) return null;
+          let sum = 0, n = 0;
+          [0.12, 0.5, 0.88].forEach(f => { const l = lumAt(r.left + r.width * f, r.top + r.height / 2); if (l !== null) { sum += l; n++; } });
+          return n >= 2 ? sum / n : null;   // a maior parte desta zona do header está sobre a imagem
+        });
+      } catch (e) { ok = false; tones = parts.map(() => null); }
+    }
+    nav.classList.toggle('nav--onimg', tones.some(t => t !== null));
+    parts.forEach((p, i) => {
+      const t = tones[i], ink = p.classList.contains('is-ink');
+      if (t === null) p.classList.remove('is-ink');
+      else if (!ink && t > 0.5) p.classList.add('is-ink');       // imagem clara → header preto
+      else if (ink && t < 0.42) p.classList.remove('is-ink');    // imagem escura → header branco
+    });
+  };
+  const ask = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', ask, { passive: true });
+  addEventListener('resize', ask);
+  addEventListener('load', ask);
+  setInterval(ask, 250);   // as imagens entram e acabam de carregar sem haver scroll
+  ask();
+})();
+
+// ── Vídeos das páginas de projeto: tocam sozinhos enquanto estão no ecrã ──
+// Sem som e em repetição (muted loop playsinline, no HTML). Cada vídeo só toca quando se vê pelo menos um
+// quarto dele e pára quando sai, para a página não ter vários a correr ao mesmo tempo sem ninguém os ver.
+// Com "reduzir movimento" ligado não arrancam sozinhos: ficam com os comandos do browser para quem quiser ver.
+(function () {
+  const vids = document.querySelectorAll('.m-pj .m-media > video');
+  if (!vids.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    vids.forEach(v => { v.controls = true; });
+    return;
+  }
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const v = e.target;
+      if (e.isIntersecting) { const p = v.play(); if (p && p.catch) p.catch(() => { v.controls = true; }); }   // se o browser não deixar, ficam os comandos
+      else v.pause();
+    });
+  }, { threshold: 0.25 });
+  vids.forEach(v => { v.muted = true; io.observe(v); });
 })();

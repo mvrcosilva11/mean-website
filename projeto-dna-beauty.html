@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=42" />
+  <link rel="apple-touch-icon" href="assets/home-visual-square.png?v=42" />
+  <title>DNA Beauty — MEAN AGENCY</title>
+  <meta name="description" content="Brand identity and website for DNA Beauty, a professional hair and beauty cosmetics brand." />
+  <!-- Corre antes da folha de estilos: marca que há JavaScript, aplica a língua guardada e,
+       se o logo animado for aparecer (1.ª abertura ou mudança de página), começa já a descarregá-lo. -->
+  <script>(function(d){d.classList.add('js');setTimeout(function(){if(!window.__mean)d.classList.remove('js')},3500);window.__meanShow=true;try{if(localStorage.getItem('mean_lang')==='pt'){d.lang='pt';d.classList.add('i18n-wait');setTimeout(function(){d.classList.remove('i18n-wait')},1500)}var s=sessionStorage;if(s.getItem('mean_fast')){s.removeItem('mean_fast');d.classList.add('is-open','is-fast')}var n=s.getItem('mean_nav');s.removeItem('mean_nav');window.__meanShow=!s.getItem('mean_intro_seen')||!!n;if(!window.__meanShow)d.classList.add('is-bare');if(window.__meanShow&&window.fetch){var p=fetch('assets/intro-logo.webp?v=42',{priority:'high'}).then(function(r){if(!r.ok)throw 0;return r.blob()});p.catch(function(){});window.__meanIntro=p}}catch(e){}})(document.documentElement)</script>
+  <link rel="stylesheet" href="style.css?v=221" />
+</head>
+<body class="page-projeto">
+
+  <!-- LOGO ANIMADO: na 1.ª abertura do site e a cada mudança de página (num recarregamento não aparece) -->
+  <div class="preloader" id="preloader" data-duration="1440" data-anim="assets/intro-logo.webp?v=42" data-still="assets/intro-logo.png?v=42"></div>
+  <script>(function(){var p=document.getElementById('preloader');if(p&&window.__meanShow===false)p.parentNode.removeChild(p)})()</script>
+
+  <!-- NAV: igual em todas as páginas. Tudo em texto, do mesmo tamanho. Fica sempre em inglês (data-i18n-skip). -->
+  <header class="nav nav-over" data-i18n-skip>
+    <div class="nav-left-group">
+      <a href="index.html" class="nav-logo-link" aria-label="Home"><img class="nav-logo" src="assets/logo-mean-white.png?v=113" alt="MEAN" /></a>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="work.html" aria-current="page">Work</a>
+        <a href="about.html">About</a>
+      </nav>
+    </div>
+    <div class="nav-right-group">
+      <a href="#talk" data-talk class="nav-cta">Talk with us</a>
+      <button class="nav-lang" type="button" data-lang-switch aria-label="Mudar para português">PT</button>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PROJETO: DNA Beauty. Página feita a partir do modelo (projeto.html); como se monta um projeto: PLANEAMENTO.md.
+       Texto e ligações: iamnupi.com/project/dna-beauty. Imagens: Projetos/02-dna-beauty/ (os originais, sem conversão). -->
+  <main class="m-pj">
+
+    <!-- 1. ABERTURA: barra do projeto, frase, ficha técnica e a 1.ª imagem (a capa, 00-capa, é só para as grelhas) -->
+    <section class="m-pj-intro">
+      <div class="m-pj-bar" data-reveal>
+        <a class="m-pj-back" href="work.html"><span class="m-arrow m-arrow--back" aria-hidden="true">←</span> Work</a>
+        <p class="m-pj-name">DNA Beauty</p>
+        <div class="m-pj-site m-pj-links">
+          <a href="https://www.dnabeauty.pt/" target="_blank" rel="noopener">Visit website <span class="m-arrow m-arrow--ext" aria-hidden="true">↗</span></a>
+          <a href="https://www.instagram.com/dnabeauty.co" target="_blank" rel="noopener">Instagram <span class="m-arrow m-arrow--ext" aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+      <span class="m-rule" data-line></span>
+      <div class="m-pj-top">
+        <h1 class="m-pj-statement" data-blur>DNA Beauty is a cosmetics brand dedicated to supplying professional-grade products for hair and beauty care.</h1>
+        <dl class="m-pj-meta" data-stagger="70">
+          <div data-reveal><dt>Client</dt><dd>DNA Beauty</dd></div>
+          <div data-reveal><dt>Sector</dt><dd>Cosmetics</dd></div>
+          <div data-reveal><dt>Location</dt><dd>Portugal</dd></div>
+          <div data-reveal><dt>Deliverables</dt><dd><span>Brand Identity</span><span>Website</span><span>E-Commerce</span></dd></div>
+        </dl>
+      </div>
+      <div class="m-pj-cover-wrap">
+        <div class="m-media m-pj-cover" data-media><img src="Projetos/02-dna-beauty/01.png" alt="DNA Beauty logo on light blue" width="1920" height="1080" decoding="async" /></div>
+      </div>
+    </section>
+
+    <!-- 2. RESUMO: segunda frase -->
+    <section class="m-pj-summary">
+      <p class="m-pj-lead" data-split="rise">Designed to meet the needs of both professionals and everyday users, it offers a curated selection of tools and essentials focused on performance and reliability.</p>
+    </section>
+
+    <!-- 3. IMAGEM A TODA A LARGURA (entre as margens da página) -->
+    <div class="m-pj-full">
+      <div class="m-media" data-media><img src="Projetos/02-dna-beauty/02.png" alt="DNA Beauty branded tape and packaging" width="1920" height="1080" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 4. CAPÍTULO: título preso à esquerda, imagens de larguras diferentes à direita (a mesma composição do Metais Jaime Dias) -->
+    <section class="m-pj-chapter">
+      <div class="m-pj-text">
+        <h2 class="m-label" data-reveal>Brand Identity, Website, E-Commerce</h2>
+      </div>
+      <div class="m-pj-stack">
+        <div><div class="m-media r-169" data-media><img src="Projetos/02-dna-beauty/03.png" alt="DNA Beauty app icon and browser tab" width="1920" height="1080" loading="lazy" decoding="async" /></div></div>
+        <div class="is-narrow"><div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/04.png" alt="Hairdressing scissors on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div></div>
+        <div class="is-narrow"><div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/05.png" alt="Comb on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div></div>
+        <div><div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/06.png" alt="Razor blade on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div></div>
+        <div class="is-small"><div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/07.png" alt="Round hairbrush on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div></div>
+      </div>
+    </section>
+
+    <!-- 5. DUAS IMAGENS LADO A LADO -->
+    <div class="m-pj-pair">
+      <div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/08.png" alt="Hair dryer on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div>
+      <div class="m-media r-32" data-media><img src="Projetos/02-dna-beauty/09.png" alt="Black comb on a teal background" width="5858" height="3906" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 6. IMAGEM A TODA A LARGURA -->
+    <div class="m-pj-full">
+      <div class="m-media" data-media><img src="Projetos/02-dna-beauty/10.jpg" alt="DNA Beauty business cards" width="3000" height="2000" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 7. DUAS IMAGENS LADO A LADO, de proporções diferentes -->
+    <div class="m-pj-pair m-pj-pair--fit">
+      <div class="m-media" data-media style="--r: 1.500"><img src="Projetos/02-dna-beauty/11.png" alt="DNA Beauty social media posts" width="1920" height="1280" loading="lazy" decoding="async" /></div>
+      <div class="m-media" data-media style="--r: 1.111"><img src="Projetos/02-dna-beauty/12.png" alt="DNA Beauty content on a phone" width="1920" height="1728" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 8. IMAGEM A TODA A LARGURA -->
+    <div class="m-pj-full">
+      <div class="m-media" data-media><img src="Projetos/02-dna-beauty/13.png" alt="DNA Beauty brand board: logo, colours and typefaces" width="1920" height="1080" loading="lazy" decoding="async" /></div>
+    </div>
+
+    <!-- 9. PROJETO SEGUINTE -->
+    <a class="m-pj-next" href="projeto-solnovo.html" data-cursor="View">
+      <span class="m-pj-next-head">
+        <span class="m-label" data-reveal>Next project</span>
+        <span class="m-pj-next-name" data-reveal>Solnovo <span class="m-arrow" aria-hidden="true">→</span></span>
+      </span>
+      <span class="m-pj-next-media"><span class="m-media" data-media><img src="Projetos/03-solnovo/00-capa.jpg" alt="Solnovo street posters with a view of Florence" width="1500" height="844" loading="lazy" decoding="async" /></span></span>
+    </a>
+
+  </main>
+
+  <!-- FOOTER: igual em todas as páginas. Proporções de esrbespoke.au, identidade MEAN. -->
+  <footer class="m-foot">
+    <div class="m-foot-in">
+      <div class="m-foot-top">
+        <a class="m-foot-name" href="index.html">MEAN Agency</a>
+        <p class="m-foot-desc"><span>Creative agency.</span><span>Porto, Portugal.</span><span>2026 © MEAN Agency.</span><span>All rights reserved.</span></p>
+        <nav class="m-foot-nav" aria-label="Footer">
+          <a href="index.html">Home</a>
+          <a href="work.html" aria-current="page">Work</a>
+          <a href="about.html">About</a>
+          <a href="#talk" data-talk>Talk with us</a>
+        </nav>
+      </div>
+      <div class="m-foot-logo"><img src="assets/logo-mean-red-tight.png?v=125" alt="MEAN" width="1075" height="269" loading="lazy" /></div>
+      <div class="m-foot-bottom">
+        <a class="m-foot-social" href="https://instagram.com/mean_agency" target="_blank" rel="noopener">@mean_agency</a>
+        <a class="m-foot-link" href="https://www.linkedin.com/company/we-are-mean" target="_blank" rel="noopener">LinkedIn</a>
+        <div class="m-foot-blocks">
+          <div class="m-foot-block">
+            <h3>Contact</h3>
+            <p><a href="mailto:mean.geral@gmail.com">mean.geral@gmail.com</a></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Studio</h3>
+            <p><span>Porto, Portugal</span></p>
+          </div>
+          <div class="m-foot-block">
+            <h3>Services</h3>
+            <p><span>Branding</span><span>Web</span><span>Social Media</span><span>Video, Motion &amp; Photography</span><span>Strategy</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js?v=221"></script>
+  <script src="main.js?v=221"></script>
+  <script src="motion.js?v=221"></script>
+</body>
+</html>

@@ -10,3 +10,9 @@ assets/bg.mov
 # artefactos de ferramentas (não fazem parte do site)
 .playwright-cli/
 .claude/.headroom_wrap_settings.lock
+
+# estado local da ligação textos → site (cada computador tem o seu)
+ferramentas/.estado/
+ferramentas/__pycache__/
+*.tmp
+TEXTOS-ERRO.txt
